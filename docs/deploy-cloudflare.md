@@ -42,7 +42,7 @@ pnpm build && pnpm exec wrangler deploy --dry-run
 
 ## 手順 B: GitHub 連携で自動デプロイ(Workers Builds、無料)
 
-Cloudflare ダッシュボード → Workers & Pages → Create → **Import a repository** で `sibukixxx/Stats Workbench` を選び、以下を設定する。GitHub Actions は不要。
+Cloudflare ダッシュボード → Workers & Pages → Create → **Import a repository** で `sibukixxx/stats-workbench` を選び、以下を設定する。GitHub Actions は不要。
 
 | 項目 | 値 |
 |---|---|
