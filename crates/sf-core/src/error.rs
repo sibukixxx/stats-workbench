@@ -1,4 +1,4 @@
-/// Core error type for StatForge.
+/// Core error type for Stats Workbench.
 ///
 /// External crate errors are converted at boundaries via `map_err`.
 #[derive(thiserror::Error, Debug)]
