@@ -44,18 +44,18 @@ python3 prepare.py
 
 ```bash
 # 基本統計量: リスク因子の概要
-sf run --recipe examples/heart_disease/summary_risk_factors.toml
+stats-workbench run --recipe examples/heart_disease/summary_risk_factors.toml
 
 # 相関分析: 各因子と心臓病の関係
-sf run --recipe examples/heart_disease/corr_heart.toml
+stats-workbench run --recipe examples/heart_disease/corr_heart.toml
 
 # 外れ値検出: バイタルサインの異常値
-sf run --recipe examples/heart_disease/outlier_vitals.toml
+stats-workbench run --recipe examples/heart_disease/outlier_vitals.toml
 
 # CLI で直接実行する場合:
-sf eda summary --source examples/heart_disease/data/heart_disease.parquet --cols age,trestbps,chol,thalach
-sf eda corr --source examples/heart_disease/data/heart_disease.parquet --cols age,chol,thalach,target --method pearson
-sf stats outlier --source examples/heart_disease/data/heart_disease.parquet --cols chol,trestbps
+stats-workbench eda summary --source examples/heart_disease/data/heart_disease.parquet --cols age,trestbps,chol,thalach
+stats-workbench eda corr --source examples/heart_disease/data/heart_disease.parquet --cols age,chol,thalach,target --method pearson
+stats-workbench stats outlier --source examples/heart_disease/data/heart_disease.parquet --cols chol,trestbps
 ```
 
 ## 結果の解釈
