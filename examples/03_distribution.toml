@@ -1,0 +1,32 @@
+# 例3: 分布（ヒストグラム）の確認
+#
+# 特定の列の値がどのように分布しているかを確認する。
+# bins でヒストグラムの区間数を調整できる。
+#
+# 準備:
+#   cargo run -p statforge --example generate_sample_data
+#
+# 実行:
+#   sf run --recipe examples/03_distribution.toml
+#
+# CLI で直接実行する場合:
+#   sf eda dist --source examples/data/sensors.parquet --col temperature --bins 15
+
+[source]
+type = "parquet"
+path = "examples/data/sensors.parquet"
+
+[[steps]]
+id = "temp_dist"
+type = "eda.dist"
+col = "temperature"
+bins = 15
+
+[[steps]]
+id = "humidity_dist"
+type = "eda.dist"
+col = "humidity"
+bins = 10
+
+[output]
+terminal = true

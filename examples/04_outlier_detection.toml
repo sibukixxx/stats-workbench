@@ -1,0 +1,34 @@
+# 例4: 外れ値検出
+#
+# IQR（四分位範囲）法で外れ値候補を検出する。
+# データクリーニングの前段階として、異常な値を見つける。
+#
+# 準備:
+#   cargo run -p statforge --example generate_sample_data
+#
+# 実行:
+#   sf run --recipe examples/04_outlier_detection.toml
+#
+# CLI で直接実行する場合:
+#   sf stats outlier --source examples/data/sales.parquet --cols revenue
+
+[source]
+type = "parquet"
+path = "examples/data/sales.parquet"
+
+[[steps]]
+id = "revenue_outliers"
+type = "stats.outlier_detect"
+cols = ["revenue"]
+method = "iqr"
+action = "flag"
+
+[[steps]]
+id = "price_outliers"
+type = "stats.outlier_detect"
+cols = ["price"]
+method = "iqr"
+action = "flag"
+
+[output]
+terminal = true
