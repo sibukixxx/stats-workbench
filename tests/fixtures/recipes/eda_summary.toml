@@ -1,0 +1,11 @@
+[source]
+type = "parquet"
+path = "tests/fixtures/parquet/sales.parquet"
+
+[[steps]]
+id = "summary"
+type = "eda.summary"
+cols = ["price", "quantity", "revenue"]
+
+[output]
+terminal = true

@@ -1,0 +1,33 @@
+[source]
+type = "parquet"
+path = "tests/fixtures/parquet/sales.parquet"
+
+[[steps]]
+id = "summary"
+type = "eda.summary"
+cols = ["price", "quantity", "revenue"]
+
+[[steps]]
+id = "corr"
+type = "eda.correlation"
+cols = ["price", "quantity", "revenue"]
+method = "pearson"
+
+[[steps]]
+id = "dist"
+type = "eda.dist"
+col = "price"
+bins = 5
+
+[[steps]]
+id = "outliers"
+type = "stats.outlier_detect"
+cols = ["revenue"]
+method = "iqr"
+action = "flag"
+
+[output]
+terminal = true
+format = "json"
+path = "tests/fixtures/output/eda_full_result.json"
+artifacts = ["summary", "corr", "dist", "outliers"]
