@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/preact";
 import { describe, expect, it } from "vitest";
 import { App } from "./app";
 
-describe("StatForge web dashboard", () => {
+describe("Stats Workbench web dashboard", () => {
   it("renders the overview screen with Japanese menu descriptions", () => {
     render(<App />);
 
