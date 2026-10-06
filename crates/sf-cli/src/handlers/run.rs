@@ -1,11 +1,11 @@
 use anyhow::Result;
-use statforge::{output, StatForge};
+use stats_workbench::{output, StatsWorkbench};
 
 use crate::cli::RunCommand;
 
 pub async fn handle_run(args: RunCommand) -> Result<()> {
-    let recipe = StatForge::load_recipe(&args.recipe)?;
-    let result = StatForge::run_recipe_file(&args.recipe).await?;
+    let recipe = StatsWorkbench::load_recipe(&args.recipe)?;
+    let result = StatsWorkbench::run_recipe_file(&args.recipe).await?;
 
     // Handle output
     if let Some(ref output_spec) = recipe.output {
