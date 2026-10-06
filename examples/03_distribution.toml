@@ -4,7 +4,7 @@
 # bins でヒストグラムの区間数を調整できる。
 #
 # 準備:
-#   cargo run -p statforge --example generate_sample_data
+#   cargo run -p stats-workbench --example generate_sample_data
 #
 # 実行:
 #   sf run --recipe examples/03_distribution.toml
