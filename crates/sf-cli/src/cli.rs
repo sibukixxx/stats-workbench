@@ -2,10 +2,10 @@ use clap::{Parser, Subcommand};
 
 #[derive(Parser, Debug)]
 #[command(
-    name = "sf",
+    name = "stats-workbench",
     version,
-    about = "StatForge の分析メニューです",
-    long_about = "StatForge の分析メニューです。\nParquet / SQLite / PostgreSQL を対象に、探索的データ分析や統計処理、レシピ実行を行います。"
+    about = "Stats Workbench の分析メニューです",
+    long_about = "Stats Workbench の分析メニューです。\nParquet / SQLite / PostgreSQL を対象に、探索的データ分析や統計処理、レシピ実行を行います。"
 )]
 pub struct Cli {
     #[command(subcommand)]
