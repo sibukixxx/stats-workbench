@@ -58,7 +58,7 @@ sf eda corr --source examples/iris/data/iris.parquet --cols sepal_length,sepal_w
 ## 結果の解釈
 
 Iris データセットは統計学・機械学習の入門として最も有名なデータセットのひとつ。
-StatForge の EDA 機能だけでも以下の重要な構造が発見できる:
+Stats Workbench の EDA 機能だけでも以下の重要な構造が発見できる:
 
 1. **花弁の寸法は萼片よりも品種を区別する力が強い** — 花弁間の相関が極めて高く、萼片間は低い
 2. **petal_length の二峰性分布** は、ラベルなしでも「このデータには少なくとも2つの異なるグループがある」と示唆する
