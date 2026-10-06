@@ -1,0 +1,38 @@
+# Wine Quality: 化学成分の外れ値検出
+#
+# What: IQR法で残糖・塩化物・総二酸化硫黄の外れ値を検出
+# Why:  測定エラーや特殊なワインを特定し、データクリーニングに活用する
+#
+# 実行:
+#   sf run --recipe examples/wine_quality/outlier_chemistry.toml
+
+[source]
+type = "parquet"
+path = "examples/wine_quality/data/wine_quality.parquet"
+
+[[steps]]
+id = "sugar_outliers"
+type = "stats.outlier_detect"
+cols = ["residual_sugar"]
+method = "iqr"
+action = "flag"
+
+[[steps]]
+id = "chlorides_outliers"
+type = "stats.outlier_detect"
+cols = ["chlorides"]
+method = "iqr"
+action = "flag"
+
+[[steps]]
+id = "sulfur_outliers"
+type = "stats.outlier_detect"
+cols = ["total_sulfur_dioxide"]
+method = "iqr"
+action = "flag"
+
+[output]
+terminal = true
+format = "json"
+path = "output/wine_quality_outliers.json"
+artifacts = ["sugar_outliers", "chlorides_outliers", "sulfur_outliers"]

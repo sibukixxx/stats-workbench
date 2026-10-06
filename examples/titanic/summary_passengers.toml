@@ -1,0 +1,16 @@
+# Titanic: 乗客の基本統計量
+#
+# What: Age, Fare, Pclass, SibSp の記述統計
+# Why:  データの全体像を把握し、分析の方向性を決める
+
+[source]
+type = "parquet"
+path = "examples/titanic/data/titanic.parquet"
+
+[[steps]]
+id = "summary"
+type = "eda.summary"
+cols = ["Survived", "Pclass", "sex_encoded", "Age", "Fare", "SibSp", "Parch"]
+
+[output]
+terminal = true

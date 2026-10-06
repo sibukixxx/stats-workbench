@@ -1,0 +1,28 @@
+# Wine Quality: 品質スコアの分布分析
+#
+# What: 品質スコアのヒストグラムと基本統計量
+# Why:  品質スコアの偏りとデータの全体像を把握する
+#
+# 実行:
+#   sf run --recipe examples/wine_quality/dist_quality.toml
+
+[source]
+type = "parquet"
+path = "examples/wine_quality/data/wine_quality.parquet"
+
+[[steps]]
+id = "quality_dist"
+type = "eda.dist"
+col = "quality"
+bins = 15
+
+[[steps]]
+id = "quality_summary"
+type = "eda.summary"
+cols = ["quality", "alcohol", "volatile_acidity", "pH"]
+
+[output]
+terminal = true
+format = "json"
+path = "output/wine_quality_dist.json"
+artifacts = ["quality_dist", "quality_summary"]

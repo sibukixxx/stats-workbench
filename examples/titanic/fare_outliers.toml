@@ -1,0 +1,27 @@
+# Titanic: 運賃の分布と外れ値
+#
+# What: 運賃（Fare）の分布分析と IQR 外れ値検出
+# Why:  運賃の右裾分布を可視化し、豪華客の存在を定量化
+
+[source]
+type = "parquet"
+path = "examples/titanic/data/titanic.parquet"
+
+[[steps]]
+id = "fare_dist"
+type = "eda.dist"
+col = "Fare"
+bins = 20
+
+[[steps]]
+id = "fare_outliers"
+type = "stats.outlier_detect"
+cols = ["Fare"]
+method = "iqr"
+action = "flag"
+
+[output]
+terminal = true
+format = "json"
+path = "output/titanic_fare.json"
+artifacts = ["fare_dist", "fare_outliers"]

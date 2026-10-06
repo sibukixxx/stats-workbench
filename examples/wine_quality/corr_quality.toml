@@ -1,0 +1,29 @@
+# Wine Quality: 品質と化学成分の相関分析
+#
+# What: Pearson / Spearman 相関で品質スコアと主要成分の関係を分析
+# Why:  どの化学成分がワインの品質評価に影響するかを特定する
+#
+# 実行:
+#   sf run --recipe examples/wine_quality/corr_quality.toml
+
+[source]
+type = "parquet"
+path = "examples/wine_quality/data/wine_quality.parquet"
+
+[[steps]]
+id = "pearson"
+type = "eda.correlation"
+cols = ["alcohol", "volatile_acidity", "sulphates", "citric_acid", "quality"]
+method = "pearson"
+
+[[steps]]
+id = "spearman"
+type = "eda.correlation"
+cols = ["alcohol", "volatile_acidity", "sulphates", "citric_acid", "quality"]
+method = "spearman"
+
+[output]
+terminal = true
+format = "json"
+path = "output/wine_quality_corr.json"
+artifacts = ["pearson", "spearman"]
