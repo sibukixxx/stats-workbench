@@ -1,6 +1,6 @@
-# StatForge default configuration
+# Stats Workbench default configuration
 #
-# This file defines default settings for the StatForge CLI.
+# This file defines default settings for the Stats Workbench CLI.
 # Override individual settings via CLI flags or environment variables.
 
 [defaults]
