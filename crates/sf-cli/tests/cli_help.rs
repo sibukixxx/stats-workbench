@@ -3,12 +3,12 @@ use predicates::prelude::*;
 
 #[test]
 fn top_level_help_shows_japanese_menu_descriptions() {
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .arg("--help")
         .assert()
         .success()
-        .stdout(predicate::str::contains("StatForge の分析メニューです"))
+        .stdout(predicate::str::contains("Stats Workbench の分析メニューです"))
         .stdout(predicate::str::contains("探索的データ分析メニュー"))
         .stdout(predicate::str::contains("統計処理メニュー"))
         .stdout(predicate::str::contains("レシピ実行メニュー"));
@@ -16,7 +16,7 @@ fn top_level_help_shows_japanese_menu_descriptions() {
 
 #[test]
 fn eda_help_shows_japanese_menu_descriptions() {
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args(["eda", "--help"])
         .assert()
@@ -31,7 +31,7 @@ fn eda_help_shows_japanese_menu_descriptions() {
 
 #[test]
 fn command_help_shows_japanese_purpose_text() {
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args(["eda", "summary", "--help"])
         .assert()
@@ -40,7 +40,7 @@ fn command_help_shows_japanese_purpose_text() {
             "列ごとの件数、平均、最小値、最大値などを確認して、データの基本的な傾向を把握します",
         ));
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args(["stats", "outlier", "--help"])
         .assert()
@@ -49,7 +49,7 @@ fn command_help_shows_japanese_purpose_text() {
             "IQR 法を使って外れ値候補を抽出し、異常な値や確認が必要なデータを見つけます",
         ));
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args(["run", "--help"])
         .assert()
