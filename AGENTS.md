@@ -1,4 +1,4 @@
-# StatForge
+# Stats Workbench
 
 Rust workspace for reproducible statistical analysis with a CLI and a separate web application.
 
