@@ -1,6 +1,6 @@
 use anyhow::Result;
-use statforge::{
-    output, source, OutputFormat, OutputSpec, RunResult, StatForge, StatForgeError, Step,
+use stats_workbench::{
+    output, source, OutputFormat, OutputSpec, RunResult, StatsWorkbench, StatsWorkbenchError, Step,
 };
 
 use crate::cli::{OutputArgs, SourceArgs};
@@ -12,7 +12,7 @@ pub async fn execute_single_step(source_args: &SourceArgs, step: Step) -> Result
         source_args.query.as_deref(),
     )?;
 
-    Ok(StatForge::run_step(&source, &step).await?)
+    Ok(StatsWorkbench::run_step(&source, &step).await?)
 }
 
 pub fn output_results(
@@ -45,7 +45,7 @@ fn build_output_spec(
                 output_args.format.as_deref().unwrap_or("json").parse()?;
 
             if !supported_formats.contains(&output_format) {
-                return Err(StatForgeError::Validation(format!(
+                return Err(StatsWorkbenchError::Validation(format!(
                     "Unsupported output format: '{}'. Supported formats: {}",
                     output_format,
                     format_names(supported_formats)
