@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // StatForge Web ダッシュボード (apps/web) を Cloudflare Workers の
+  // Static Assets として配信する設定。
+  //
+  // - `main` を持たない「静的アセットのみ」の Worker なので、Workers Free プランで
+  //   $0 で運用できる(静的アセット配信はリクエスト数課金の対象外)。
+  // - ダッシュボードはモックデータで動くため、バックエンドは不要。
+  //
+  // デプロイ: `pnpm deploy:cf` (= pnpm build && wrangler deploy)
+  // 詳細:     docs/deploy-cloudflare.md
+  "name": "statforge-dashboard",
+  "compatibility_date": "2026-08-01",
+  "assets": {
+    "directory": "./dist",
+    // SPA なので未知のパスは index.html にフォールバックさせる
+    "not_found_handling": "single-page-application"
+  }
+}

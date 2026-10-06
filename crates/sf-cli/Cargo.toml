@@ -1,0 +1,38 @@
+[package]
+name = "sf-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "Command-line interface for StatForge."
+documentation = "https://docs.rs/sf-cli"
+readme = "../../README.md"
+keywords = ["statistics", "cli", "analysis"]
+categories = ["command-line-utilities", "science"]
+
+[[bin]]
+name = "sf"
+path = "src/main.rs"
+
+[dependencies]
+statforge = { version = "0.1.0", path = "../statforge" }
+sf-core = { version = "0.1.0", path = "../sf-core" }
+sf-engine = { version = "0.1.0", path = "../sf-engine" }
+polars = { workspace = true }
+clap = { workspace = true }
+toml = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+
+[dev-dependencies]
+assert_cmd = { workspace = true }
+predicates = { workspace = true }
+polars = { workspace = true }
+serde_json = { workspace = true }
+sqlx = { workspace = true }

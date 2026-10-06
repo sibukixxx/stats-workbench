@@ -1,0 +1,10 @@
+# StatForge default configuration
+#
+# This file defines default settings for the StatForge CLI.
+# Override individual settings via CLI flags or environment variables.
+
+[defaults]
+output_format = "terminal"
+
+[logging]
+level = "info"
