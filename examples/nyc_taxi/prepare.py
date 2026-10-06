@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Extract a sample subset from NYC Taxi Parquet for StatForge examples.
+"""Extract a sample subset from NYC Taxi Parquet for Stats Workbench examples.
 
 Usage:
     python3 prepare.py
