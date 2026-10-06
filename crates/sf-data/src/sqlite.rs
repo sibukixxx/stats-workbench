@@ -6,7 +6,7 @@ use crate::query::build_select_query;
 
 /// Read from SQLite into a Polars LazyFrame.
 ///
-/// The database is opened read-only (and never created): StatForge only
+/// The database is opened read-only (and never created): Stats Workbench only
 /// analyses data, and a recipe must not be able to write to or create files
 /// through a `query`, a `?mode=rwc` URI suffix, or `ATTACH`.
 pub async fn read_sqlite(
