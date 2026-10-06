@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Convert Iris CSV to Parquet for StatForge.
+"""Convert Iris CSV to Parquet for Stats Workbench.
 
 Usage:
     python3 prepare.py
@@ -32,7 +32,7 @@ print("Converting iris.csv to iris.parquet...")
 df = pd.read_csv(csv_path, header=None,
                  names=["sepal_length", "sepal_width", "petal_length", "petal_width", "species"])
 
-# Drop species column — StatForge works with numeric columns
+# Drop species column — Stats Workbench works with numeric columns
 df = df.drop(columns=["species"])
 
 df.to_parquet(parquet_path, index=False)
