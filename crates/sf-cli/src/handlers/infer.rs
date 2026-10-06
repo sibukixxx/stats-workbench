@@ -4,7 +4,7 @@ use sf_core::{
     ProportionTestStepSpec, SfError, StepHeader, StepSpec, TTestOneSampleStepSpec,
     TTestTwoSampleStepSpec, VarianceCiStepSpec, VarianceTestStepSpec,
 };
-use statforge::{RunResult, StatForge};
+use stats_workbench::{RunResult, StatsWorkbench};
 
 use crate::cli::{
     ChiSqGoodnessArgs, ChiSqIndependenceArgs, MeanCiArgs, PropCiArgs, PropTestArgs, TTest1Args,
@@ -29,7 +29,7 @@ fn parse_alternative(s: &str) -> Result<AlternativeSpec> {
 
 /// Execute a step that doesn't need a data source (proportion tests, chi-sq goodness).
 fn execute_no_source(step: &StepSpec) -> Result<RunResult> {
-    Ok(StatForge::run_step_no_source(step)?)
+    Ok(StatsWorkbench::run_step_no_source(step)?)
 }
 
 pub async fn handle_ttest1(args: TTest1Args) -> Result<()> {
