@@ -1,5 +1,5 @@
 use anyhow::Result;
-use statforge::{step, CorrMethod, OutputFormat};
+use stats_workbench::{step, CorrMethod, OutputFormat};
 
 use crate::cli::{EdaCorrArgs, EdaDistArgs, EdaSummaryArgs};
 use crate::handlers::common::{execute_single_step, output_results};
