@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Convert Bike Sharing CSV to Parquet for StatForge.
+"""Convert Bike Sharing CSV to Parquet for Stats Workbench.
 
 Usage:
     python3 prepare.py
