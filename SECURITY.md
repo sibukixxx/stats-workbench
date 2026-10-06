@@ -1,42 +1,21 @@
 # Security Policy
 
-## Reporting Security Issues
+## Reporting a vulnerability
 
-**Do not** open public issues for security vulnerabilities. Instead, please email sibukixxx@gmail.com with:
+Do not open a public issue for vulnerabilities that may expose credentials, private endpoints, customer data, or exploitable details.
 
-- Description of the vulnerability
-- Steps to reproduce (if applicable)
-- Potential impact
-- Suggested fix (if you have one)
+Use GitHub private vulnerability reporting for this repository when available. If private reporting is unavailable, contact the maintainer privately through the contact method listed on the maintainer's GitHub profile.
 
-We will acknowledge receipt within 48 hours and provide an update within 7 days.
+## Security considerations
 
-## Security Considerations
+- Recipes and external data sources are treated as untrusted input.
+- Output paths are validated against path traversal.
+- Only explicitly allowed environment variables may be expanded from recipes.
+- SQLite sources are opened read-only.
+- PostgreSQL analysis uses read-only transaction semantics where applicable.
+- Database connection strings and secrets must not be emitted in logs or artifacts.
+- Do not commit credentials, private datasets, or production database snapshots.
 
-### Input Validation
+## Supported code
 
-- Recipes are treated as untrusted input and validated for:
-  - Path traversal (`..` in output paths)
-  - Sensitive environment variable access (only `SF_*` and `DATABASE_URL` are allowed)
-  - Table name escaping via `quote_ident()`
-
-### Database Access
-
-- SQLite sources are opened as read-only
-- PostgreSQL connections enforce `SET TRANSACTION READ ONLY`
-- TLS is enabled for remote connections (`tls-rustls`)
-
-### Data Sensitivity
-
-- Database connection strings are redacted in error messages and metadata
-- Output paths are validated to prevent data exfiltration outside safe directories
-
-## Supported Versions
-
-Only the latest release version receives security updates. For critical issues, we may patch older versions on a case-by-case basis.
-
-## Known Limitations
-
-- This tool is not recommended for processing highly sensitive data without additional hardening
-- Recipes should only come from trusted sources
-- Deploy behind authentication in production environments
+Security fixes target the current `main` branch until stable releases are published.
