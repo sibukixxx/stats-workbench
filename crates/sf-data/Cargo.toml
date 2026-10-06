@@ -1,0 +1,22 @@
+[package]
+name = "sf-data"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "Source loading for Parquet, SQLite, and PostgreSQL in StatForge."
+documentation = "https://docs.rs/sf-data"
+readme = "../../README.md"
+keywords = ["statistics", "data", "parquet", "sqlite", "postgres"]
+categories = ["science", "database"]
+
+[dependencies]
+sf-core = { version = "0.1.0", path = "../sf-core" }
+polars = { workspace = true }
+sqlx = { workspace = true }
+tokio = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
