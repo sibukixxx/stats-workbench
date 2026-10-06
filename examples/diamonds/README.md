@@ -44,15 +44,15 @@ python3 prepare.py
 
 ```bash
 # 相関分析（Pearson + Spearman）
-sf run --recipe examples/diamonds/corr_carat_price.toml
+stats-workbench run --recipe examples/diamonds/corr_carat_price.toml
 
 # 価格の分布
-sf run --recipe examples/diamonds/dist_price.toml
+stats-workbench run --recipe examples/diamonds/dist_price.toml
 
 # フルパイプライン
-sf run --recipe examples/diamonds/pipeline_full.toml
+stats-workbench run --recipe examples/diamonds/pipeline_full.toml
 
 # CLI で直接実行する場合:
-sf eda summary --source examples/diamonds/data/diamonds.parquet --cols carat,price,depth,table
-sf eda corr --source examples/diamonds/data/diamonds.parquet --cols carat,price,x,y,z --method pearson
+stats-workbench eda summary --source examples/diamonds/data/diamonds.parquet --cols carat,price,depth,table
+stats-workbench eda corr --source examples/diamonds/data/diamonds.parquet --cols carat,price,x,y,z --method pearson
 ```
