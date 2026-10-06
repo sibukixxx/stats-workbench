@@ -1,0 +1,22 @@
+# Heart Disease: リスク因子の基本統計量
+#
+# What: 年齢・血圧・コレステロール・最大心拍数の要約統計
+# Why:  患者集団の特性とばらつきを把握する
+#
+# 実行:
+#   sf run --recipe examples/heart_disease/summary_risk_factors.toml
+
+[source]
+type = "parquet"
+path = "examples/heart_disease/data/heart_disease.parquet"
+
+[[steps]]
+id = "risk_summary"
+type = "eda.summary"
+cols = ["age", "trestbps", "chol", "thalach"]
+
+[output]
+terminal = true
+format = "json"
+path = "output/heart_disease_summary.json"
+artifacts = ["risk_summary"]

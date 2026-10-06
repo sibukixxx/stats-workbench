@@ -1,0 +1,35 @@
+# FIFA 22 Players: Wage and Value Outlier Detection
+#
+# What: Detect outliers in wage_eur, value_eur, and overall rating
+# Why:  Identify superstar players with extreme compensation and top-tier ratings
+
+[source]
+type = "parquet"
+path = "examples/fifa_players/data/fifa_players.parquet"
+
+[[steps]]
+id = "outlier_wage"
+type = "stats.outlier_detect"
+cols = ["wage_eur"]
+method = "iqr"
+action = "flag"
+
+[[steps]]
+id = "outlier_value"
+type = "stats.outlier_detect"
+cols = ["value_eur"]
+method = "iqr"
+action = "flag"
+
+[[steps]]
+id = "outlier_overall"
+type = "stats.outlier_detect"
+cols = ["overall"]
+method = "iqr"
+action = "flag"
+
+[output]
+terminal = true
+format = "json"
+path = "output/fifa_outlier_wages.json"
+artifacts = ["outlier_wage", "outlier_value", "outlier_overall"]

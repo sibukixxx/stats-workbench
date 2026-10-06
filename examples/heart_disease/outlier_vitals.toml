@@ -1,0 +1,38 @@
+# Heart Disease: バイタルサインの外れ値検出
+#
+# What: IQR法でコレステロール・血圧・最大心拍数の外れ値を検出
+# Why:  臨床的に異常な値や測定エラーを特定する
+#
+# 実行:
+#   sf run --recipe examples/heart_disease/outlier_vitals.toml
+
+[source]
+type = "parquet"
+path = "examples/heart_disease/data/heart_disease.parquet"
+
+[[steps]]
+id = "chol_outliers"
+type = "stats.outlier_detect"
+cols = ["chol"]
+method = "iqr"
+action = "flag"
+
+[[steps]]
+id = "bp_outliers"
+type = "stats.outlier_detect"
+cols = ["trestbps"]
+method = "iqr"
+action = "flag"
+
+[[steps]]
+id = "hr_outliers"
+type = "stats.outlier_detect"
+cols = ["thalach"]
+method = "iqr"
+action = "flag"
+
+[output]
+terminal = true
+format = "json"
+path = "output/heart_disease_outliers.json"
+artifacts = ["chol_outliers", "bp_outliers", "hr_outliers"]

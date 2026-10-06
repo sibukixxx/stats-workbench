@@ -1,0 +1,29 @@
+# Heart Disease: 各因子と心臓病の相関分析
+#
+# What: Pearson / Spearman 相関で主要因子と心臓病の関係を分析
+# Why:  どの臨床指標が心臓病の有無と関連するかを特定する
+#
+# 実行:
+#   sf run --recipe examples/heart_disease/corr_heart.toml
+
+[source]
+type = "parquet"
+path = "examples/heart_disease/data/heart_disease.parquet"
+
+[[steps]]
+id = "pearson"
+type = "eda.correlation"
+cols = ["age", "trestbps", "chol", "thalach", "oldpeak", "target"]
+method = "pearson"
+
+[[steps]]
+id = "spearman"
+type = "eda.correlation"
+cols = ["age", "trestbps", "chol", "thalach", "oldpeak", "target"]
+method = "spearman"
+
+[output]
+terminal = true
+format = "json"
+path = "output/heart_disease_corr.json"
+artifacts = ["pearson", "spearman"]

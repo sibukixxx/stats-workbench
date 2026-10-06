@@ -1,0 +1,25 @@
+# FIFA 22 Players: Age Distribution
+#
+# What: Distribution histogram and summary statistics of player age
+# Why:  Understand the age profile and career lifecycle of professional players
+
+[source]
+type = "parquet"
+path = "examples/fifa_players/data/fifa_players.parquet"
+
+[[steps]]
+id = "summary"
+type = "eda.summary"
+cols = ["age", "overall", "potential", "wage_eur", "value_eur"]
+
+[[steps]]
+id = "dist_age"
+type = "stats.distribution"
+cols = ["age"]
+bins = 20
+
+[output]
+terminal = true
+format = "json"
+path = "output/fifa_dist_age.json"
+artifacts = ["summary", "dist_age"]
