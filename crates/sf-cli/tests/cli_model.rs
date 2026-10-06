@@ -8,7 +8,7 @@ use support::{fixture_path, regression_fixture_path, setup_fixture, setup_regres
 fn model_regress_works() {
     setup_regression_fixture();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "model",
@@ -33,7 +33,7 @@ fn model_regress_works() {
 fn model_regress_simple_regression() {
     setup_fixture();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "model",
@@ -61,7 +61,7 @@ fn model_regress_json_output() {
         std::fs::create_dir_all(parent).unwrap();
     }
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "model",
@@ -92,7 +92,7 @@ fn model_regress_json_output() {
 
 #[test]
 fn model_regress_missing_target() {
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "model",
@@ -108,7 +108,7 @@ fn model_regress_missing_target() {
 
 #[test]
 fn model_regress_missing_predictors() {
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "model",
@@ -126,7 +126,7 @@ fn model_regress_missing_predictors() {
 fn model_diagnose_works() {
     setup_regression_fixture();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "model",
@@ -151,7 +151,7 @@ fn model_diagnose_works() {
 fn model_diagnose_single_predictor() {
     setup_fixture();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "model",
