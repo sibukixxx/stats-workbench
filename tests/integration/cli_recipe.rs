@@ -28,7 +28,7 @@ fn setup_fixture() {
 fn recipe_eda_summary() {
     setup_fixture();
 
-    let mut cmd = Command::cargo_bin("sf").unwrap();
+    let mut cmd = Command::cargo_bin("stats-workbench").unwrap();
     cmd.args(["run", "--recipe", "tests/fixtures/recipes/eda_summary.toml"]);
 
     cmd.assert()
@@ -45,7 +45,7 @@ fn recipe_eda_full_pipeline() {
     // Clean up previous output
     let _ = std::fs::remove_file("tests/fixtures/output/eda_full_result.json");
 
-    let mut cmd = Command::cargo_bin("sf").unwrap();
+    let mut cmd = Command::cargo_bin("stats-workbench").unwrap();
     cmd.args(["run", "--recipe", "tests/fixtures/recipes/eda_full.toml"]);
 
     cmd.assert()
@@ -75,7 +75,7 @@ fn recipe_eda_full_pipeline() {
 
 #[test]
 fn recipe_broken_toml() {
-    let mut cmd = Command::cargo_bin("sf").unwrap();
+    let mut cmd = Command::cargo_bin("stats-workbench").unwrap();
     cmd.args(["run", "--recipe", "tests/fixtures/recipes/broken.toml"]);
 
     cmd.assert()
@@ -85,7 +85,7 @@ fn recipe_broken_toml() {
 
 #[test]
 fn recipe_nonexistent_file() {
-    let mut cmd = Command::cargo_bin("sf").unwrap();
+    let mut cmd = Command::cargo_bin("stats-workbench").unwrap();
     cmd.args(["run", "--recipe", "nonexistent_recipe.toml"]);
 
     cmd.assert().failure();
