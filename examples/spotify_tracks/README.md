@@ -41,16 +41,16 @@ python3 prepare.py
 
 ```bash
 # オーディオ特徴量の相関分析
-sf run --recipe examples/spotify_tracks/corr_audio_features.toml
+stats-workbench run --recipe examples/spotify_tracks/corr_audio_features.toml
 
 # popularity の分布分析
-sf run --recipe examples/spotify_tracks/dist_popularity.toml
+stats-workbench run --recipe examples/spotify_tracks/dist_popularity.toml
 
 # 外れ値検出（duration_ms, tempo, loudness）
-sf run --recipe examples/spotify_tracks/outlier_duration.toml
+stats-workbench run --recipe examples/spotify_tracks/outlier_duration.toml
 
 # または直接実行:
-sf eda corr --source examples/spotify_tracks/data/spotify_tracks.parquet \
+stats-workbench eda corr --source examples/spotify_tracks/data/spotify_tracks.parquet \
     --cols energy,loudness,danceability,acousticness,valence,speechiness,popularity \
     --method pearson
 ```

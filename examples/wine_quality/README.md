@@ -42,18 +42,18 @@ python3 prepare.py
 
 ```bash
 # 相関分析: アルコール・化学成分と品質の関係
-sf run --recipe examples/wine_quality/corr_quality.toml
+stats-workbench run --recipe examples/wine_quality/corr_quality.toml
 
 # 分布分析: 品質スコアの分布
-sf run --recipe examples/wine_quality/dist_quality.toml
+stats-workbench run --recipe examples/wine_quality/dist_quality.toml
 
 # 外れ値検出: 化学成分の異常値
-sf run --recipe examples/wine_quality/outlier_chemistry.toml
+stats-workbench run --recipe examples/wine_quality/outlier_chemistry.toml
 
 # CLI で直接実行する場合:
-sf eda corr --source examples/wine_quality/data/wine_quality.parquet --cols alcohol,volatile_acidity,quality --method pearson
-sf eda dist --source examples/wine_quality/data/wine_quality.parquet --col quality --bins 15
-sf stats outlier --source examples/wine_quality/data/wine_quality.parquet --cols residual_sugar,chlorides
+stats-workbench eda corr --source examples/wine_quality/data/wine_quality.parquet --cols alcohol,volatile_acidity,quality --method pearson
+stats-workbench eda dist --source examples/wine_quality/data/wine_quality.parquet --col quality --bins 15
+stats-workbench stats outlier --source examples/wine_quality/data/wine_quality.parquet --cols residual_sugar,chlorides
 ```
 
 ## 結果の解釈

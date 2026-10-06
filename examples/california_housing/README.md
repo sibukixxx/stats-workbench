@@ -53,15 +53,15 @@ pip install scikit-learn pandas pyarrow
 
 ```bash
 # 所得と住宅価格の相関
-sf run --recipe examples/california_housing/corr_income_price.toml
+stats-workbench run --recipe examples/california_housing/corr_income_price.toml
 
 # 住宅価格の分布（天井効果の確認）
-sf run --recipe examples/california_housing/price_distribution.toml
+stats-workbench run --recipe examples/california_housing/price_distribution.toml
 
 # 居住人数・人口の外れ値検出
-sf run --recipe examples/california_housing/outlier_occupancy.toml
+stats-workbench run --recipe examples/california_housing/outlier_occupancy.toml
 
 # CLI で直接実行する場合:
-sf eda summary --source examples/california_housing/data/california_housing.parquet --cols MedInc,MedHouseVal,AveOccup
-sf eda corr --source examples/california_housing/data/california_housing.parquet --cols MedInc,MedHouseVal --method pearson
+stats-workbench eda summary --source examples/california_housing/data/california_housing.parquet --cols MedInc,MedHouseVal,AveOccup
+stats-workbench eda corr --source examples/california_housing/data/california_housing.parquet --cols MedInc,MedHouseVal --method pearson
 ```

@@ -43,16 +43,16 @@ python3 prepare.py
 
 ```bash
 # 能力値の相関分析
-sf run --recipe examples/fifa_players/corr_ratings.toml
+stats-workbench run --recipe examples/fifa_players/corr_ratings.toml
 
 # 年齢の分布分析
-sf run --recipe examples/fifa_players/dist_age.toml
+stats-workbench run --recipe examples/fifa_players/dist_age.toml
 
 # 外れ値検出（年俸、市場価値、総合評価）
-sf run --recipe examples/fifa_players/outlier_wages.toml
+stats-workbench run --recipe examples/fifa_players/outlier_wages.toml
 
 # または直接実行:
-sf eda corr --source examples/fifa_players/data/fifa_players.parquet \
+stats-workbench eda corr --source examples/fifa_players/data/fifa_players.parquet \
     --cols overall,pace,shooting,passing,dribbling,defending,physic \
     --method pearson
 ```

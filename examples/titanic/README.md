@@ -37,17 +37,17 @@ python3 prepare.py
 
 ```bash
 # 基本統計量
-sf run --recipe examples/titanic/summary_passengers.toml
+stats-workbench run --recipe examples/titanic/summary_passengers.toml
 
 # 生存率の相関分析
-sf run --recipe examples/titanic/corr_survival.toml
+stats-workbench run --recipe examples/titanic/corr_survival.toml
 
 # 運賃の分布と外れ値
-sf run --recipe examples/titanic/fare_outliers.toml
+stats-workbench run --recipe examples/titanic/fare_outliers.toml
 
 # Or run directly:
-sf eda summary --source examples/titanic/data/titanic.parquet --cols Survived,Pclass,sex_encoded,Age,Fare
-sf eda corr --source examples/titanic/data/titanic.parquet --cols Survived,Pclass,sex_encoded,Fare --method pearson
+stats-workbench eda summary --source examples/titanic/data/titanic.parquet --cols Survived,Pclass,sex_encoded,Age,Fare
+stats-workbench eda corr --source examples/titanic/data/titanic.parquet --cols Survived,Pclass,sex_encoded,Fare --method pearson
 ```
 
 ## Expected insight

@@ -42,17 +42,17 @@ python3 prepare.py
 
 ```bash
 # 基本統計量
-sf run --recipe examples/iris/summary_all.toml
+stats-workbench run --recipe examples/iris/summary_all.toml
 
 # 相関分析（Pearson + Spearman）
-sf run --recipe examples/iris/corr_dimensions.toml
+stats-workbench run --recipe examples/iris/corr_dimensions.toml
 
 # 分布分析 + 外れ値検出
-sf run --recipe examples/iris/dist_petal_length.toml
+stats-workbench run --recipe examples/iris/dist_petal_length.toml
 
 # Or run directly:
-sf eda summary --source examples/iris/data/iris.parquet --cols sepal_length,sepal_width,petal_length,petal_width
-sf eda corr --source examples/iris/data/iris.parquet --cols sepal_length,sepal_width,petal_length,petal_width --method pearson
+stats-workbench eda summary --source examples/iris/data/iris.parquet --cols sepal_length,sepal_width,petal_length,petal_width
+stats-workbench eda corr --source examples/iris/data/iris.parquet --cols sepal_length,sepal_width,petal_length,petal_width --method pearson
 ```
 
 ## 結果の解釈
