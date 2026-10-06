@@ -4,7 +4,7 @@
 # データクリーニングの前段階として、異常な値を見つける。
 #
 # 準備:
-#   cargo run -p statforge --example generate_sample_data
+#   cargo run -p stats-workbench --example generate_sample_data
 #
 # 実行:
 #   sf run --recipe examples/04_outlier_detection.toml
