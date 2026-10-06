@@ -40,14 +40,14 @@ python3 prepare.py
 
 ```bash
 # Summary statistics
-sf run --recipe examples/bike_sharing/eda_summary.toml
+stats-workbench run --recipe examples/bike_sharing/eda_summary.toml
 
 # Correlation: weather vs demand
-sf run --recipe examples/bike_sharing/corr_weather.toml
+stats-workbench run --recipe examples/bike_sharing/corr_weather.toml
 
 # Or run directly:
-sf eda summary --source examples/bike_sharing/data/day.parquet --cols temp,hum,windspeed,cnt
-sf eda corr --source examples/bike_sharing/data/day.parquet --cols temp,hum,windspeed,cnt --method pearson
+stats-workbench eda summary --source examples/bike_sharing/data/day.parquet --cols temp,hum,windspeed,cnt
+stats-workbench eda corr --source examples/bike_sharing/data/day.parquet --cols temp,hum,windspeed,cnt --method pearson
 ```
 
 ## Expected insight
