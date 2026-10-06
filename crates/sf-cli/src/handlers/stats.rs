@@ -1,5 +1,5 @@
 use anyhow::Result;
-use statforge::{step, OutputFormat};
+use stats_workbench::{step, OutputFormat};
 
 use crate::cli::OutlierArgs;
 use crate::handlers::common::{execute_single_step, output_results};
