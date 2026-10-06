@@ -1,4 +1,4 @@
-use stats_workbench::{output, source, step, Stats Workbench};
+use stats_workbench::{output, source, step, StatsWorkbench};
 
 #[tokio::main]
 async fn main() -> stats_workbench::Result<()> {
