@@ -1,0 +1,28 @@
+[package]
+name = "sf-engine"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "Pipeline execution engine for StatForge."
+documentation = "https://docs.rs/sf-engine"
+readme = "../../README.md"
+keywords = ["statistics", "pipeline", "analysis"]
+categories = ["science", "data-structures"]
+
+[dependencies]
+sf-core = { version = "0.1.0", path = "../sf-core" }
+sf-data = { version = "0.1.0", path = "../sf-data" }
+sf-stats = { version = "0.1.0", path = "../sf-stats" }
+sf-report = { version = "0.1.0", path = "../sf-report" }
+polars = { workspace = true }
+toml = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+chrono = { workspace = true }
