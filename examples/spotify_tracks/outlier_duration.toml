@@ -1,0 +1,35 @@
+# Spotify Tracks: Outlier Detection
+#
+# What: Detect outliers in duration_ms, tempo, and loudness
+# Why:  Identify anomalous tracks (e.g., podcasts mixed in, extreme values)
+
+[source]
+type = "parquet"
+path = "examples/spotify_tracks/data/spotify_tracks.parquet"
+
+[[steps]]
+id = "outlier_duration"
+type = "stats.outlier_detect"
+cols = ["duration_ms"]
+method = "iqr"
+action = "flag"
+
+[[steps]]
+id = "outlier_tempo"
+type = "stats.outlier_detect"
+cols = ["tempo"]
+method = "iqr"
+action = "flag"
+
+[[steps]]
+id = "outlier_loudness"
+type = "stats.outlier_detect"
+cols = ["loudness"]
+method = "iqr"
+action = "flag"
+
+[output]
+terminal = true
+format = "json"
+path = "output/spotify_outlier_duration.json"
+artifacts = ["outlier_duration", "outlier_tempo", "outlier_loudness"]

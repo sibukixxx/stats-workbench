@@ -1,0 +1,38 @@
+# NYC Taxi: Fare and Trip Analysis
+#
+# What: Summary, distribution, and outlier detection on taxi trip data
+# Why:  Demonstrates StatForge handling real-world Parquet data at scale
+
+[source]
+type = "parquet"
+path = "examples/nyc_taxi/data/yellow_tripdata_sample.parquet"
+
+[[steps]]
+id = "summary"
+type = "eda.summary"
+cols = ["trip_distance", "fare_amount", "tip_amount", "total_amount"]
+
+[[steps]]
+id = "corr"
+type = "eda.correlation"
+cols = ["trip_distance", "fare_amount", "tip_amount", "total_amount"]
+method = "pearson"
+
+[[steps]]
+id = "fare_dist"
+type = "eda.dist"
+col = "fare_amount"
+bins = 20
+
+[[steps]]
+id = "outliers"
+type = "stats.outlier_detect"
+cols = ["fare_amount", "trip_distance"]
+method = "iqr"
+action = "flag"
+
+[output]
+terminal = true
+format = "json"
+path = "output/nyc_taxi_eda.json"
+artifacts = ["summary", "corr", "fare_dist", "outliers"]

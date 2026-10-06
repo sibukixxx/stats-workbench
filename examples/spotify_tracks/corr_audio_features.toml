@@ -1,0 +1,26 @@
+# Spotify Tracks: Audio Feature Correlation
+#
+# What: Pearson and Spearman correlation between audio features and popularity
+# Why:  Identify relationships between audio characteristics and track popularity
+
+[source]
+type = "parquet"
+path = "examples/spotify_tracks/data/spotify_tracks.parquet"
+
+[[steps]]
+id = "pearson"
+type = "eda.correlation"
+cols = ["energy", "loudness", "danceability", "acousticness", "valence", "speechiness", "popularity"]
+method = "pearson"
+
+[[steps]]
+id = "spearman"
+type = "eda.correlation"
+cols = ["energy", "loudness", "danceability", "acousticness", "valence", "speechiness", "popularity"]
+method = "spearman"
+
+[output]
+terminal = true
+format = "json"
+path = "output/spotify_corr_audio_features.json"
+artifacts = ["pearson", "spearman"]

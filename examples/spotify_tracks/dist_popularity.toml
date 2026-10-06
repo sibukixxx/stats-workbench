@@ -1,0 +1,25 @@
+# Spotify Tracks: Popularity Distribution
+#
+# What: Distribution histogram and summary statistics of track popularity
+# Why:  Understand how popularity is distributed across the catalog
+
+[source]
+type = "parquet"
+path = "examples/spotify_tracks/data/spotify_tracks.parquet"
+
+[[steps]]
+id = "summary"
+type = "eda.summary"
+cols = ["popularity", "danceability", "energy", "valence"]
+
+[[steps]]
+id = "dist_popularity"
+type = "stats.distribution"
+cols = ["popularity"]
+bins = 20
+
+[output]
+terminal = true
+format = "json"
+path = "output/spotify_dist_popularity.json"
+artifacts = ["summary", "dist_popularity"]

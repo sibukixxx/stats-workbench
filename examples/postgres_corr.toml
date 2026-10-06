@@ -1,0 +1,26 @@
+# Example: Correlation analysis on PostgreSQL
+#
+# Usage:
+#   export DATABASE_URL=postgresql://user:pass@localhost/mydb
+#   sf run --recipe examples/postgres_corr.toml
+
+[source]
+type = "postgres"
+url = "${DATABASE_URL}"
+table = "metrics"
+
+[[steps]]
+id = "summary"
+type = "eda.summary"
+
+[[steps]]
+id = "corr"
+type = "eda.correlation"
+method = "spearman"
+cols = ["latency", "throughput", "error_rate"]
+
+[output]
+terminal = true
+format = "json"
+path = "output/pg_corr_result.json"
+artifacts = ["summary", "corr"]
