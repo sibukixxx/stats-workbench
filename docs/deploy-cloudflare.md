@@ -30,7 +30,7 @@ pnpm deploy:cf             # = pnpm build && wrangler deploy
 
 `pnpm deploy` ではなく `pnpm deploy:cf` を使う(`pnpm deploy` は pnpm の組み込みコマンドで別物)。
 
-初回デプロイで `https://statforge-dashboard.<あなたのsubdomain>.workers.dev` が発行される。
+初回デプロイで `https://stats-workbench-dashboard.<あなたのsubdomain>.workers.dev` が発行される。
 
 CI など非対話環境では `wrangler login` の代わりに `CLOUDFLARE_API_TOKEN`(Workers Scripts:Edit 権限)と `CLOUDFLARE_ACCOUNT_ID` を環境変数に設定する。
 
@@ -42,7 +42,7 @@ pnpm build && pnpm exec wrangler deploy --dry-run
 
 ## 手順 B: GitHub 連携で自動デプロイ(Workers Builds、無料)
 
-Cloudflare ダッシュボード → Workers & Pages → Create → **Import a repository** で `sibukixxx/StatForge` を選び、以下を設定する。GitHub Actions は不要。
+Cloudflare ダッシュボード → Workers & Pages → Create → **Import a repository** で `sibukixxx/Stats Workbench` を選び、以下を設定する。GitHub Actions は不要。
 
 | 項目 | 値 |
 |---|---|
