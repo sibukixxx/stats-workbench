@@ -5,7 +5,7 @@
 # 再現可能な分析パイプラインとして保存・共有できる。
 #
 # 準備:
-#   cargo run -p statforge --example generate_sample_data
+#   cargo run -p stats-workbench --example generate_sample_data
 #
 # 実行:
 #   sf run --recipe examples/05_full_pipeline.toml
