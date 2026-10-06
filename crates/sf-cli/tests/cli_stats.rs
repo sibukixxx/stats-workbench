@@ -8,7 +8,7 @@ use support::{fixture_path, setup_fixture};
 fn stats_outlier_works() {
     setup_fixture();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "stats",
@@ -26,7 +26,7 @@ fn stats_outlier_works() {
 
 #[test]
 fn stats_outlier_missing_cols() {
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args(["stats", "outlier", "--source", &fixture_path()])
         .assert()
