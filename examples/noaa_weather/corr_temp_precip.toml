@@ -1,0 +1,31 @@
+# NOAA Weather: Temperature-Precipitation Correlation
+#
+# What: Summary and correlation of daily weather variables
+# Why:  Demonstrates weather analysis and prepares for time series (Phase 2)
+
+[source]
+type = "parquet"
+path = "examples/noaa_weather/data/weather.parquet"
+
+[[steps]]
+id = "summary"
+type = "eda.summary"
+cols = ["TMAX", "TMIN", "PRCP"]
+
+[[steps]]
+id = "corr"
+type = "eda.correlation"
+cols = ["TMAX", "TMIN", "PRCP"]
+method = "pearson"
+
+[[steps]]
+id = "temp_dist"
+type = "eda.dist"
+col = "TMAX"
+bins = 20
+
+[output]
+terminal = true
+format = "json"
+path = "output/noaa_weather_corr.json"
+artifacts = ["summary", "corr", "temp_dist"]

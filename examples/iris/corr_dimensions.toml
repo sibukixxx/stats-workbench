@@ -1,0 +1,26 @@
+# Iris: 形態計測値の相関分析
+#
+# What: 4つの形態計測値間の Pearson / Spearman 相関
+# Why:  花弁と萼片の寸法関係を定量化（r≈0.96 の超強相関を検出）
+
+[source]
+type = "parquet"
+path = "examples/iris/data/iris.parquet"
+
+[[steps]]
+id = "pearson"
+type = "eda.correlation"
+cols = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
+method = "pearson"
+
+[[steps]]
+id = "spearman"
+type = "eda.correlation"
+cols = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
+method = "spearman"
+
+[output]
+terminal = true
+format = "json"
+path = "output/iris_corr.json"
+artifacts = ["pearson", "spearman"]

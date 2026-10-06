@@ -1,0 +1,15 @@
+# Iris: 基本統計量
+#
+# What: 4つの形態計測値の記述統計
+# Why:  各特徴量のスケールとばらつきを把握
+
+[source]
+type = "parquet"
+path = "examples/iris/data/iris.parquet"
+
+[[steps]]
+id = "summary"
+type = "eda.summary"
+
+[output]
+terminal = true
