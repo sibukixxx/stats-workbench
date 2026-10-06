@@ -1,0 +1,24 @@
+# Example: EDA on a SQLite database
+#
+# Usage:
+#   sf run --recipe examples/sqlite_analysis.toml
+
+[source]
+type = "sqlite"
+path = "examples/data/analytics.db"
+table = "orders"
+
+[[steps]]
+id = "summary"
+type = "eda.summary"
+cols = ["price", "qty"]
+
+[[steps]]
+id = "outliers"
+type = "stats.outlier_detect"
+cols = ["price"]
+method = "iqr"
+action = "flag"
+
+[output]
+terminal = true

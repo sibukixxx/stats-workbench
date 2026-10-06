@@ -1,0 +1,26 @@
+# Titanic: 生存率の相関分析
+#
+# What: 生存と各要因（客室等級、性別、年齢、運賃）の相関
+# Why:  どの要因が生存に最も影響したかを定量的に把握
+
+[source]
+type = "parquet"
+path = "examples/titanic/data/titanic.parquet"
+
+[[steps]]
+id = "pearson"
+type = "eda.correlation"
+cols = ["Survived", "Pclass", "sex_encoded", "Age", "Fare"]
+method = "pearson"
+
+[[steps]]
+id = "spearman"
+type = "eda.correlation"
+cols = ["Survived", "Pclass", "sex_encoded", "Age", "Fare"]
+method = "spearman"
+
+[output]
+terminal = true
+format = "json"
+path = "output/titanic_corr.json"
+artifacts = ["pearson", "spearman"]

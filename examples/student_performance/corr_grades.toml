@@ -1,0 +1,26 @@
+# Student Performance: Grade Correlation
+#
+# What: Pearson and Spearman correlation between grades and study factors
+# Why:  Identify which factors most strongly predict final grade (G3)
+
+[source]
+type = "parquet"
+path = "examples/student_performance/data/student_performance.parquet"
+
+[[steps]]
+id = "pearson"
+type = "eda.correlation"
+cols = ["G1", "G2", "G3", "studytime", "absences", "failures"]
+method = "pearson"
+
+[[steps]]
+id = "spearman"
+type = "eda.correlation"
+cols = ["G1", "G2", "G3", "studytime", "absences", "failures"]
+method = "spearman"
+
+[output]
+terminal = true
+format = "json"
+path = "output/student_corr_grades.json"
+artifacts = ["pearson", "spearman"]

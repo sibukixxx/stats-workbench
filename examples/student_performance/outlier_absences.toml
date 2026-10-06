@@ -1,0 +1,28 @@
+# Student Performance: Absence and Failure Outliers
+#
+# What: IQR-based outlier detection on absences and failures
+# Why:  Identify students with extreme absence patterns or repeated failures
+
+[source]
+type = "parquet"
+path = "examples/student_performance/data/student_performance.parquet"
+
+[[steps]]
+id = "absence_outliers"
+type = "stats.outlier_detect"
+cols = ["absences"]
+method = "iqr"
+action = "flag"
+
+[[steps]]
+id = "failure_outliers"
+type = "stats.outlier_detect"
+cols = ["failures"]
+method = "iqr"
+action = "flag"
+
+[output]
+terminal = true
+format = "json"
+path = "output/student_outlier_absences.json"
+artifacts = ["absence_outliers", "failure_outliers"]

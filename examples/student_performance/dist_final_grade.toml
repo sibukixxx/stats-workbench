@@ -1,0 +1,20 @@
+# Student Performance: Final Grade Distribution
+#
+# What: Histogram of final grades (G3) with 20 bins
+# Why:  Reveal the bimodal pattern in student outcomes
+
+[source]
+type = "parquet"
+path = "examples/student_performance/data/student_performance.parquet"
+
+[[steps]]
+id = "g3_dist"
+type = "eda.dist"
+col = "G3"
+bins = 20
+
+[output]
+terminal = true
+format = "json"
+path = "output/student_dist_g3.json"
+artifacts = ["g3_dist"]
