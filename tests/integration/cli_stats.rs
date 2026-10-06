@@ -28,7 +28,7 @@ fn setup_fixture() {
 fn stats_outlier_works() {
     setup_fixture();
 
-    let mut cmd = Command::cargo_bin("sf").unwrap();
+    let mut cmd = Command::cargo_bin("stats-workbench").unwrap();
     cmd.args([
         "stats",
         "outlier",
@@ -46,7 +46,7 @@ fn stats_outlier_works() {
 
 #[test]
 fn stats_outlier_missing_cols() {
-    let mut cmd = Command::cargo_bin("sf").unwrap();
+    let mut cmd = Command::cargo_bin("stats-workbench").unwrap();
     cmd.args([
         "stats",
         "outlier",
