@@ -4,7 +4,7 @@
 # pearson (線形相関) と spearman (順位相関) の2つを比較。
 #
 # 準備:
-#   cargo run -p statforge --example generate_sample_data
+#   cargo run -p stats-workbench --example generate_sample_data
 #
 # 実行:
 #   sf run --recipe examples/02_correlation.toml
