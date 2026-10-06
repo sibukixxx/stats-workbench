@@ -49,7 +49,7 @@ jobs:
         run: cargo build -p sf-cli --release
 
       - name: Build SDK
-        run: cargo build -p statforge --release --all-features
+        run: cargo build -p stats-workbench --release --all-features
 
   web:
     runs-on: ubuntu-latest
