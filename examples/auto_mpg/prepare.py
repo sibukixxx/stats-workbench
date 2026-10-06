@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Convert Auto MPG data to Parquet for StatForge."""
+"""Convert Auto MPG data to Parquet for Stats Workbench."""
 import os
 import sys
 
