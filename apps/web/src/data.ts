@@ -69,7 +69,7 @@ export const SCREEN_CONFIG: ScreenConfig[] = [
     path: "/",
     navGroup: "Overview",
     label: "Overview",
-    eyebrow: "StatForge",
+    eyebrow: "Stats Workbench",
     title: "分析メニュー全体を俯瞰するダッシュボード",
     description:
       "CLI のメニュー構成をブラウザ上で再整理し、探索的分析、統計処理、レシピ実行の入口をまとめて把握できます。",
@@ -171,7 +171,7 @@ export function createDefaultSourceConfig(): SourceConfig {
   return {
     type: "parquet",
     path: "tests/fixtures/parquet/sales.parquet",
-    url: "postgresql://analyst@localhost:5432/statforge",
+    url: "postgresql://analyst@localhost:5432/stats-workbench",
     table: "orders",
     query: "",
     filter: "price > 10",
@@ -265,7 +265,7 @@ export function buildRunResult(recipePath: string): RunResult {
   const fullRecipe = recipePath.includes("full");
   return {
     execution: {
-      tool: "statforge-web-mock",
+      tool: "stats-workbench-web-mock",
       version: "0.1.0",
       recipe: recipePath || "inline-recipe.toml",
       startedAt: "2026-03-22T20:45:00+09:00",
