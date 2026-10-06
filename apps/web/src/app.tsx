@@ -63,7 +63,7 @@ function Sidebar(props: { activePath: string }) {
     <aside className="panel sidebar-panel w-full overflow-hidden lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)] lg:w-[320px]">
       <div className="space-y-6 p-5 lg:p-6">
         <div className="space-y-3">
-          <p className="eyebrow text-[var(--color-highlight)]">StatForge Web</p>
+          <p className="eyebrow text-[var(--color-highlight)]">Stats Workbench Web</p>
           <div>
             <h1 className="font-serif text-3xl leading-tight text-white">
               Analysis
