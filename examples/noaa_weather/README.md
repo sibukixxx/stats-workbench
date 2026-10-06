@@ -39,13 +39,13 @@ data endpoint which does not require authentication.
 
 ```bash
 # Temperature-precipitation correlation
-sf run --recipe examples/noaa_weather/corr_temp_precip.toml
+stats-workbench run --recipe examples/noaa_weather/corr_temp_precip.toml
 
 # Or directly:
-sf eda summary --source examples/noaa_weather/data/weather.parquet \
+stats-workbench eda summary --source examples/noaa_weather/data/weather.parquet \
   --cols TMAX,TMIN,PRCP
 
-sf eda corr --source examples/noaa_weather/data/weather.parquet \
+stats-workbench eda corr --source examples/noaa_weather/data/weather.parquet \
   --cols TMAX,TMIN,PRCP --method pearson
 ```
 
