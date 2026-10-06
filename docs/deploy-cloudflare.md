@@ -4,7 +4,7 @@
 
 | 対象 | デプロイ | 理由 |
 |---|---|---|
-| `crates/*`(CLI `sf`・Rust SDK) | **しない** | ローカルで Parquet / SQLite / PostgreSQL を読むコマンドラインツール。Cloudflare Workers は JS / WASM のみで、ファイルシステムも DB 直結もない。ユーザーは `cargo install` やバイナリ配布で使う |
+| `crates/*`(CLI `stats-workbench`・Rust SDK) | **しない** | ローカルで Parquet / SQLite / PostgreSQL を読むコマンドラインツール。Cloudflare Workers は JS / WASM のみで、ファイルシステムも DB 直結もない。ユーザーは `cargo install` やバイナリ配布で使う |
 | `apps/web`(Web ダッシュボード) | **Cloudflare Workers Static Assets** | Vite でビルドした静的 SPA。現状はモックデータで動くためバックエンド不要 |
 
 ## 料金: $0(Workers Free プラン)
