@@ -1,7 +1,7 @@
 # NYC Taxi: Fare and Trip Analysis
 #
 # What: Summary, distribution, and outlier detection on taxi trip data
-# Why:  Demonstrates StatForge handling real-world Parquet data at scale
+# Why:  Demonstrates Stats Workbench handling real-world Parquet data at scale
 
 [source]
 type = "parquet"
