@@ -40,16 +40,16 @@ The prepare script extracts a 100K-row subset for fast iteration.
 
 ```bash
 # Summary of fare and trip features
-sf run --recipe examples/nyc_taxi/eda_fare_trip.toml
+stats-workbench run --recipe examples/nyc_taxi/eda_fare_trip.toml
 
 # Or directly:
-sf eda summary --source examples/nyc_taxi/data/yellow_tripdata_sample.parquet \
+stats-workbench eda summary --source examples/nyc_taxi/data/yellow_tripdata_sample.parquet \
   --cols trip_distance,fare_amount,tip_amount,total_amount
 
-sf eda dist --source examples/nyc_taxi/data/yellow_tripdata_sample.parquet \
+stats-workbench eda dist --source examples/nyc_taxi/data/yellow_tripdata_sample.parquet \
   --col fare_amount --bins 20
 
-sf stats outlier --source examples/nyc_taxi/data/yellow_tripdata_sample.parquet \
+stats-workbench stats outlier --source examples/nyc_taxi/data/yellow_tripdata_sample.parquet \
   --cols fare_amount,trip_distance
 ```
 
