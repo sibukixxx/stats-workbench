@@ -81,7 +81,7 @@ mod tests {
     #[test]
     fn parse_sqlite_source_preserves_db_options() {
         let source = SourceLoader::parse_cli_source(
-            "sqlite://tmp/statforge.db",
+            "sqlite://tmp/stats-workbench.db",
             Some("orders"),
             Some("SELECT * FROM orders"),
         )
@@ -89,7 +89,7 @@ mod tests {
 
         match source {
             SourceSpec::Sqlite { path, table, query } => {
-                assert_eq!(path, "tmp/statforge.db");
+                assert_eq!(path, "tmp/stats-workbench.db");
                 assert_eq!(table.as_deref(), Some("orders"));
                 assert_eq!(query.as_deref(), Some("SELECT * FROM orders"));
             }
