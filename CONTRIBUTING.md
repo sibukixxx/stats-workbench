@@ -1,48 +1,43 @@
 # Contributing to Stats Workbench
 
-Thanks for your interest! We welcome contributions from the community.
+Thanks for considering a contribution.
 
-## Development Setup
+## Development setup
 
-```bash
+```sh
 git clone https://github.com/sibukixxx/stats-workbench.git
-cd Stats Workbench
-cargo build
-cargo test
+cd stats-workbench
+cargo build --workspace
+cargo test --workspace
 ```
 
-## Code Style
+For the web UI:
 
-- Run `cargo fmt` before committing
-- Use `cargo clippy --all-targets` to catch common mistakes
-- Keep changes focused; one feature or fix per PR
+```sh
+cd apps/web
+pnpm install
+pnpm test
+pnpm build
+```
 
-## Testing
+## Before opening a pull request
 
-- Add tests for new functionality
-- Ensure all tests pass: `cargo test --all`
-- Integration tests go in `crates/sf-cli/tests/`
+```sh
+cargo fmt --all --check
+cargo clippy --workspace --all-targets -- -D warnings
+cargo test --workspace
+```
 
-## Commit Messages
+Keep changes focused. Statistical behavior changes should include deterministic regression coverage or fixtures with independently checkable expected values.
 
-- Use clear, descriptive commit messages
-- Reference issues when relevant (e.g., "Fixes #123")
-- Follow conventional commits if possible (`feat:`, `fix:`, `refactor:`, etc.)
+Do not commit credentials, private datasets, database connection strings, or AI session/attribution metadata.
 
-## PR Guidelines
+## Scope
 
-1. Fork the repository
-2. Create a branch for your changes
-3. Ensure tests pass locally
-4. Open a PR with a clear description of changes
-5. Respond to review feedback
+Good contributions include statistical primitives, data-source compatibility, deterministic recipe execution, output formats, CLI/SDK usability, tests, examples, and security hardening.
 
-## Reporting Issues
-
-- Check existing issues before opening a new one
-- Include reproducible steps and relevant context
-- Mention your Rust version and platform
+Business recommendations, generic research reasoning, CRM/customer workflows, and autonomous source acquisition are outside this repository.
 
 ## License
 
-By contributing, you agree that your code will be licensed under the MIT License.
+By contributing, you agree that your contribution is licensed under the MIT License.
