@@ -1,6 +1,6 @@
-# StatForge 使い方ガイド
+# Stats Workbench 使い方ガイド
 
-StatForge (`sf`) は Parquet / SQLite / PostgreSQL のデータに対して、
+Stats Workbench (`sf`) は Parquet / SQLite / PostgreSQL のデータに対して、
 探索的データ分析（EDA）や統計処理をコマンド一発で実行できる CLI ツールです。
 
 ## 目次
@@ -31,7 +31,7 @@ cargo build -p sf-cli
 ### 2. サンプルデータを生成
 
 ```bash
-cargo run -p statforge --example generate_sample_data
+cargo run -p stats-workbench --example generate_sample_data
 ```
 
 これで `examples/data/` に3つの Parquet ファイルが作られます:
@@ -156,7 +156,7 @@ sf run --recipe examples/05_full_pipeline.toml
 
 ## データソースの指定方法
 
-StatForge は3種類のデータソースに対応しています。
+Stats Workbench は3種類のデータソースに対応しています。
 
 ### Parquet ファイル
 
