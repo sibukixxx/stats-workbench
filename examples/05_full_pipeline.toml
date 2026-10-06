@@ -1,0 +1,51 @@
+# 例5: フルパイプライン（要約→相関→分布→外れ値）
+#
+# 一つのデータセットに対して複数の分析を順番に実行し、
+# 結果を JSON ファイルにまとめて出力する。
+# 再現可能な分析パイプラインとして保存・共有できる。
+#
+# 準備:
+#   cargo run -p statforge --example generate_sample_data
+#
+# 実行:
+#   sf run --recipe examples/05_full_pipeline.toml
+#
+# 結果は output/sales_full_analysis.json に保存される。
+
+[source]
+type = "parquet"
+path = "examples/data/sales.parquet"
+
+# ステップ1: 全体像の把握
+[[steps]]
+id = "overview"
+type = "eda.summary"
+cols = ["price", "quantity", "revenue", "discount"]
+
+# ステップ2: 変数間の関係性
+[[steps]]
+id = "correlations"
+type = "eda.correlation"
+cols = ["price", "quantity", "revenue"]
+method = "pearson"
+
+# ステップ3: 売上金額の分布
+[[steps]]
+id = "revenue_distribution"
+type = "eda.dist"
+col = "revenue"
+bins = 20
+
+# ステップ4: 外れ値の検出
+[[steps]]
+id = "outliers"
+type = "stats.outlier_detect"
+cols = ["revenue", "price"]
+method = "iqr"
+action = "flag"
+
+[output]
+terminal = true
+format = "json"
+path = "output/sales_full_analysis.json"
+artifacts = ["overview", "correlations", "revenue_distribution", "outliers"]

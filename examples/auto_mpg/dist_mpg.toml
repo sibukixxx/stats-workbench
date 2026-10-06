@@ -1,0 +1,22 @@
+# Auto MPG: 燃費の分布分析
+#
+# What: mpg のヒストグラム（15ビン）
+# Why:  燃費分布の形状を把握（右裾か正規分布か）
+
+[source]
+type = "parquet"
+path = "examples/auto_mpg/data/auto_mpg.parquet"
+
+[[steps]]
+id = "mpg_dist"
+type = "eda.dist"
+col = "mpg"
+bins = 15
+
+[[steps]]
+id = "summary"
+type = "eda.summary"
+cols = ["mpg", "weight", "horsepower"]
+
+[output]
+terminal = true

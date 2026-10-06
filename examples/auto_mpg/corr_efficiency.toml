@@ -1,0 +1,26 @@
+# Auto MPG: 燃費効率の相関分析
+#
+# What: 燃費（mpg）と車両特性の Pearson / Spearman 相関
+# Why:  重量・排気量・馬力のうち、燃費に最も影響する要因を特定
+
+[source]
+type = "parquet"
+path = "examples/auto_mpg/data/auto_mpg.parquet"
+
+[[steps]]
+id = "pearson"
+type = "eda.correlation"
+cols = ["mpg", "cylinders", "displacement", "horsepower", "weight", "acceleration"]
+method = "pearson"
+
+[[steps]]
+id = "spearman"
+type = "eda.correlation"
+cols = ["mpg", "cylinders", "displacement", "horsepower", "weight", "acceleration"]
+method = "spearman"
+
+[output]
+terminal = true
+format = "json"
+path = "output/auto_mpg_corr.json"
+artifacts = ["pearson", "spearman"]

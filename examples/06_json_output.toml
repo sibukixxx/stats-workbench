@@ -1,0 +1,36 @@
+# 例6: JSON 出力（プログラムからの利用）
+#
+# 分析結果を JSON に出力して、他のプログラムやダッシュボードから利用する。
+# terminal = true にすると画面にも同時に表示する。
+#
+# 準備:
+#   cargo run -p statforge --example generate_sample_data
+#
+# 実行:
+#   sf run --recipe examples/06_json_output.toml
+#
+# CLI で直接 JSON 出力する場合:
+#   sf eda summary --source examples/data/sensors.parquet \
+#     --cols temperature,humidity,pressure \
+#     --out output/sensor_summary.json --format json
+
+[source]
+type = "parquet"
+path = "examples/data/sensors.parquet"
+
+[[steps]]
+id = "sensor_summary"
+type = "eda.summary"
+cols = ["temperature", "humidity", "pressure", "battery_level"]
+
+[[steps]]
+id = "sensor_corr"
+type = "eda.correlation"
+cols = ["temperature", "humidity", "pressure"]
+method = "spearman"
+
+[output]
+terminal = true
+format = "json"
+path = "output/sensor_analysis.json"
+artifacts = ["sensor_summary", "sensor_corr"]

@@ -1,0 +1,21 @@
+# Auto MPG: 重量・馬力の外れ値検出
+#
+# What: weight と horsepower の IQR 外れ値検出
+# Why:  極端に重い車や高馬力車を定量的に特定
+
+[source]
+type = "parquet"
+path = "examples/auto_mpg/data/auto_mpg.parquet"
+
+[[steps]]
+id = "outliers"
+type = "stats.outlier_detect"
+cols = ["weight", "horsepower", "displacement"]
+method = "iqr"
+action = "flag"
+
+[output]
+terminal = true
+format = "json"
+path = "output/auto_mpg_outliers.json"
+artifacts = ["outliers"]

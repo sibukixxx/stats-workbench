@@ -1,0 +1,48 @@
+# 例7: 実践ユースケース — 人事データ分析
+#
+# 従業員データから給与と経験年数・パフォーマンスの関係を分析する。
+# 「給与に最も影響する要因は何か？」を探るEDAの典型例。
+#
+# 準備:
+#   cargo run -p statforge --example generate_sample_data
+#
+# 実行:
+#   sf run --recipe examples/07_employee_analysis.toml
+
+[source]
+type = "parquet"
+path = "examples/data/employees.parquet"
+
+# まず全体の傾向を把握
+[[steps]]
+id = "summary"
+type = "eda.summary"
+cols = ["years_exp", "salary", "performance_score", "projects_completed"]
+
+# 給与と各変数の相関を確認
+[[steps]]
+id = "salary_corr"
+type = "eda.correlation"
+cols = ["years_exp", "salary", "performance_score", "projects_completed"]
+method = "pearson"
+
+# 給与の分布を確認（偏りがないか）
+[[steps]]
+id = "salary_dist"
+type = "eda.dist"
+col = "salary"
+bins = 10
+
+# 給与の外れ値を検出
+[[steps]]
+id = "salary_outliers"
+type = "stats.outlier_detect"
+cols = ["salary"]
+method = "iqr"
+action = "flag"
+
+[output]
+terminal = true
+format = "json"
+path = "output/employee_analysis.json"
+artifacts = ["summary", "salary_corr", "salary_dist", "salary_outliers"]
