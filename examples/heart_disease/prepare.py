@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Convert Cleveland Heart Disease data to Parquet for StatForge.
+"""Convert Cleveland Heart Disease data to Parquet for Stats Workbench.
 
 Usage:
     python3 prepare.py
