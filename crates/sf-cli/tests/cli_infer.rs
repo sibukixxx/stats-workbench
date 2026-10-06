@@ -10,7 +10,7 @@ use support::{fixture_path, output_path, setup_fixture};
 fn infer_ttest1_terminal_output() {
     setup_fixture();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "infer",
@@ -35,7 +35,7 @@ fn infer_ttest1_json_output() {
     setup_fixture();
     let out = output_path("ttest1", "json");
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "infer",
@@ -70,7 +70,7 @@ fn infer_ttest1_json_output() {
 fn infer_ttest1_alternative_less() {
     setup_fixture();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "infer",
@@ -95,7 +95,7 @@ fn infer_ttest1_alternative_less() {
 fn infer_ttest2_terminal_output() {
     setup_fixture();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "infer",
@@ -120,7 +120,7 @@ fn infer_ttest2_terminal_output() {
 fn infer_mean_ci_terminal_output() {
     setup_fixture();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "infer",
@@ -140,7 +140,7 @@ fn infer_mean_ci_terminal_output() {
 fn infer_mean_ci_custom_confidence() {
     setup_fixture();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "infer",
@@ -161,7 +161,7 @@ fn infer_mean_ci_custom_confidence() {
 
 #[test]
 fn infer_prop_test_terminal_output() {
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "infer",
@@ -183,7 +183,7 @@ fn infer_prop_test_terminal_output() {
 
 #[test]
 fn infer_prop_ci_terminal_output() {
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args(["infer", "prop-ci", "--n", "100", "--successes", "60"])
         .assert()
@@ -198,7 +198,7 @@ fn infer_prop_ci_terminal_output() {
 fn infer_var_test_terminal_output() {
     setup_fixture();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "infer",
@@ -222,7 +222,7 @@ fn infer_var_test_terminal_output() {
 fn infer_var_ci_terminal_output() {
     setup_fixture();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "infer",
@@ -242,7 +242,7 @@ fn infer_var_ci_terminal_output() {
 
 #[test]
 fn infer_chisq_goodness_terminal_output() {
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "infer",
@@ -258,7 +258,7 @@ fn infer_chisq_goodness_terminal_output() {
 
 #[test]
 fn infer_chisq_goodness_with_expected() {
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "infer",
@@ -279,7 +279,7 @@ fn infer_chisq_goodness_with_expected() {
 fn infer_chisq_independence_terminal_output() {
     setup_fixture();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "infer",
@@ -325,7 +325,7 @@ terminal = true
     std::fs::create_dir_all(recipe_path.parent().unwrap()).unwrap();
     std::fs::write(&recipe_path, recipe).unwrap();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args(["run", "--recipe", &recipe_path.to_string_lossy()])
         .assert()
@@ -359,7 +359,7 @@ terminal = true
     std::fs::create_dir_all(recipe_path.parent().unwrap()).unwrap();
     std::fs::write(&recipe_path, recipe).unwrap();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args(["run", "--recipe", &recipe_path.to_string_lossy()])
         .assert()
@@ -404,7 +404,7 @@ path = "{}"
     std::fs::create_dir_all(recipe_path.parent().unwrap()).unwrap();
     std::fs::write(&recipe_path, recipe).unwrap();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args(["run", "--recipe", &recipe_path.to_string_lossy()])
         .assert()
@@ -424,7 +424,7 @@ fn infer_ttest1_parquet_output() {
     setup_fixture();
     let out = output_path("ttest1_out", "parquet");
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "infer",
