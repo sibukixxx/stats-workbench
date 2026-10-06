@@ -1,0 +1,35 @@
+# California Housing: Occupancy and Population Outliers
+#
+# What: IQR-based outlier detection on occupancy, population, and rooms
+# Why:  Identify census blocks with unusual living conditions
+
+[source]
+type = "parquet"
+path = "examples/california_housing/data/california_housing.parquet"
+
+[[steps]]
+id = "occupancy_outliers"
+type = "stats.outlier_detect"
+cols = ["AveOccup"]
+method = "iqr"
+action = "flag"
+
+[[steps]]
+id = "population_outliers"
+type = "stats.outlier_detect"
+cols = ["Population"]
+method = "iqr"
+action = "flag"
+
+[[steps]]
+id = "rooms_outliers"
+type = "stats.outlier_detect"
+cols = ["AveRooms"]
+method = "iqr"
+action = "flag"
+
+[output]
+terminal = true
+format = "json"
+path = "output/california_outlier_occupancy.json"
+artifacts = ["occupancy_outliers", "population_outliers", "rooms_outliers"]

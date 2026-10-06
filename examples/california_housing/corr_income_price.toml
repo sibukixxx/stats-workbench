@@ -1,0 +1,26 @@
+# California Housing: Income-Price Correlation
+#
+# What: Pearson and Spearman correlation between housing features
+# Why:  Identify which features most strongly predict median house value
+
+[source]
+type = "parquet"
+path = "examples/california_housing/data/california_housing.parquet"
+
+[[steps]]
+id = "pearson"
+type = "eda.correlation"
+cols = ["MedInc", "HouseAge", "AveRooms", "AveBedrms", "MedHouseVal"]
+method = "pearson"
+
+[[steps]]
+id = "spearman"
+type = "eda.correlation"
+cols = ["MedInc", "HouseAge", "AveRooms", "AveBedrms", "MedHouseVal"]
+method = "spearman"
+
+[output]
+terminal = true
+format = "json"
+path = "output/california_corr_income_price.json"
+artifacts = ["pearson", "spearman"]

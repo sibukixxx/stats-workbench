@@ -1,0 +1,33 @@
+# Bike Sharing: Weather-Demand Correlation
+#
+# What: Pearson and Spearman correlation between weather and rental count
+# Why:  Identify which weather factors most influence bike demand
+
+[source]
+type = "parquet"
+path = "examples/bike_sharing/data/day.parquet"
+
+[[steps]]
+id = "pearson"
+type = "eda.correlation"
+cols = ["temp", "atemp", "hum", "windspeed", "cnt"]
+method = "pearson"
+
+[[steps]]
+id = "spearman"
+type = "eda.correlation"
+cols = ["temp", "atemp", "hum", "windspeed", "cnt"]
+method = "spearman"
+
+[[steps]]
+id = "outlier_cnt"
+type = "stats.outlier_detect"
+cols = ["cnt"]
+method = "iqr"
+action = "flag"
+
+[output]
+terminal = true
+format = "json"
+path = "output/bike_sharing_corr.json"
+artifacts = ["pearson", "spearman", "outlier_cnt"]

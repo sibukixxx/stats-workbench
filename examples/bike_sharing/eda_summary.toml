@@ -1,0 +1,19 @@
+# Bike Sharing: Summary statistics
+#
+# What: Basic statistics of weather and rental features
+# Why:  Understand the distribution and scale of key variables
+
+[source]
+type = "parquet"
+path = "examples/bike_sharing/data/day.parquet"
+
+[[steps]]
+id = "summary"
+type = "eda.summary"
+cols = ["temp", "hum", "windspeed", "cnt", "casual", "registered"]
+
+[output]
+terminal = true
+format = "json"
+path = "output/bike_sharing_summary.json"
+artifacts = ["summary"]
