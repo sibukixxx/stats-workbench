@@ -20,7 +20,7 @@
 
 ## What this example demonstrates
 
-- **Large Parquet handling**: StatForge reads NYC taxi Parquet directly — no conversion step
+- **Large Parquet handling**: Stats Workbench reads NYC taxi Parquet directly — no conversion step
 - **EDA summary**: Fare, distance, tip distributions
 - **Distribution analysis**: Histogram of fare amounts
 - **Outlier detection**: Identify anomalous fares and distances
