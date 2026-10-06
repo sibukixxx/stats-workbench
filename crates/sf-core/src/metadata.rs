@@ -23,7 +23,7 @@ pub struct ExecutionMeta {
 impl Default for ExecutionMeta {
     fn default() -> Self {
         Self {
-            tool: "StatForge".to_string(),
+            tool: "Stats Workbench".to_string(),
             version: env!("CARGO_PKG_VERSION").to_string(),
             recipe_path: None,
             started_at: String::new(),
