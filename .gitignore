@@ -1,0 +1,18 @@
+/target
+/output
+Cargo.lock
+.env
+/apps/web/node_modules
+/apps/web/dist
+/apps/web/coverage
+/apps/web/.vite
+
+# Example data (downloaded/generated, not checked in)
+examples/*/data/
+examples/data/
+tests/fixtures/parquet/*.parquet
+tests/fixtures/output/
+crates/sf-cli/tests/fixtures/parquet/
+.venv/
+.pnpm-store/
+/apps/web/.wrangler
