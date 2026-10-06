@@ -1,5 +1,5 @@
 use polars::prelude::*;
-use stats_workbench::{output, source, step, Stats Workbench};
+use stats_workbench::{output, source, step, StatsWorkbench};
 use std::fs;
 use std::path::{Path, PathBuf};
 
@@ -16,7 +16,7 @@ fn fixture_path() -> PathBuf {
 
 fn output_path(name: &str, extension: &str) -> PathBuf {
     workspace_root()
-        .join("target/statforge-sdk-tests")
+        .join("target/stats-workbench-sdk-tests")
         .join(format!("{name}.{extension}"))
 }
 
