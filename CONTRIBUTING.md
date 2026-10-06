@@ -1,12 +1,12 @@
-# Contributing to StatForge
+# Contributing to Stats Workbench
 
 Thanks for your interest! We welcome contributions from the community.
 
 ## Development Setup
 
 ```bash
-git clone https://github.com/sibukixxx/StatForge.git
-cd StatForge
+git clone https://github.com/sibukixxx/stats-workbench.git
+cd Stats Workbench
 cargo build
 cargo test
 ```
