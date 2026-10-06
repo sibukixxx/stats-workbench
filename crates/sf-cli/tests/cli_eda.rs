@@ -10,7 +10,7 @@ use support::{fixture_path, output_path, setup_fixture};
 fn eda_summary_terminal_works() {
     setup_fixture();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "eda",
@@ -30,7 +30,7 @@ fn eda_summary_terminal_works() {
 fn eda_summary_all_cols() {
     setup_fixture();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args(["eda", "summary", "--source", &fixture_path()])
         .assert()
@@ -43,7 +43,7 @@ fn eda_summary_all_cols() {
 fn eda_corr_works() {
     setup_fixture();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "eda",
@@ -65,7 +65,7 @@ fn eda_corr_works() {
 fn eda_corr_spearman() {
     setup_fixture();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "eda",
@@ -86,7 +86,7 @@ fn eda_corr_spearman() {
 fn eda_dist_works() {
     setup_fixture();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "eda",
@@ -108,7 +108,7 @@ fn eda_dist_works() {
 fn eda_summary_invalid_column() {
     setup_fixture();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "eda",
@@ -125,7 +125,7 @@ fn eda_summary_invalid_column() {
 
 #[test]
 fn eda_summary_missing_file() {
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "eda",
@@ -142,7 +142,7 @@ fn eda_summary_missing_file() {
 
 #[test]
 fn eda_corr_too_few_cols() {
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "eda",
@@ -162,7 +162,7 @@ fn eda_summary_json_output_excludes_source_artifact() {
     setup_fixture();
     let output_path = output_path("eda-summary", "json");
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "eda",
@@ -196,7 +196,7 @@ fn eda_summary_parquet_output_writes_summary_artifact() {
     setup_fixture();
     let output_path = output_path("eda-summary", "parquet");
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "eda",
