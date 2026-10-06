@@ -47,7 +47,7 @@ fn setup_ts_fixture() {
 
 #[test]
 fn ts_adf_terminal_works() {
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "ts",
@@ -68,7 +68,7 @@ fn ts_adf_terminal_works() {
 
 #[test]
 fn ts_adf_with_max_lag() {
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "ts",
@@ -91,7 +91,7 @@ fn ts_adf_with_max_lag() {
 fn ts_adf_json_output() {
     let output = output_path("ts-adf", "json");
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "ts",
@@ -118,7 +118,7 @@ fn ts_adf_json_output() {
 
 #[test]
 fn ts_adf_missing_column() {
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "ts",
@@ -137,7 +137,7 @@ fn ts_adf_missing_column() {
 
 #[test]
 fn ts_decompose_terminal_works() {
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "ts",
@@ -162,7 +162,7 @@ fn ts_decompose_terminal_works() {
 fn ts_decompose_json_output() {
     let output = output_path("ts-decompose", "json");
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "ts",
@@ -191,7 +191,7 @@ fn ts_decompose_json_output() {
 
 #[test]
 fn ts_forecast_terminal_works() {
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "ts",
@@ -218,7 +218,7 @@ fn ts_forecast_terminal_works() {
 fn ts_forecast_json_output() {
     let output = output_path("ts-forecast", "json");
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "ts",
@@ -249,7 +249,7 @@ fn ts_forecast_json_output() {
 
 #[test]
 fn ts_forecast_missing_column() {
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "ts",
