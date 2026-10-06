@@ -70,7 +70,7 @@ cargo run -p sf-cli -- stats outlier \
 cargo run -p sf-cli -- run --recipe examples/05_full_pipeline.toml
 ```
 
-> **ヒント**: `cargo install --path crates/sf-cli` でインストールすると `sf` コマンドとして直接使えます。
+> **ヒント**: `cargo install --path crates/sf-cli` でインストールすると `stats-workbench` コマンドとして直接使えます。
 
 ---
 
