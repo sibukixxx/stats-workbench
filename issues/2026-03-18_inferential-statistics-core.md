@@ -7,7 +7,7 @@
 
 ## 背景
 
-- 現在の StatForge は `summary` / `corr` / `dist` / `outlier` までで、記述統計と EDA が中心
+- 現在の Stats Workbench は `summary` / `corr` / `dist` / `outlier` までで、記述統計と EDA が中心
 - ユーザーが挙げたトピックのうち、プロ向け統計システムとして最も大きい欠落は「推定」と「仮説検定」
 - `StatsKind` には `TTest` / `Anova` がある一方で、`StepSpec` / CLI / executor / report には未接続
 
