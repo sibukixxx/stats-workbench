@@ -1,17 +1,17 @@
 # Stats Workbench 使い方ガイド
 
-Stats Workbench (`sf`) は Parquet / SQLite / PostgreSQL のデータに対して、
+Stats Workbench (`stats-workbench`) は Parquet / SQLite / PostgreSQL のデータに対して、
 探索的データ分析（EDA）や統計処理をコマンド一発で実行できる CLI ツールです。
 
 ## 目次
 
 - [クイックスタート（3分で体験）](#クイックスタート3分で体験)
 - [CLI コマンド一覧](#cli-コマンド一覧)
-  - [sf eda summary — 要約統計](#sf-eda-summary--要約統計)
-  - [sf eda corr — 相関分析](#sf-eda-corr--相関分析)
-  - [sf eda dist — 分布確認](#sf-eda-dist--分布確認)
-  - [sf stats outlier — 外れ値検出](#sf-stats-outlier--外れ値検出)
-  - [sf run — レシピ実行](#sf-run--レシピ実行)
+  - [stats-workbench eda summary — 要約統計](#sf-eda-summary--要約統計)
+  - [stats-workbench eda corr — 相関分析](#sf-eda-corr--相関分析)
+  - [stats-workbench eda dist — 分布確認](#sf-eda-dist--分布確認)
+  - [stats-workbench stats outlier — 外れ値検出](#sf-stats-outlier--外れ値検出)
+  - [stats-workbench run — レシピ実行](#sf-run--レシピ実行)
 - [データソースの指定方法](#データソースの指定方法)
 - [出力形式](#出力形式)
 - [レシピ（TOML パイプライン）の書き方](#レシピtoml-パイプラインの書き方)
@@ -76,16 +76,16 @@ cargo run -p sf-cli -- run --recipe examples/05_full_pipeline.toml
 
 ## CLI コマンド一覧
 
-### sf eda summary — 要約統計
+### stats-workbench eda summary — 要約統計
 
 列ごとの件数、平均、標準偏差、最小・最大値などを一覧表示。
 
 ```bash
 # 指定した列の統計
-sf eda summary --source data.parquet --cols price,quantity,revenue
+stats-workbench eda summary --source data.parquet --cols price,quantity,revenue
 
 # 全列の統計（--cols を省略）
-sf eda summary --source data.parquet
+stats-workbench eda summary --source data.parquet
 ```
 
 **出力例のイメージ:**
@@ -100,56 +100,56 @@ sf eda summary --source data.parquet
 └───────────┴───────┴────────┴───────┴───────┴────────┘
 ```
 
-### sf eda corr — 相関分析
+### stats-workbench eda corr — 相関分析
 
 複数列の相関係数を行列形式で出力。
 
 ```bash
 # Pearson（線形相関、デフォルト）
-sf eda corr --source data.parquet --cols x,y,z --method pearson
+stats-workbench eda corr --source data.parquet --cols x,y,z --method pearson
 
 # Spearman（順位相関 — 非線形な関係も検出）
-sf eda corr --source data.parquet --cols x,y,z --method spearman
+stats-workbench eda corr --source data.parquet --cols x,y,z --method spearman
 ```
 
 **使い分け:**
 - **Pearson**: 線形な関係を測る。正規分布に近いデータ向き
 - **Spearman**: 単調な関係（線形でなくてもOK）を測る。外れ値に強い
 
-### sf eda dist — 分布確認
+### stats-workbench eda dist — 分布確認
 
 指定した列のヒストグラム（度数分布）を計算。
 
 ```bash
 # 10区間（デフォルト）
-sf eda dist --source data.parquet --col temperature
+stats-workbench eda dist --source data.parquet --col temperature
 
 # 区間数を指定
-sf eda dist --source data.parquet --col temperature --bins 20
+stats-workbench eda dist --source data.parquet --col temperature --bins 20
 ```
 
 **ポイント:** `--col` は単数形（1列のみ指定）。`--cols` ではない点に注意。
 
-### sf stats outlier — 外れ値検出
+### stats-workbench stats outlier — 外れ値検出
 
 IQR（四分位範囲）法で外れ値候補を検出。
 
 ```bash
 # 1列の外れ値
-sf stats outlier --source data.parquet --cols revenue
+stats-workbench stats outlier --source data.parquet --cols revenue
 
 # 複数列を同時にチェック
-sf stats outlier --source data.parquet --cols revenue,price,quantity
+stats-workbench stats outlier --source data.parquet --cols revenue,price,quantity
 ```
 
 **IQR 法**: Q1 - 1.5×IQR 未満、または Q3 + 1.5×IQR 超の値を外れ値と判定。
 
-### sf run — レシピ実行
+### stats-workbench run — レシピ実行
 
 TOML ファイルに書いた分析手順をまとめて実行。
 
 ```bash
-sf run --recipe examples/05_full_pipeline.toml
+stats-workbench run --recipe examples/05_full_pipeline.toml
 ```
 
 ---
@@ -161,17 +161,17 @@ Stats Workbench は3種類のデータソースに対応しています。
 ### Parquet ファイル
 
 ```bash
-sf eda summary --source path/to/data.parquet --cols col1,col2
+stats-workbench eda summary --source path/to/data.parquet --cols col1,col2
 ```
 
 ### SQLite データベース
 
 ```bash
 # テーブル指定
-sf eda summary --source sqlite://path/to/database.db --table orders --cols amount,qty
+stats-workbench eda summary --source sqlite://path/to/database.db --table orders --cols amount,qty
 
 # カスタム SQL クエリ
-sf eda summary --source sqlite://path/to/database.db \
+stats-workbench eda summary --source sqlite://path/to/database.db \
   --query "SELECT amount, qty FROM orders WHERE status = 'completed'" \
   --cols amount,qty
 ```
@@ -180,12 +180,12 @@ sf eda summary --source sqlite://path/to/database.db \
 
 ```bash
 # テーブル指定
-sf eda corr --source postgresql://user:pass@localhost:5432/mydb \
+stats-workbench eda corr --source postgresql://user:pass@localhost:5432/mydb \
   --table metrics --cols latency,throughput
 
 # 環境変数を使用（パスワードをコマンドに書かない）
 export DATABASE_URL=postgresql://user:pass@localhost:5432/mydb
-sf eda summary --source $DATABASE_URL --table users --cols age,score
+stats-workbench eda summary --source $DATABASE_URL --table users --cols age,score
 ```
 
 レシピ内では `${DATABASE_URL}` で環境変数を展開できます。展開できるのは `DATABASE_URL` と `SF_` で始まる変数だけで、それ以外(`${HOME}` や `${AWS_SECRET_ACCESS_KEY}` など)を参照するレシピはエラーになります(共有レシピ経由の秘密情報の持ち出し防止):
@@ -216,7 +216,7 @@ table = "metrics"
 
 ```bash
 # CLI から
-sf eda summary --source data.parquet --cols price,quantity \
+stats-workbench eda summary --source data.parquet --cols price,quantity \
   --out output/result.json --format json
 
 # レシピで
@@ -229,7 +229,7 @@ artifacts = ["step1", "step2"]
 ### Parquet ファイル出力
 
 ```bash
-sf eda summary --source data.parquet --cols price,quantity \
+stats-workbench eda summary --source data.parquet --cols price,quantity \
   --out output/result.parquet --format parquet
 ```
 
@@ -289,7 +289,7 @@ artifacts = ["step_name"]     # 出力するステップを指定
 ### レシピの実行
 
 ```bash
-sf run --recipe path/to/recipe.toml
+stats-workbench run --recipe path/to/recipe.toml
 ```
 
 ---
@@ -336,16 +336,16 @@ sf run --recipe path/to/recipe.toml
 
 ```bash
 # 1. まず全体像を把握
-sf eda summary --source data/sales.parquet
+stats-workbench eda summary --source data/sales.parquet
 
 # 2. 数値列の相関を見て、関係の強い変数を特定
-sf eda corr --source data/sales.parquet --cols price,quantity,revenue --method pearson
+stats-workbench eda corr --source data/sales.parquet --cols price,quantity,revenue --method pearson
 
 # 3. 売上金額の分布を確認（正規分布？偏りがある？）
-sf eda dist --source data/sales.parquet --col revenue --bins 20
+stats-workbench eda dist --source data/sales.parquet --col revenue --bins 20
 
 # 4. 外れ値を検出（異常な取引がないか）
-sf stats outlier --source data/sales.parquet --cols revenue,price
+stats-workbench stats outlier --source data/sales.parquet --cols revenue,price
 ```
 
 ### ユースケース2: データクリーニングの前段
@@ -354,10 +354,10 @@ sf stats outlier --source data/sales.parquet --cols revenue,price
 
 ```bash
 # 欠損値の有無を count で確認（count < 全件数なら欠損あり）
-sf eda summary --source data/raw.parquet --cols col1,col2,col3
+stats-workbench eda summary --source data/raw.parquet --cols col1,col2,col3
 
 # 外れ値候補を確認
-sf stats outlier --source data/raw.parquet --cols col1,col2
+stats-workbench stats outlier --source data/raw.parquet --cols col1,col2
 ```
 
 ### ユースケース3: DB から直接分析
@@ -366,10 +366,10 @@ sf stats outlier --source data/raw.parquet --cols col1,col2
 
 ```bash
 # SQLite の場合
-sf eda summary --source sqlite://app.db --table users --cols age,purchase_count
+stats-workbench eda summary --source sqlite://app.db --table users --cols age,purchase_count
 
 # 条件付きで分析したい場合は --query を使う
-sf eda corr --source sqlite://app.db \
+stats-workbench eda corr --source sqlite://app.db \
   --query "SELECT age, purchase_count, total_spent FROM users WHERE active = 1" \
   --cols age,purchase_count,total_spent
 ```
@@ -380,7 +380,7 @@ sf eda corr --source sqlite://app.db \
 
 ```bash
 # レシピを書いて再現可能にする
-sf run --recipe analysis/quarterly_report.toml
+stats-workbench run --recipe analysis/quarterly_report.toml
 
 # output/ に JSON が出力される → git で管理、CI で自動実行も可能
 ```
@@ -389,10 +389,10 @@ sf run --recipe analysis/quarterly_report.toml
 
 ```bash
 # まず Pearson で線形相関を確認
-sf eda corr --source data.parquet --cols x,y --method pearson
+stats-workbench eda corr --source data.parquet --cols x,y --method pearson
 
 # 相関が低いが関係がありそうなら Spearman で非線形を確認
-sf eda corr --source data.parquet --cols x,y --method spearman
+stats-workbench eda corr --source data.parquet --cols x,y --method spearman
 
 # Spearman のほうが高ければ、非線形な単調関係がある
 ```
