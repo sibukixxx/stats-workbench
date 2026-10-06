@@ -1,0 +1,20 @@
+# California Housing: Price Distribution
+#
+# What: Histogram of median house values with 20 bins
+# Why:  Reveal the ceiling effect at 5.0 ($500K cap)
+
+[source]
+type = "parquet"
+path = "examples/california_housing/data/california_housing.parquet"
+
+[[steps]]
+id = "price_dist"
+type = "eda.dist"
+col = "MedHouseVal"
+bins = 20
+
+[output]
+terminal = true
+format = "json"
+path = "output/california_dist_price.json"
+artifacts = ["price_dist"]

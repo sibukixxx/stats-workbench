@@ -1,0 +1,20 @@
+# Diamonds: Price Distribution
+#
+# What: Histogram of diamond prices with 25 bins
+# Why:  Visualize the extreme right skew in price distribution
+
+[source]
+type = "parquet"
+path = "examples/diamonds/data/diamonds.parquet"
+
+[[steps]]
+id = "price_dist"
+type = "eda.dist"
+col = "price"
+bins = 25
+
+[output]
+terminal = true
+format = "json"
+path = "output/diamonds_dist_price.json"
+artifacts = ["price_dist"]

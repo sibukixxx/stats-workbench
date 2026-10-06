@@ -1,0 +1,26 @@
+# Diamonds: Carat-Price Correlation
+#
+# What: Pearson and Spearman correlation between all numeric features
+# Why:  Identify which features most strongly predict diamond price
+
+[source]
+type = "parquet"
+path = "examples/diamonds/data/diamonds.parquet"
+
+[[steps]]
+id = "pearson"
+type = "eda.correlation"
+cols = ["carat", "price", "depth", "table", "x", "y", "z"]
+method = "pearson"
+
+[[steps]]
+id = "spearman"
+type = "eda.correlation"
+cols = ["carat", "price", "depth", "table", "x", "y", "z"]
+method = "spearman"
+
+[output]
+terminal = true
+format = "json"
+path = "output/diamonds_corr.json"
+artifacts = ["pearson", "spearman"]

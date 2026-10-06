@@ -1,0 +1,26 @@
+# FIFA 22 Players: Rating Correlation
+#
+# What: Pearson and Spearman correlation between overall rating and skill attributes
+# Why:  Identify which attributes contribute most to overall player quality
+
+[source]
+type = "parquet"
+path = "examples/fifa_players/data/fifa_players.parquet"
+
+[[steps]]
+id = "pearson"
+type = "eda.correlation"
+cols = ["overall", "pace", "shooting", "passing", "dribbling", "defending", "physic"]
+method = "pearson"
+
+[[steps]]
+id = "spearman"
+type = "eda.correlation"
+cols = ["overall", "pace", "shooting", "passing", "dribbling", "defending", "physic"]
+method = "spearman"
+
+[output]
+terminal = true
+format = "json"
+path = "output/fifa_corr_ratings.json"
+artifacts = ["pearson", "spearman"]

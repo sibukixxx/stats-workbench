@@ -1,0 +1,38 @@
+# Example: EDA on a Parquet sales dataset
+#
+# Usage:
+#   sf run --recipe examples/eda_sales.toml
+
+[source]
+type = "parquet"
+path = "examples/data/sales.parquet"
+
+[[steps]]
+id = "summary_main"
+type = "eda.summary"
+cols = ["revenue", "quantity", "price"]
+
+[[steps]]
+id = "corr_main"
+type = "eda.correlation"
+cols = ["revenue", "quantity", "price"]
+method = "spearman"
+
+[[steps]]
+id = "dist_revenue"
+type = "eda.dist"
+col = "revenue"
+bins = 20
+
+[[steps]]
+id = "outlier_revenue"
+type = "stats.outlier_detect"
+cols = ["revenue"]
+method = "iqr"
+action = "flag"
+
+[output]
+terminal = true
+format = "json"
+path = "output/eda_sales.json"
+artifacts = ["summary_main", "corr_main", "dist_revenue", "outlier_revenue"]

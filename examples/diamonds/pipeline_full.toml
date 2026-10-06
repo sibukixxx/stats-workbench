@@ -1,0 +1,42 @@
+# Diamonds: Full Analysis Pipeline
+#
+# What: Summary → Correlation → Distribution → Outlier detection
+# Why:  Complete exploratory analysis of the diamonds dataset
+
+[source]
+type = "parquet"
+path = "examples/diamonds/data/diamonds.parquet"
+
+# Step 1: Overview statistics
+[[steps]]
+id = "overview"
+type = "eda.summary"
+cols = ["carat", "depth", "table", "price", "x", "y", "z"]
+
+# Step 2: Correlation analysis
+[[steps]]
+id = "correlations"
+type = "eda.correlation"
+cols = ["carat", "price", "depth", "table", "x", "y", "z"]
+method = "pearson"
+
+# Step 3: Price distribution
+[[steps]]
+id = "price_distribution"
+type = "eda.dist"
+col = "price"
+bins = 25
+
+# Step 4: Outlier detection
+[[steps]]
+id = "outliers"
+type = "stats.outlier_detect"
+cols = ["price", "carat"]
+method = "iqr"
+action = "flag"
+
+[output]
+terminal = true
+format = "json"
+path = "output/diamonds_full_analysis.json"
+artifacts = ["overview", "correlations", "price_distribution", "outliers"]
