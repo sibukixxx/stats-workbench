@@ -29,7 +29,7 @@ fn setup_fixture() {
 fn eda_summary_parquet_works() {
     setup_fixture();
 
-    let mut cmd = Command::cargo_bin("sf").unwrap();
+    let mut cmd = Command::cargo_bin("stats-workbench").unwrap();
     cmd.args([
         "eda",
         "summary",
@@ -49,7 +49,7 @@ fn eda_summary_parquet_works() {
 fn eda_summary_all_cols() {
     setup_fixture();
 
-    let mut cmd = Command::cargo_bin("sf").unwrap();
+    let mut cmd = Command::cargo_bin("stats-workbench").unwrap();
     cmd.args([
         "eda",
         "summary",
@@ -67,7 +67,7 @@ fn eda_summary_all_cols() {
 fn eda_corr_works() {
     setup_fixture();
 
-    let mut cmd = Command::cargo_bin("sf").unwrap();
+    let mut cmd = Command::cargo_bin("stats-workbench").unwrap();
     cmd.args([
         "eda",
         "corr",
@@ -89,7 +89,7 @@ fn eda_corr_works() {
 fn eda_corr_spearman() {
     setup_fixture();
 
-    let mut cmd = Command::cargo_bin("sf").unwrap();
+    let mut cmd = Command::cargo_bin("stats-workbench").unwrap();
     cmd.args([
         "eda",
         "corr",
@@ -110,7 +110,7 @@ fn eda_corr_spearman() {
 fn eda_dist_works() {
     setup_fixture();
 
-    let mut cmd = Command::cargo_bin("sf").unwrap();
+    let mut cmd = Command::cargo_bin("stats-workbench").unwrap();
     cmd.args([
         "eda",
         "dist",
@@ -132,7 +132,7 @@ fn eda_dist_works() {
 fn eda_summary_invalid_column() {
     setup_fixture();
 
-    let mut cmd = Command::cargo_bin("sf").unwrap();
+    let mut cmd = Command::cargo_bin("stats-workbench").unwrap();
     cmd.args([
         "eda",
         "summary",
@@ -149,7 +149,7 @@ fn eda_summary_invalid_column() {
 
 #[test]
 fn eda_summary_missing_file() {
-    let mut cmd = Command::cargo_bin("sf").unwrap();
+    let mut cmd = Command::cargo_bin("stats-workbench").unwrap();
     cmd.args([
         "eda",
         "summary",
@@ -166,7 +166,7 @@ fn eda_summary_missing_file() {
 
 #[test]
 fn eda_corr_too_few_cols() {
-    let mut cmd = Command::cargo_bin("sf").unwrap();
+    let mut cmd = Command::cargo_bin("stats-workbench").unwrap();
     cmd.args([
         "eda",
         "corr",
