@@ -33,13 +33,13 @@ python3 prepare.py
 
 ```bash
 # 相関分析
-sf run examples/auto_mpg/corr_efficiency.toml
+stats-workbench run examples/auto_mpg/corr_efficiency.toml
 
 # 分布分析
-sf run examples/auto_mpg/dist_mpg.toml
+stats-workbench run examples/auto_mpg/dist_mpg.toml
 
 # 外れ値検出
-sf run examples/auto_mpg/outlier_weight.toml
+stats-workbench run examples/auto_mpg/outlier_weight.toml
 ```
 
 ## このデータセットで示せること
