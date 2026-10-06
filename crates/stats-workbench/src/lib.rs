@@ -1,6 +1,6 @@
 //! Public Rust SDK for Stats Workbench.
 //!
-//! The `statforge` crate exposes stable, high-level entrypoints for running
+//! The `stats-workbench` crate exposes stable, high-level entrypoints for running
 //! analysis steps or full TOML recipes without depending on internal crates.
 
 pub mod output;
