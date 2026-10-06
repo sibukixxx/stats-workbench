@@ -1,4 +1,4 @@
-//! Public Rust SDK for StatForge.
+//! Public Rust SDK for Stats Workbench.
 //!
 //! The `statforge` crate exposes stable, high-level entrypoints for running
 //! analysis steps or full TOML recipes without depending on internal crates.
@@ -19,14 +19,14 @@ pub use sf_core::{
 };
 
 pub type Result<T> = SfResult<T>;
-pub type StatForgeError = SfError;
+pub type StatsWorkbenchError = SfError;
 pub type Source = sf_core::SourceSpec;
 pub type Step = sf_core::StepSpec;
 
 /// High-level SDK entrypoints.
-pub struct StatForge;
+pub struct StatsWorkbench;
 
-impl StatForge {
+impl StatsWorkbench {
     /// Parse a recipe TOML document with environment-variable expansion.
     ///
     /// Only `SF_*` variables and `DATABASE_URL` may be referenced, and output
@@ -122,7 +122,7 @@ mod tests {
 
     #[test]
     fn loads_recipe_from_toml_text() {
-        let recipe = StatForge::parse_recipe(
+        let recipe = StatsWorkbench::parse_recipe(
             r#"
 [source]
 type = "parquet"

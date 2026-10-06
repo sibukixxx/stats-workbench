@@ -1,5 +1,5 @@
 use polars::prelude::*;
-use statforge::{output, source, step, StatForge};
+use stats_workbench::{output, source, step, Stats Workbench};
 use std::fs;
 use std::path::{Path, PathBuf};
 
@@ -48,7 +48,7 @@ async fn run_step_returns_summary_artifact() {
 
     let source = source::parquet(fixture_path().display().to_string());
     let step = step::summary(["price", "quantity"]);
-    let result = StatForge::run_step(&source, &step).await.unwrap();
+    let result = StatsWorkbench::run_step(&source, &step).await.unwrap();
 
     assert_eq!(result.metadata().source_type, "parquet");
     assert_eq!(result.execution().steps_executed, 1);
@@ -86,7 +86,7 @@ cols = ["price", "quantity"]
     )
     .unwrap();
 
-    let result = StatForge::run_recipe_file(&recipe_path).await.unwrap();
+    let result = StatsWorkbench::run_recipe_file(&recipe_path).await.unwrap();
     let expected_recipe_path = recipe_path.display().to_string();
 
     assert_eq!(
@@ -105,7 +105,7 @@ async fn json_output_can_target_selected_artifacts() {
 
     let source = source::parquet(fixture_path().display().to_string());
     let step = step::summary(["price", "quantity"]);
-    let result = StatForge::run_step(&source, &step).await.unwrap();
+    let result = StatsWorkbench::run_step(&source, &step).await.unwrap();
 
     output::to_json(
         &result,
@@ -125,9 +125,9 @@ async fn json_output_can_target_selected_artifacts() {
     assert!(artifacts.contains_key("step_01_eda_summary"));
 }
 
-fn artifact_to_json(artifact: &statforge::Artifact) -> serde_json::Value {
+fn artifact_to_json(artifact: &stats_workbench::Artifact) -> serde_json::Value {
     match artifact {
-        statforge::Artifact::Stats(stats) => serde_json::json!({
+        stats_workbench::Artifact::Stats(stats) => serde_json::json!({
             "kind": format!("{:?}", stats.kind),
             "values": stats.values,
         }),

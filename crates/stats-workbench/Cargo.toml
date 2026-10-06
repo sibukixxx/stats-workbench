@@ -1,5 +1,5 @@
 [package]
-name = "statforge"
+name = "stats-workbench"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
@@ -7,7 +7,7 @@ rust-version.workspace = true
 repository.workspace = true
 homepage.workspace = true
 description = "Public Rust SDK for reproducible statistical analysis on Parquet, SQLite, and PostgreSQL sources."
-documentation = "https://docs.rs/statforge"
+documentation = "https://docs.rs/stats-workbench"
 readme = "../../README.md"
 keywords = ["statistics", "data", "analysis", "parquet", "sdk"]
 categories = ["science", "data-structures"]

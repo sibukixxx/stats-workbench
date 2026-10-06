@@ -4,7 +4,7 @@
 //   cargo run --example generate_sample_data
 //
 // examples/ 配下のレシピで使うサンプル Parquet を生成します。
-// 外部データのダウンロード不要で、すぐに StatForge を試せます。
+// 外部データのダウンロード不要で、すぐに Stats Workbench を試せます。
 
 use polars::prelude::*;
 use std::fs;
