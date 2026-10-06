@@ -8,7 +8,7 @@ use support::setup_sqlite_fixture;
 fn sqlite_summary_with_table_works() {
     let source = setup_sqlite_fixture();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "eda",
@@ -30,7 +30,7 @@ fn sqlite_summary_with_table_works() {
 fn sqlite_outlier_with_query_works() {
     let source = setup_sqlite_fixture();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "stats",
@@ -52,7 +52,7 @@ fn sqlite_outlier_with_query_works() {
 fn sqlite_source_requires_table_or_query() {
     let source = setup_sqlite_fixture();
 
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args(["eda", "summary", "--source", &source, "--cols", "price"])
         .assert()
@@ -64,7 +64,7 @@ fn sqlite_source_requires_table_or_query() {
 
 #[test]
 fn postgres_source_requires_table_or_query() {
-    Command::cargo_bin("sf")
+    Command::cargo_bin("stats-workbench")
         .unwrap()
         .args([
             "eda",
