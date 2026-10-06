@@ -1,0 +1,32 @@
+[source]
+type = "parquet"
+path = "tests/fixtures/parquet/timeseries.parquet"
+
+[[steps]]
+id = "adf_test"
+type = "ts.adf"
+time_col = "time"
+value_col = "value"
+max_lag = 4
+
+[[steps]]
+id = "decomposition"
+type = "ts.decompose"
+time_col = "time"
+value_col = "value"
+period = 12
+
+[[steps]]
+id = "forecast"
+type = "ts.forecast"
+time_col = "time"
+value_col = "value"
+order = [1, 1, 0]
+horizon = 10
+confidence = 0.95
+
+[output]
+terminal = true
+format = "json"
+path = "tests/fixtures/output/ts_pipeline_result.json"
+artifacts = ["adf_test", "decomposition", "forecast"]

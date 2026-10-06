@@ -1,0 +1,19 @@
+[source]
+type = "parquet"
+path = "tests/fixtures/parquet/regression.parquet"
+
+[[steps]]
+id = "regress"
+type = "model.regress"
+target = "revenue"
+predictors = ["price", "quantity"]
+confidence_level = 0.95
+
+[[steps]]
+id = "diagnose"
+type = "model.diagnose"
+target = "revenue"
+predictors = ["price", "quantity"]
+
+[output]
+terminal = true
