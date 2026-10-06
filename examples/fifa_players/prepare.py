@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Convert FIFA 22 Player CSV to Parquet for StatForge.
+"""Convert FIFA 22 Player CSV to Parquet for Stats Workbench.
 
 Usage:
     python3 prepare.py
