@@ -6,18 +6,18 @@ license.workspace = true
 rust-version.workspace = true
 repository.workspace = true
 homepage.workspace = true
-description = "Command-line interface for StatForge."
-documentation = "https://docs.rs/sf-cli"
+description = "Command-line interface for Stats Workbench."
+documentation = "https://docs.rs/stats-workbench"
 readme = "../../README.md"
 keywords = ["statistics", "cli", "analysis"]
 categories = ["command-line-utilities", "science"]
 
 [[bin]]
-name = "sf"
+name = "stats-workbench"
 path = "src/main.rs"
 
 [dependencies]
-statforge = { version = "0.1.0", path = "../statforge" }
+stats-workbench = { version = "0.1.0", path = "../stats-workbench" }
 sf-core = { version = "0.1.0", path = "../sf-core" }
 sf-engine = { version = "0.1.0", path = "../sf-engine" }
 polars = { workspace = true }
