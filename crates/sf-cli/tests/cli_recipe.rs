@@ -9,7 +9,7 @@ fn recipe_eda_summary() {
     setup_fixture();
     let root = workspace_root();
 
-    let mut cmd = Command::cargo_bin("sf").unwrap();
+    let mut cmd = Command::cargo_bin("stats-workbench").unwrap();
     cmd.current_dir(&root);
     cmd.args(["run", "--recipe", "tests/fixtures/recipes/eda_summary.toml"]);
 
@@ -28,7 +28,7 @@ fn recipe_eda_full_pipeline() {
     let output_path = root.join("tests/fixtures/output/eda_full_result.json");
     let _ = std::fs::remove_file(&output_path);
 
-    let mut cmd = Command::cargo_bin("sf").unwrap();
+    let mut cmd = Command::cargo_bin("stats-workbench").unwrap();
     cmd.current_dir(&root);
     cmd.args(["run", "--recipe", "tests/fixtures/recipes/eda_full.toml"]);
 
@@ -55,7 +55,7 @@ fn recipe_regression_pipeline() {
     setup_regression_fixture();
     let root = workspace_root();
 
-    let mut cmd = Command::cargo_bin("sf").unwrap();
+    let mut cmd = Command::cargo_bin("stats-workbench").unwrap();
     cmd.current_dir(&root);
     cmd.args(["run", "--recipe", "tests/fixtures/recipes/regression.toml"]);
 
@@ -98,7 +98,7 @@ fn recipe_ts_pipeline() {
     let output_path = root.join("tests/fixtures/output/ts_pipeline_result.json");
     let _ = std::fs::remove_file(&output_path);
 
-    let mut cmd = Command::cargo_bin("sf").unwrap();
+    let mut cmd = Command::cargo_bin("stats-workbench").unwrap();
     cmd.current_dir(&root);
     cmd.args(["run", "--recipe", "tests/fixtures/recipes/ts_pipeline.toml"]);
 
@@ -124,7 +124,7 @@ fn recipe_ts_pipeline() {
 fn recipe_broken_toml() {
     let root = workspace_root();
 
-    let mut cmd = Command::cargo_bin("sf").unwrap();
+    let mut cmd = Command::cargo_bin("stats-workbench").unwrap();
     cmd.current_dir(&root);
     cmd.args(["run", "--recipe", "tests/fixtures/recipes/broken.toml"]);
 
@@ -135,7 +135,7 @@ fn recipe_broken_toml() {
 
 #[test]
 fn recipe_nonexistent_file() {
-    let mut cmd = Command::cargo_bin("sf").unwrap();
+    let mut cmd = Command::cargo_bin("stats-workbench").unwrap();
     cmd.args(["run", "--recipe", "nonexistent_recipe.toml"]);
 
     cmd.assert().failure();
