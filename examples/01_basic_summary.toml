@@ -3,7 +3,7 @@
 # 最もシンプルな使い方。売上データの基本統計量を確認する。
 #
 # 準備:
-#   cargo run -p statforge --example generate_sample_data
+#   cargo run -p stats-workbench --example generate_sample_data
 #
 # 実行:
 #   sf run --recipe examples/01_basic_summary.toml
