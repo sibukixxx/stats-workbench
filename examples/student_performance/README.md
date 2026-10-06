@@ -45,15 +45,15 @@ python3 prepare.py
 
 ```bash
 # 成績間の相関分析
-sf run --recipe examples/student_performance/corr_grades.toml
+stats-workbench run --recipe examples/student_performance/corr_grades.toml
 
 # 最終成績の分布
-sf run --recipe examples/student_performance/dist_final_grade.toml
+stats-workbench run --recipe examples/student_performance/dist_final_grade.toml
 
 # 欠席・不合格の外れ値検出
-sf run --recipe examples/student_performance/outlier_absences.toml
+stats-workbench run --recipe examples/student_performance/outlier_absences.toml
 
 # CLI で直接実行する場合:
-sf eda summary --source examples/student_performance/data/student_performance.parquet --cols G1,G2,G3,absences
-sf eda corr --source examples/student_performance/data/student_performance.parquet --cols G1,G2,G3 --method pearson
+stats-workbench eda summary --source examples/student_performance/data/student_performance.parquet --cols G1,G2,G3,absences
+stats-workbench eda corr --source examples/student_performance/data/student_performance.parquet --cols G1,G2,G3 --method pearson
 ```
