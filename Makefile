@@ -14,6 +14,7 @@ OUT ?=
 FORMAT ?=
 
 .PHONY: help build check fmt fmt-check clippy test clean dev \
+	web-install web-test web-build release-check \
 	run-summary run-corr run-outlier run-recipe
 
 help:
@@ -29,6 +30,7 @@ help:
 		'  test         Run the workspace test suite' \
 		'  dev          Run the default CLI flow against bundled fixtures' \
 		'  clean        Remove build artifacts' \
+		'  release-check Run the deterministic OSS release gate' \
 		'' \
 		'CLI targets:' \
 		'  run-summary  Run EDA summary against SOURCE/COLS' \
@@ -58,10 +60,21 @@ fmt-check:
 	$(CARGO) fmt --all --check
 
 clippy:
-	$(CARGO) clippy --workspace --all-targets
+	$(CARGO) clippy --workspace --all-targets -- -D warnings
 
 test:
 	$(CARGO) test --workspace
+
+web-install:
+	cd apps/web && pnpm install --frozen-lockfile
+
+web-test: web-install
+	cd apps/web && pnpm test
+
+web-build: web-install
+	cd apps/web && pnpm build
+
+release-check: fmt-check clippy test build web-test web-build
 
 dev: run-summary
 
