@@ -14,7 +14,7 @@ OUT ?=
 FORMAT ?=
 
 .PHONY: help build check fmt fmt-check clippy test clean dev \
-	web-install web-test web-build release-check \
+	web-install web-test web-build test-analytical release-check \
 	run-summary run-corr run-outlier run-recipe
 
 help:
@@ -74,7 +74,11 @@ web-test: web-install
 web-build: web-install
 	cd apps/web && pnpm build
 
-release-check: fmt-check clippy test build web-test web-build
+test-analytical:
+	python3 scripts/test_export_analytical.py
+	python3 -m unittest discover -s examples/insight-population -p test_fixture.py
+
+release-check: fmt-check clippy test build test-analytical web-test web-build
 
 dev: run-summary
 

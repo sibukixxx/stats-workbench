@@ -1,0 +1,15 @@
+[source]
+type = "sqlite"
+path = "${SF_POPULATION_DB}"
+query = "SELECT population FROM population WHERE year = 2020 ORDER BY region_code"
+
+[[steps]]
+id = "summary"
+type = "eda.summary"
+cols = ["population"]
+
+[output]
+terminal = false
+format = "json"
+path = "${SF_POPULATION_RESULT}"
+artifacts = ["summary"]

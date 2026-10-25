@@ -17,6 +17,7 @@ Stats Workbench is for developers and data workflows that need statistical compu
 - terminal, JSON, and Parquet output
 - Parquet, read-only SQLite, and PostgreSQL inputs
 - the same analysis engine through a Rust SDK
+- optional [Insight Analytical Artifact v1 export](docs/analytical-export.md) with input/spec hashes and provenance
 - optional Preact web UI
 
 It produces statistical results and analytical artifacts. It does **not** turn those results into causal conclusions or business decisions.
