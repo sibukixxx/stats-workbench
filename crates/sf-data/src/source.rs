@@ -8,12 +8,12 @@ impl SourceLoader {
         match spec {
             SourceSpec::Parquet { path } => {
                 let lf = crate::parquet::read_parquet(path)?;
-                Ok(DatasetRef::Lazy(lf))
+                Ok(DatasetRef::Lazy(Box::new(lf)))
             }
             SourceSpec::Sqlite { path, table, query } => {
                 let lf =
                     crate::sqlite::read_sqlite(path, table.as_deref(), query.as_deref()).await?;
-                Ok(DatasetRef::Lazy(lf))
+                Ok(DatasetRef::Lazy(Box::new(lf)))
             }
             SourceSpec::Postgres {
                 url,
@@ -28,7 +28,7 @@ impl SourceLoader {
                     filter.as_deref(),
                 )
                 .await?;
-                Ok(DatasetRef::Lazy(lf))
+                Ok(DatasetRef::Lazy(Box::new(lf)))
             }
         }
     }

@@ -47,10 +47,7 @@ pub fn compute_adf(
     let is_stationary = t_stat < critical_values[1]; // 5% level
 
     let mut values_map = BTreeMap::new();
-    values_map.insert(
-        "test_statistic".to_string(),
-        serde_json::json!(t_stat),
-    );
+    values_map.insert("test_statistic".to_string(), serde_json::json!(t_stat));
     values_map.insert("lag_used".to_string(), serde_json::json!(lag));
     values_map.insert("n_obs".to_string(), serde_json::json!(n_obs));
     values_map.insert(
@@ -177,6 +174,10 @@ fn ols_with_se(x: &[Vec<f64>], y: &[f64], k: usize) -> (Vec<f64>, Vec<f64>) {
 }
 
 /// Invert a small square matrix using Gauss-Jordan elimination.
+#[allow(
+    clippy::needless_range_loop,
+    reason = "Gauss-Jordan elimination indexes both pivot and target rows"
+)]
 fn invert_matrix(m: &[Vec<f64>]) -> Option<Vec<Vec<f64>>> {
     let n = m.len();
     let mut aug: Vec<Vec<f64>> = m
@@ -286,9 +287,9 @@ fn mackinnon_critical_values(n: usize) -> [f64; 3] {
     let n_f = n as f64;
     // Approximations for constant-only case
     [
-        -3.43035 - 6.5393 / n_f - 16.786 / (n_f * n_f),   // 1%
-        -2.86154 - 2.7882 / n_f - 3.5529 / (n_f * n_f),   // 5%
-        -2.56677 - 1.5384 / n_f - 2.8099 / (n_f * n_f),   // 10%
+        -3.43035 - 6.5393 / n_f - 16.786 / (n_f * n_f), // 1%
+        -2.86154 - 2.7882 / n_f - 3.5529 / (n_f * n_f), // 5%
+        -2.56677 - 1.5384 / n_f - 2.8099 / (n_f * n_f), // 10%
     ]
 }
 
@@ -300,9 +301,7 @@ fn series_to_f64_vec(s: &Series) -> SfResult<Vec<f64>> {
         SfError::Execution(format!("Cannot extract f64 from '{}': {}", s.name(), e))
     })?;
 
-    let values: Vec<f64> = ca
-        .into_no_null_iter()
-        .collect();
+    let values: Vec<f64> = ca.into_no_null_iter().collect();
 
     if values.len() != s.len() - s.null_count() {
         // Filter nulls: use only non-null values
@@ -330,9 +329,8 @@ mod tests {
     fn adf_returns_stationary_for_white_noise() {
         // White noise (mean-zero, stationary)
         let values: Vec<f64> = vec![
-            0.5, -0.3, 0.8, -0.1, 0.4, -0.6, 0.2, -0.4, 0.7, -0.2,
-            0.3, -0.5, 0.6, -0.3, 0.1, -0.7, 0.4, -0.2, 0.5, -0.1,
-            0.2, -0.4, 0.3, -0.6, 0.1, -0.3, 0.5, -0.2, 0.4, -0.5,
+            0.5, -0.3, 0.8, -0.1, 0.4, -0.6, 0.2, -0.4, 0.7, -0.2, 0.3, -0.5, 0.6, -0.3, 0.1, -0.7,
+            0.4, -0.2, 0.5, -0.1, 0.2, -0.4, 0.3, -0.6, 0.1, -0.3, 0.5, -0.2, 0.4, -0.5,
         ];
         let df = make_ts_df(&values);
         let result = compute_adf(&df, "time", "value", 4).unwrap();
@@ -351,9 +349,8 @@ mod tests {
         // Random walk: y_t = y_{t-1} + noise (non-stationary)
         let mut values = vec![0.0_f64];
         let increments = [
-            0.5, 0.3, 0.8, 0.1, 0.4, 0.6, 0.2, 0.4, 0.7, 0.2,
-            0.3, 0.5, 0.6, 0.3, 0.1, 0.7, 0.4, 0.2, 0.5, 0.1,
-            0.2, 0.4, 0.3, 0.6, 0.1, 0.3, 0.5, 0.2, 0.4, 0.5,
+            0.5, 0.3, 0.8, 0.1, 0.4, 0.6, 0.2, 0.4, 0.7, 0.2, 0.3, 0.5, 0.6, 0.3, 0.1, 0.7, 0.4,
+            0.2, 0.5, 0.1, 0.2, 0.4, 0.3, 0.6, 0.1, 0.3, 0.5, 0.2, 0.4, 0.5,
         ];
         for inc in &increments {
             let last = *values.last().unwrap();

@@ -2,11 +2,11 @@ use polars::prelude::{DataFrame, IntoLazy, LazyFrame};
 
 /// Two-mode dataset reference.
 ///
-/// LazyFrame for deferred evaluation (parquet scan, query pushdown).
+/// Boxed LazyFrame for deferred evaluation (parquet scan, query pushdown).
 /// Materialized when a step needs random access or repeated iteration.
 #[derive(Clone)]
 pub enum DatasetRef {
-    Lazy(LazyFrame),
+    Lazy(Box<LazyFrame>),
     Materialized(DataFrame),
 }
 
@@ -30,7 +30,7 @@ impl DatasetRef {
     /// Get a LazyFrame. If materialized, convert back to lazy.
     pub fn lazy(&self) -> LazyFrame {
         match self {
-            DatasetRef::Lazy(lf) => lf.clone(),
+            DatasetRef::Lazy(lf) => lf.as_ref().clone(),
             DatasetRef::Materialized(df) => df.clone().lazy(),
         }
     }
@@ -38,7 +38,7 @@ impl DatasetRef {
     /// Collect into a DataFrame. If already materialized, return clone.
     pub fn collect(&self) -> Result<DataFrame, polars::error::PolarsError> {
         match self {
-            DatasetRef::Lazy(lf) => lf.clone().collect(),
+            DatasetRef::Lazy(lf) => lf.as_ref().clone().collect(),
             DatasetRef::Materialized(df) => Ok(df.clone()),
         }
     }

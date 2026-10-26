@@ -26,8 +26,7 @@ fn setup_ts_fixture() {
     let values: Vec<f64> = (0..n)
         .map(|i| {
             let trend = 10.0 + 0.3 * i as f64;
-            let seasonal =
-                5.0 * (2.0 * std::f64::consts::PI * i as f64 / 12.0).sin();
+            let seasonal = 5.0 * (2.0 * std::f64::consts::PI * i as f64 / 12.0).sin();
             let noise = ((i * 7 + 3) % 11) as f64 * 0.1 - 0.5;
             trend + seasonal + noise
         })
@@ -40,9 +39,7 @@ fn setup_ts_fixture() {
     .unwrap();
 
     let mut file = std::fs::File::create(&path).unwrap();
-    ParquetWriter::new(&mut file)
-        .finish(&mut df)
-        .unwrap();
+    ParquetWriter::new(&mut file).finish(&mut df).unwrap();
 }
 
 #[test]

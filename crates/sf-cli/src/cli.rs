@@ -210,7 +210,6 @@ pub struct OutlierArgs {
     pub cols: Vec<String>,
 }
 
-
 // ── Model ──────────────────────────────────────────
 
 #[derive(Parser, Debug)]

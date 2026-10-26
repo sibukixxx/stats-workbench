@@ -5,7 +5,9 @@ use tracing_subscriber::EnvFilter;
 mod cli;
 mod handlers;
 
-use cli::{Cli, Command, EdaSubcommand, InferSubcommand, ModelSubcommand, StatsSubcommand, TsSubcommand};
+use cli::{
+    Cli, Command, EdaSubcommand, InferSubcommand, ModelSubcommand, StatsSubcommand, TsSubcommand,
+};
 
 #[tokio::main]
 async fn main() -> Result<()> {

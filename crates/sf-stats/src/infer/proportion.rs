@@ -95,10 +95,7 @@ mod tests {
     fn proportion_test_returns_correct_structure() {
         let result = compute_proportion_test(100, 60, 0.5, 0.95, Alternative::TwoSided).unwrap();
         assert!(matches!(result.kind, StatsKind::ProportionTest));
-        assert_eq!(
-            result.values["test"].as_str(),
-            Some("proportion_z_test")
-        );
+        assert_eq!(result.values["test"].as_str(), Some("proportion_z_test"));
         assert!(result.values.contains_key("z_statistic"));
         assert!(result.values.contains_key("p_value"));
         assert!(result.values.contains_key("ci_lower"));
@@ -111,7 +108,11 @@ mod tests {
         // 50 out of 100 when testing p0=0.5
         let result = compute_proportion_test(100, 50, 0.5, 0.95, Alternative::TwoSided).unwrap();
         let p = result.values["p_value"].as_f64().unwrap();
-        assert!(p > 0.9, "p-value should be very high when p_hat == p0, got {}", p);
+        assert!(
+            p > 0.9,
+            "p-value should be very high when p_hat == p0, got {}",
+            p
+        );
     }
 
     #[test]

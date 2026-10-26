@@ -34,8 +34,8 @@ pub fn compute_regression(
 
     // Build design matrix X (n × p) with intercept column
     let mut x_mat = vec![vec![0.0; p]; n];
-    for i in 0..n {
-        x_mat[i][0] = 1.0; // intercept
+    for row in &mut x_mat {
+        row[0] = 1.0;
     }
     for (j, pred_name) in predictors.iter().enumerate() {
         let col_vals = extract_f64_column(df, pred_name)?;
@@ -70,7 +70,11 @@ pub fn compute_regression(
         .collect();
 
     // Residuals: e = y - ŷ
-    let residuals: Vec<f64> = y.iter().zip(y_hat.iter()).map(|(yi, yhi)| yi - yhi).collect();
+    let residuals: Vec<f64> = y
+        .iter()
+        .zip(y_hat.iter())
+        .map(|(yi, yhi)| yi - yhi)
+        .collect();
 
     // SSE, SSR, SST
     let y_mean: f64 = y.iter().sum::<f64>() / n as f64;
@@ -145,10 +149,7 @@ pub fn compute_regression(
         serde_json::json!(confidence_level),
     );
     values.insert("target".to_string(), serde_json::json!(target));
-    values.insert(
-        "predictors".to_string(),
-        serde_json::to_value(predictors)?,
-    );
+    values.insert("predictors".to_string(), serde_json::to_value(predictors)?);
     values.insert("predictions".to_string(), serde_json::to_value(&y_hat)?);
     values.insert("residuals".to_string(), serde_json::to_value(&residuals)?);
 
@@ -177,8 +178,8 @@ fn mat_mul_ata(a: &[Vec<f64>], n: usize, p: usize) -> Vec<Vec<f64>> {
     for i in 0..p {
         for j in i..p {
             let mut sum = 0.0;
-            for k in 0..n {
-                sum += a[k][i] * a[k][j];
+            for row in a.iter().take(n) {
+                sum += row[i] * row[j];
             }
             result[i][j] = sum;
             result[j][i] = sum;
@@ -214,6 +215,10 @@ fn mat_mul_mv(m: &[Vec<f64>], v: &[f64], p: usize) -> Vec<f64> {
 }
 
 /// Invert a p×p matrix using Gauss-Jordan elimination.
+#[allow(
+    clippy::needless_range_loop,
+    reason = "Gauss-Jordan elimination indexes both pivot and target rows"
+)]
 pub(crate) fn mat_invert(m: &[Vec<f64>], p: usize) -> SfResult<Vec<Vec<f64>>> {
     // Augmented matrix [M | I]
     let mut aug = vec![vec![0.0; 2 * p]; p];
@@ -361,7 +366,9 @@ fn ln_gamma(x: f64) -> f64 {
         let s = coefficients[1..]
             .iter()
             .enumerate()
-            .fold(coefficients[0], |acc, (i, &c)| acc + c / (i as f64 + 1.0 - x));
+            .fold(coefficients[0], |acc, (i, &c)| {
+                acc + c / (i as f64 + 1.0 - x)
+            });
         std::f64::consts::PI.ln()
             - (std::f64::consts::PI * x).sin().ln()
             - s.ln()
@@ -373,9 +380,10 @@ fn ln_gamma(x: f64) -> f64 {
         let s = coefficients[1..]
             .iter()
             .enumerate()
-            .fold(coefficients[0], |acc, (i, &c)| acc + c / (x + i as f64 + 1.0));
-        (2.0 * std::f64::consts::PI).ln() / 2.0 + s.ln() + (x + 7.5).ln() * (x + 0.5)
-            - (x + 7.5)
+            .fold(coefficients[0], |acc, (i, &c)| {
+                acc + c / (x + i as f64 + 1.0)
+            });
+        (2.0 * std::f64::consts::PI).ln() / 2.0 + s.ln() + (x + 7.5).ln() * (x + 0.5) - (x + 7.5)
     }
 }
 
@@ -410,8 +418,8 @@ fn beta_continued_fraction(a: f64, b: f64, x: f64) -> f64 {
         f *= c * d;
 
         // Odd step: d_{2m+1}
-        let num = -(a + m_f64) * (a + b + m_f64) * x
-            / ((a + 2.0 * m_f64) * (a + 2.0 * m_f64 + 1.0));
+        let num =
+            -(a + m_f64) * (a + b + m_f64) * x / ((a + 2.0 * m_f64) * (a + 2.0 * m_f64 + 1.0));
         d = 1.0 + num * d;
         if d.abs() < tiny {
             d = tiny;
@@ -485,8 +493,7 @@ mod tests {
     #[test]
     fn multiple_regression_returns_correct_parameter_count() {
         let df = noisy_df();
-        let result =
-            compute_regression(&df, "y", &["x1".into(), "x2".into()], 0.95).unwrap();
+        let result = compute_regression(&df, "y", &["x1".into(), "x2".into()], 0.95).unwrap();
 
         let coeffs = result
             .values
@@ -561,12 +568,7 @@ mod tests {
         let df = test_df();
         let result = compute_regression(&df, "y", &["x".into()], 0.95).unwrap();
 
-        let resids = result
-            .values
-            .get("residuals")
-            .unwrap()
-            .as_array()
-            .unwrap();
+        let resids = result.values.get("residuals").unwrap().as_array().unwrap();
         for r in resids {
             assert!(r.as_f64().unwrap().abs() < 1e-8);
         }
@@ -612,7 +614,14 @@ mod tests {
         for &prob in &[0.025, 0.05, 0.5, 0.95, 0.975] {
             let t = t_quantile(prob, df);
             let p = t_cdf(t, df);
-            assert!((p - prob).abs() < 1e-6, "t_quantile({}, {}) = {}, cdf = {}", prob, df, t, p);
+            assert!(
+                (p - prob).abs() < 1e-6,
+                "t_quantile({}, {}) = {}, cdf = {}",
+                prob,
+                df,
+                t,
+                p
+            );
         }
     }
 
@@ -645,9 +654,13 @@ mod tests {
         let inv = mat_invert(&m, 2).unwrap();
 
         // M * M^{-1} ≈ I
-        for i in 0..2 {
-            for j in 0..2 {
-                let val: f64 = (0..2).map(|k| m[i][k] * inv[k][j]).sum();
+        for (i, row) in m.iter().enumerate() {
+            for (j, _) in inv[0].iter().enumerate() {
+                let val: f64 = row
+                    .iter()
+                    .zip(&inv)
+                    .map(|(value, inverse_row)| value * inverse_row[j])
+                    .sum();
                 let expected = if i == j { 1.0 } else { 0.0 };
                 assert!((val - expected).abs() < 1e-10);
             }

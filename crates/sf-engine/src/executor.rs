@@ -30,8 +30,7 @@ impl StepExecutor {
             }
             StepSpec::EdaCorrelation(spec) => {
                 let df = resolve_input_df(ctx, step.header().input.as_deref())?;
-                let result =
-                    eda::correlation::compute_correlation(&df, &spec.cols, &spec.method)?;
+                let result = eda::correlation::compute_correlation(&df, &spec.cols, &spec.method)?;
                 ctx.artifacts.insert(name, Artifact::Stats(result));
             }
             StepSpec::EdaDist(spec) => {
@@ -137,8 +136,7 @@ impl StepExecutor {
             }
             StepSpec::InferVarianceCi(spec) => {
                 let df = resolve_input_df(ctx, step.header().input.as_deref())?;
-                let result =
-                    infer::ci::compute_variance_ci(&df, &spec.col, spec.confidence)?;
+                let result = infer::ci::compute_variance_ci(&df, &spec.col, spec.confidence)?;
                 ctx.artifacts.insert(name, Artifact::Stats(result));
             }
             StepSpec::InferChiSqIndependence(spec) => {
