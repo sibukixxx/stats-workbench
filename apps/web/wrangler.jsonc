@@ -10,6 +10,8 @@
   // デプロイ: `pnpm deploy:cf` (= pnpm build && wrangler deploy)
   // 詳細:     docs/deploy-cloudflare.md
   "name": "stats-workbench-dashboard",
+  "workers_dev": false,
+  "preview_urls": false,
   "compatibility_date": "2026-08-01",
   "assets": {
     "directory": "./dist",
