@@ -4,12 +4,13 @@
 
 ## 実装と実行結果
 
-- Rust 1.99.0: workspace test/build、fmt --check、clippy --workspace --all-targets -- -D warnings: 成功。
+- Rust 1.99.1: workspace test/build、fmt --check、clippy --workspace --all-targets -- -D warnings: 成功。
 - Python exporter 6件と人口fixture 1件、Web 5件・build・pnpm audit: 成功。
 - 実stats-workbench binary→Insight main 6885c6005c091b70cc0e72f705e103cc6482ca28からbuildした実delivery binaryのloopback HTTP E2E: 成功（skipなし）。STATS_WORKBENCH_COMMIT=0a2217f082343deb4d46ff3307927d6ddaeebd30で再実行。
 - 7 observations、Findingsなし、idempotent receipt、再実行fingerprint一致を確認。fingerprint=529f9bce49a9a0261d01ce44653a900abcf933c4d14b3d0e08f963d615418162。
 - cargo audit（RustSec DB 21d909e4c8bd4e14c7aea58bf980c881a0053ab1、2026-10-24更新）: 既知脆弱性0件。間接proc-macro依存paste 1.0.15にRUSTSEC-2024-0436（保守終了）の情報警告1件。隠蔽・ignore指定なし。
-- Rust 1.89の最低版実行、最適化release build、DB外部接続、live統計ソース再取得は未実施。デバッグbuildと混同しない。
+- `cargo build -p sf-cli --release --locked` と最適化binaryのQuick Start/実Insight E2E: 成功。
+- Rust 1.89の最低版実行、DB外部接続、live統計ソース再取得は未実施。
 
 ## 公開前監査
 
