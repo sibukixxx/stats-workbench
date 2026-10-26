@@ -681,7 +681,6 @@ fn default_p0() -> f64 {
     0.5
 }
 
-
 // ── OutputSpec ──────────────────────────────────────
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

@@ -282,16 +282,56 @@ fn outlier_to_dataframe(stats: &StatsArtifact) -> SfResult<DataFrame> {
 
 /// Convert a t-test result to a single-row DataFrame with key statistics.
 fn ttest_to_dataframe(stats: &StatsArtifact) -> SfResult<DataFrame> {
-    let test = stats.values.get("test").and_then(|v| v.as_str()).unwrap_or("t_test");
-    let col = stats.values.get("column").and_then(|v| v.as_str()).unwrap_or("");
-    let t_stat = stats.values.get("t_statistic").and_then(|v| v.as_f64()).unwrap_or(f64::NAN);
-    let df_val = stats.values.get("df").and_then(|v| v.as_f64()).unwrap_or(f64::NAN);
-    let p_value = stats.values.get("p_value").and_then(|v| v.as_f64()).unwrap_or(f64::NAN);
-    let ci_lower = stats.values.get("ci_lower").and_then(|v| v.as_f64()).unwrap_or(f64::NAN);
-    let ci_upper = stats.values.get("ci_upper").and_then(|v| v.as_f64()).unwrap_or(f64::NAN);
-    let effect_size = stats.values.get("effect_size").and_then(|v| v.as_f64()).unwrap_or(f64::NAN);
-    let confidence = stats.values.get("confidence_level").and_then(|v| v.as_f64()).unwrap_or(0.95);
-    let alternative = stats.values.get("alternative").and_then(|v| v.as_str()).unwrap_or("two_sided");
+    let test = stats
+        .values
+        .get("test")
+        .and_then(|v| v.as_str())
+        .unwrap_or("t_test");
+    let col = stats
+        .values
+        .get("column")
+        .and_then(|v| v.as_str())
+        .unwrap_or("");
+    let t_stat = stats
+        .values
+        .get("t_statistic")
+        .and_then(|v| v.as_f64())
+        .unwrap_or(f64::NAN);
+    let df_val = stats
+        .values
+        .get("df")
+        .and_then(|v| v.as_f64())
+        .unwrap_or(f64::NAN);
+    let p_value = stats
+        .values
+        .get("p_value")
+        .and_then(|v| v.as_f64())
+        .unwrap_or(f64::NAN);
+    let ci_lower = stats
+        .values
+        .get("ci_lower")
+        .and_then(|v| v.as_f64())
+        .unwrap_or(f64::NAN);
+    let ci_upper = stats
+        .values
+        .get("ci_upper")
+        .and_then(|v| v.as_f64())
+        .unwrap_or(f64::NAN);
+    let effect_size = stats
+        .values
+        .get("effect_size")
+        .and_then(|v| v.as_f64())
+        .unwrap_or(f64::NAN);
+    let confidence = stats
+        .values
+        .get("confidence_level")
+        .and_then(|v| v.as_f64())
+        .unwrap_or(0.95);
+    let alternative = stats
+        .values
+        .get("alternative")
+        .and_then(|v| v.as_str())
+        .unwrap_or("two_sided");
 
     DataFrame::new(vec![
         Column::new("test".into(), vec![test]),
@@ -310,12 +350,36 @@ fn ttest_to_dataframe(stats: &StatsArtifact) -> SfResult<DataFrame> {
 
 /// Convert a CI result to a single-row DataFrame.
 fn ci_to_dataframe(stats: &StatsArtifact) -> SfResult<DataFrame> {
-    let estimate = stats.values.get("estimate").and_then(|v| v.as_str()).unwrap_or("");
-    let ci_lower = stats.values.get("ci_lower").and_then(|v| v.as_f64()).unwrap_or(f64::NAN);
-    let ci_upper = stats.values.get("ci_upper").and_then(|v| v.as_f64()).unwrap_or(f64::NAN);
-    let confidence = stats.values.get("confidence_level").and_then(|v| v.as_f64()).unwrap_or(0.95);
-    let margin = stats.values.get("margin_of_error").and_then(|v| v.as_f64()).unwrap_or(f64::NAN);
-    let method = stats.values.get("method").and_then(|v| v.as_str()).unwrap_or("");
+    let estimate = stats
+        .values
+        .get("estimate")
+        .and_then(|v| v.as_str())
+        .unwrap_or("");
+    let ci_lower = stats
+        .values
+        .get("ci_lower")
+        .and_then(|v| v.as_f64())
+        .unwrap_or(f64::NAN);
+    let ci_upper = stats
+        .values
+        .get("ci_upper")
+        .and_then(|v| v.as_f64())
+        .unwrap_or(f64::NAN);
+    let confidence = stats
+        .values
+        .get("confidence_level")
+        .and_then(|v| v.as_f64())
+        .unwrap_or(0.95);
+    let margin = stats
+        .values
+        .get("margin_of_error")
+        .and_then(|v| v.as_f64())
+        .unwrap_or(f64::NAN);
+    let method = stats
+        .values
+        .get("method")
+        .and_then(|v| v.as_str())
+        .unwrap_or("");
 
     let mut cols = vec![
         Column::new("estimate".into(), vec![estimate]),
@@ -341,10 +405,26 @@ fn ci_to_dataframe(stats: &StatsArtifact) -> SfResult<DataFrame> {
 
 /// Generic hypothesis test to DataFrame (proportion, chi-square, variance tests).
 fn hypothesis_test_to_dataframe(stats: &StatsArtifact) -> SfResult<DataFrame> {
-    let test = stats.values.get("test").and_then(|v| v.as_str()).unwrap_or("");
-    let df_val = stats.values.get("df").and_then(|v| v.as_f64()).unwrap_or(f64::NAN);
-    let p_value = stats.values.get("p_value").and_then(|v| v.as_f64()).unwrap_or(f64::NAN);
-    let effect_size = stats.values.get("effect_size").and_then(|v| v.as_f64()).unwrap_or(f64::NAN);
+    let test = stats
+        .values
+        .get("test")
+        .and_then(|v| v.as_str())
+        .unwrap_or("");
+    let df_val = stats
+        .values
+        .get("df")
+        .and_then(|v| v.as_f64())
+        .unwrap_or(f64::NAN);
+    let p_value = stats
+        .values
+        .get("p_value")
+        .and_then(|v| v.as_f64())
+        .unwrap_or(f64::NAN);
+    let effect_size = stats
+        .values
+        .get("effect_size")
+        .and_then(|v| v.as_f64())
+        .unwrap_or(f64::NAN);
 
     let mut cols = vec![
         Column::new("test".into(), vec![test]),
@@ -368,8 +448,9 @@ fn hypothesis_test_to_dataframe(stats: &StatsArtifact) -> SfResult<DataFrame> {
         cols.push(Column::new("ci_upper".into(), vec![ci_hi]));
     }
 
-    DataFrame::new(cols)
-        .map_err(|e| SfError::Internal(format!("Hypothesis test Parquet frame build failed: {}", e)))
+    DataFrame::new(cols).map_err(|e| {
+        SfError::Internal(format!("Hypothesis test Parquet frame build failed: {}", e))
+    })
 }
 
 fn regression_to_dataframe(stats: &StatsArtifact) -> SfResult<DataFrame> {
@@ -431,10 +512,7 @@ fn diagnostics_to_dataframe(stats: &StatsArtifact) -> SfResult<DataFrame> {
         .iter()
         .map(|e| required_str(e, "name").map(ToOwned::to_owned))
         .collect();
-    let vifs: SfResult<Vec<f64>> = vif_entries
-        .iter()
-        .map(|e| required_f64(e, "vif"))
-        .collect();
+    let vifs: SfResult<Vec<f64>> = vif_entries.iter().map(|e| required_f64(e, "vif")).collect();
 
     let dw = stats
         .values
@@ -450,7 +528,6 @@ fn diagnostics_to_dataframe(stats: &StatsArtifact) -> SfResult<DataFrame> {
     ])
     .map_err(|e| SfError::Internal(format!("Diagnostics Parquet frame build failed: {}", e)))
 }
-
 
 fn required_str<'a>(value: &'a serde_json::Value, field: &str) -> SfResult<&'a str> {
     value

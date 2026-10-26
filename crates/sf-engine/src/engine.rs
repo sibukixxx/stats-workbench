@@ -141,7 +141,9 @@ impl PipelineEngine {
         use std::path::Component;
 
         let p = Path::new(path);
-        if p.components().any(|c| matches!(c, Component::ParentDir | Component::Prefix(_))) {
+        if p.components()
+            .any(|c| matches!(c, Component::ParentDir | Component::Prefix(_)))
+        {
             return Err(SfError::Validation(format!(
                 "Recipe output path '{}' must not contain '..'",
                 path
@@ -252,7 +254,10 @@ mod tests {
             PipelineEngine::redact_location("postgresql://u@db/app"),
             "postgresql://u@db/app"
         );
-        assert_eq!(PipelineEngine::redact_location("data/x.parquet"), "data/x.parquet");
+        assert_eq!(
+            PipelineEngine::redact_location("data/x.parquet"),
+            "data/x.parquet"
+        );
     }
 
     #[test]
@@ -364,10 +369,7 @@ period = 12
 
         let recipe = PipelineEngine::parse_recipe(text).unwrap();
         assert_eq!(recipe.steps.len(), 1);
-        assert!(matches!(
-            recipe.steps[0],
-            sf_core::StepSpec::TsDecompose(_)
-        ));
+        assert!(matches!(recipe.steps[0], sf_core::StepSpec::TsDecompose(_)));
     }
 
     #[test]
@@ -388,10 +390,7 @@ confidence = 0.95
 
         let recipe = PipelineEngine::parse_recipe(text).unwrap();
         assert_eq!(recipe.steps.len(), 1);
-        assert!(matches!(
-            recipe.steps[0],
-            sf_core::StepSpec::TsForecast(_)
-        ));
+        assert!(matches!(recipe.steps[0], sf_core::StepSpec::TsForecast(_)));
     }
 
     #[test]

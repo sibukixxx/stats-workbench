@@ -119,9 +119,9 @@ pub fn compute_ttest_two_sample(
         .as_materialized_series();
 
     // Get unique groups
-    let groups = group_series.unique().map_err(|e| {
-        SfError::Execution(format!("Failed to get unique groups: {}", e))
-    })?;
+    let groups = group_series
+        .unique()
+        .map_err(|e| SfError::Execution(format!("Failed to get unique groups: {}", e)))?;
     if groups.len() != 2 {
         return Err(SfError::Validation(format!(
             "Two-sample t-test requires exactly 2 groups, found {}",
@@ -192,8 +192,7 @@ pub fn compute_ttest_two_sample(
 
     // Welch-Satterthwaite degrees of freedom
     let num = (var1 / n1_f + var2 / n2_f).powi(2);
-    let denom =
-        (var1 / n1_f).powi(2) / (n1_f - 1.0) + (var2 / n2_f).powi(2) / (n2_f - 1.0);
+    let denom = (var1 / n1_f).powi(2) / (n1_f - 1.0) + (var2 / n2_f).powi(2) / (n2_f - 1.0);
     let df_val = num / denom;
 
     let p_value = match alternative {
@@ -280,7 +279,8 @@ mod tests {
     #[test]
     fn one_sample_ttest_returns_correct_structure() {
         let df = sample_df();
-        let result = compute_ttest_one_sample(&df, "value", 12.0, 0.95, Alternative::TwoSided).unwrap();
+        let result =
+            compute_ttest_one_sample(&df, "value", 12.0, 0.95, Alternative::TwoSided).unwrap();
         assert!(matches!(result.kind, StatsKind::TTest));
         assert_eq!(
             result.values.get("test").and_then(|v| v.as_str()),
@@ -301,7 +301,11 @@ mod tests {
         let result =
             compute_ttest_one_sample(&df, "value", 12.1, 0.95, Alternative::TwoSided).unwrap();
         let p = result.values["p_value"].as_f64().unwrap();
-        assert!(p > 0.5, "p-value should be high when mu0 == mean, got {}", p);
+        assert!(
+            p > 0.5,
+            "p-value should be high when mu0 == mean, got {}",
+            p
+        );
     }
 
     #[test]
@@ -352,10 +356,7 @@ mod tests {
         let df = sample_df();
         let result =
             compute_ttest_one_sample(&df, "value", 12.0, 0.95, Alternative::TwoSided).unwrap();
-        assert_eq!(
-            result.values["effect_size_type"].as_str(),
-            Some("cohens_d")
-        );
+        assert_eq!(result.values["effect_size_type"].as_str(), Some("cohens_d"));
         let d = result.values["effect_size"].as_f64().unwrap();
         // mean=12.1, mu0=12.0, so d should be small positive
         assert!(d > 0.0 && d < 1.0);

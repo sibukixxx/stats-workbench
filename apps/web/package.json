@@ -13,20 +13,20 @@
     "deploy:cf": "pnpm build && wrangler deploy"
   },
   "dependencies": {
-    "@preact/signals": "^2.0.1",
-    "preact": "^10.26.4"
+    "@preact/signals": "^2.11.3",
+    "preact": "^10.29.8"
   },
   "devDependencies": {
-    "@preact/preset-vite": "^2.10.1",
-    "@tailwindcss/vite": "^4.1.8",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/preact": "^3.2.4",
-    "@types/node": "^24.0.0",
+    "@preact/preset-vite": "^2.10.6",
+    "@tailwindcss/vite": "^4.3.3",
+    "@testing-library/jest-dom": "^6.10.0",
+    "@testing-library/preact": "^3.2.6",
+    "@types/node": "^24.19.2",
     "jsdom": "^26.1.0",
-    "tailwindcss": "^4.1.8",
-    "typescript": "^5.8.3",
-    "vite": "^6.3.5",
-    "vitest": "^3.1.4",
-    "wrangler": "^4.128.0"
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.3",
+    "vite": "^6.4.5",
+    "vitest": "^4.1.12",
+    "wrangler": "^4.152.0"
   }
 }

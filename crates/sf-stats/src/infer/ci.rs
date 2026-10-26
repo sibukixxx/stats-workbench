@@ -10,11 +10,7 @@ use super::distributions::{chi2_quantile, normal_quantile, t_quantile};
 ///
 /// Uses the t-distribution when population variance is unknown (which is always
 /// the case in practice).
-pub fn compute_mean_ci(
-    df: &DataFrame,
-    col: &str,
-    confidence: f64,
-) -> SfResult<StatsArtifact> {
+pub fn compute_mean_ci(df: &DataFrame, col: &str, confidence: f64) -> SfResult<StatsArtifact> {
     let series = df
         .column(col)
         .map_err(|e| SfError::Execution(format!("Column '{}' not found: {}", col, e)))?
@@ -69,11 +65,7 @@ pub fn compute_mean_ci(
 /// Compute a confidence interval for the population proportion.
 ///
 /// Uses the normal approximation (Wald interval). Requires np >= 5 and n(1-p) >= 5.
-pub fn compute_proportion_ci(
-    n: u64,
-    successes: u64,
-    confidence: f64,
-) -> SfResult<StatsArtifact> {
+pub fn compute_proportion_ci(n: u64, successes: u64, confidence: f64) -> SfResult<StatsArtifact> {
     if n == 0 {
         return Err(SfError::Validation("Sample size must be > 0".into()));
     }
@@ -103,7 +95,10 @@ pub fn compute_proportion_ci(
     values_map.insert("ci_lower".into(), serde_json::json!(ci_lower));
     values_map.insert("ci_upper".into(), serde_json::json!(ci_upper));
     values_map.insert("margin_of_error".into(), serde_json::json!(margin_of_error));
-    values_map.insert("method".into(), serde_json::json!("wald_normal_approximation"));
+    values_map.insert(
+        "method".into(),
+        serde_json::json!("wald_normal_approximation"),
+    );
 
     Ok(StatsArtifact {
         kind: StatsKind::ConfidenceInterval,
@@ -114,11 +109,7 @@ pub fn compute_proportion_ci(
 /// Compute a confidence interval for the population variance.
 ///
 /// Uses the chi-squared distribution.
-pub fn compute_variance_ci(
-    df: &DataFrame,
-    col: &str,
-    confidence: f64,
-) -> SfResult<StatsArtifact> {
+pub fn compute_variance_ci(df: &DataFrame, col: &str, confidence: f64) -> SfResult<StatsArtifact> {
     let series = df
         .column(col)
         .map_err(|e| SfError::Execution(format!("Column '{}' not found: {}", col, e)))?
@@ -160,7 +151,10 @@ pub fn compute_variance_ci(
     values_map.insert("confidence_level".into(), serde_json::json!(confidence));
     values_map.insert("ci_lower".into(), serde_json::json!(ci_lower));
     values_map.insert("ci_upper".into(), serde_json::json!(ci_upper));
-    values_map.insert("method".into(), serde_json::json!("chi_squared_distribution"));
+    values_map.insert(
+        "method".into(),
+        serde_json::json!("chi_squared_distribution"),
+    );
 
     Ok(StatsArtifact {
         kind: StatsKind::ConfidenceInterval,

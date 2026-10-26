@@ -97,13 +97,19 @@ pub fn compute_arima_forecast(
     cumulative_var[0] = sigma * sigma;
     // MA coefficients affect prediction interval width
     let psi = compute_psi_weights(&ar_coeffs, &ma_coeffs, horizon);
-    for h in 0..horizon {
+    for (h, variance) in cumulative_var.iter_mut().enumerate() {
         let mut var_h = 0.0;
         for j in 0..=h {
-            let psi_j = if j == 0 { 1.0 } else if j <= psi.len() { psi[j - 1] } else { 0.0 };
+            let psi_j = if j == 0 {
+                1.0
+            } else if j <= psi.len() {
+                psi[j - 1]
+            } else {
+                0.0
+            };
             var_h += psi_j * psi_j;
         }
-        cumulative_var[h] = sigma * sigma * var_h;
+        *variance = sigma * sigma * var_h;
     }
 
     // Build time labels for forecast points
@@ -197,9 +203,9 @@ fn fit_ar(y: &[f64], p: usize) -> SfResult<(Vec<f64>, f64, f64)> {
 
     for i in 0..p {
         r_vec[i] = gamma[i + 1];
-        for j in 0..p {
-            let idx = if i >= j { i - j } else { j - i };
-            r_matrix[i][j] = gamma[idx];
+        for (j, value) in r_matrix[i].iter_mut().enumerate() {
+            let idx = i.abs_diff(j);
+            *value = gamma[idx];
         }
     }
 
@@ -220,6 +226,10 @@ fn fit_ar(y: &[f64], p: usize) -> SfResult<(Vec<f64>, f64, f64)> {
 }
 
 /// Solve linear system Ax = b using Gaussian elimination.
+#[allow(
+    clippy::needless_range_loop,
+    reason = "Gaussian elimination indexes both pivot and target rows"
+)]
 fn solve_linear_system(a: &[Vec<f64>], b: &[f64]) -> SfResult<Vec<f64>> {
     let n = a.len();
     let mut aug: Vec<Vec<f64>> = a
@@ -410,7 +420,9 @@ mod tests {
 
     #[test]
     fn arima_forecast_intervals_widen_with_horizon() {
-        let values: Vec<f64> = (0..50).map(|i| 10.0 + 0.5 * i as f64 + (i as f64 * 0.3).sin()).collect();
+        let values: Vec<f64> = (0..50)
+            .map(|i| 10.0 + 0.5 * i as f64 + (i as f64 * 0.3).sin())
+            .collect();
         let df = make_ts_df(&values);
 
         let result = compute_arima_forecast(&df, "time", "value", [1, 1, 0], 10, 0.95).unwrap();
@@ -459,7 +471,9 @@ mod tests {
 
     #[test]
     fn arima_with_ma_component() {
-        let values: Vec<f64> = (0..60).map(|i| 10.0 + 0.3 * i as f64 + (i as f64 * 0.5).sin()).collect();
+        let values: Vec<f64> = (0..60)
+            .map(|i| 10.0 + 0.3 * i as f64 + (i as f64 * 0.5).sin())
+            .collect();
         let df = make_ts_df(&values);
 
         let result = compute_arima_forecast(&df, "time", "value", [1, 1, 1], 5, 0.95).unwrap();

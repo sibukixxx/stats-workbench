@@ -1,6 +1,5 @@
 /target
 /output
-Cargo.lock
 .env
 /apps/web/node_modules
 /apps/web/dist
@@ -16,3 +15,6 @@ crates/sf-cli/tests/fixtures/parquet/
 .venv/
 .pnpm-store/
 /apps/web/.wrangler
+
+.local/
+__pycache__/

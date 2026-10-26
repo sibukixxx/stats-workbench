@@ -31,8 +31,8 @@ pub fn compute_regression_diagnostics(
 
     // Build design matrix
     let mut x_mat = vec![vec![0.0; p]; n];
-    for i in 0..n {
-        x_mat[i][0] = 1.0;
+    for row in &mut x_mat {
+        row[0] = 1.0;
     }
     for (j, pred_name) in predictors.iter().enumerate() {
         let col_vals = extract_f64_column(df, pred_name)?;
@@ -59,7 +59,11 @@ pub fn compute_regression_diagnostics(
     let y_hat: Vec<f64> = (0..n)
         .map(|i| (0..p).map(|j| x_mat[i][j] * beta[j]).sum())
         .collect();
-    let residuals: Vec<f64> = y.iter().zip(y_hat.iter()).map(|(yi, yhi)| yi - yhi).collect();
+    let residuals: Vec<f64> = y
+        .iter()
+        .zip(y_hat.iter())
+        .map(|(yi, yhi)| yi - yhi)
+        .collect();
 
     let sse: f64 = residuals.iter().map(|e| e * e).sum();
     let mse = sse / (n - p) as f64;
@@ -111,7 +115,10 @@ pub fn compute_regression_diagnostics(
 
     // ── Residual statistics ──
     let resid_mean: f64 = residuals.iter().sum::<f64>() / n as f64;
-    let resid_std: f64 = (residuals.iter().map(|e| (e - resid_mean).powi(2)).sum::<f64>()
+    let resid_std: f64 = (residuals
+        .iter()
+        .map(|e| (e - resid_mean).powi(2))
+        .sum::<f64>()
         / (n as f64 - 1.0))
         .sqrt();
     let resid_min = residuals.iter().copied().fold(f64::INFINITY, f64::min);
@@ -119,13 +126,21 @@ pub fn compute_regression_diagnostics(
 
     // ── Shapiro-Wilk approximation: skewness & kurtosis of residuals ──
     let skewness = if resid_std > 0.0 {
-        let m3: f64 = residuals.iter().map(|e| ((e - resid_mean) / resid_std).powi(3)).sum::<f64>() / n as f64;
+        let m3: f64 = residuals
+            .iter()
+            .map(|e| ((e - resid_mean) / resid_std).powi(3))
+            .sum::<f64>()
+            / n as f64;
         m3
     } else {
         0.0
     };
     let kurtosis = if resid_std > 0.0 {
-        let m4: f64 = residuals.iter().map(|e| ((e - resid_mean) / resid_std).powi(4)).sum::<f64>() / n as f64;
+        let m4: f64 = residuals
+            .iter()
+            .map(|e| ((e - resid_mean) / resid_std).powi(4))
+            .sum::<f64>()
+            / n as f64;
         m4 - 3.0 // excess kurtosis
     } else {
         0.0
@@ -137,15 +152,9 @@ pub fn compute_regression_diagnostics(
     // ── Build output ──
     let mut values = BTreeMap::new();
     values.insert("target".to_string(), serde_json::json!(target));
-    values.insert(
-        "predictors".to_string(),
-        serde_json::to_value(predictors)?,
-    );
+    values.insert("predictors".to_string(), serde_json::to_value(predictors)?);
     values.insert("n".to_string(), serde_json::json!(n));
-    values.insert(
-        "durbin_watson".to_string(),
-        serde_json::json!(dw),
-    );
+    values.insert("durbin_watson".to_string(), serde_json::json!(dw));
 
     // VIF per predictor
     let vif_entries: Vec<serde_json::Value> = predictors
@@ -171,7 +180,10 @@ pub fn compute_regression_diagnostics(
     // Leverage summary
     let lev_mean = leverage.iter().sum::<f64>() / n as f64;
     let lev_max = leverage.iter().copied().fold(f64::NEG_INFINITY, f64::max);
-    let high_leverage_count = leverage.iter().filter(|&&h| h > 2.0 * p as f64 / n as f64).count();
+    let high_leverage_count = leverage
+        .iter()
+        .filter(|&&h| h > 2.0 * p as f64 / n as f64)
+        .count();
     values.insert(
         "leverage".to_string(),
         serde_json::json!({
@@ -215,10 +227,7 @@ fn durbin_watson(residuals: &[f64]) -> f64 {
     if residuals.len() < 2 {
         return 0.0;
     }
-    let num: f64 = residuals
-        .windows(2)
-        .map(|w| (w[1] - w[0]).powi(2))
-        .sum();
+    let num: f64 = residuals.windows(2).map(|w| (w[1] - w[0]).powi(2)).sum();
     let den: f64 = residuals.iter().map(|e| e * e).sum();
     if den > 0.0 {
         num / den
@@ -251,8 +260,8 @@ fn compute_vif(df: &DataFrame, predictors: &[String]) -> SfResult<Vec<f64>> {
 
         // Build X with intercept + other predictors
         let mut x_mat = vec![vec![0.0; p]; n];
-        for i in 0..n {
-            x_mat[i][0] = 1.0;
+        for row in &mut x_mat {
+            row[0] = 1.0;
         }
         for (col_j, col_name) in other_cols.iter().enumerate() {
             let vals = extract_f64_column(df, col_name)?;
@@ -284,7 +293,11 @@ fn compute_vif(df: &DataFrame, predictors: &[String]) -> SfResult<Vec<f64>> {
             .collect();
 
         let y_mean: f64 = y.iter().sum::<f64>() / n as f64;
-        let sse: f64 = y.iter().zip(y_hat.iter()).map(|(yi, yhi)| (yi - yhi).powi(2)).sum();
+        let sse: f64 = y
+            .iter()
+            .zip(y_hat.iter())
+            .map(|(yi, yhi)| (yi - yhi).powi(2))
+            .sum();
         let sst: f64 = y.iter().map(|yi| (yi - y_mean).powi(2)).sum();
 
         let r2 = if sst > 0.0 { 1.0 - sse / sst } else { 0.0 };
@@ -305,8 +318,8 @@ fn mat_mul_ata(a: &[Vec<f64>], n: usize, p: usize) -> Vec<Vec<f64>> {
     for i in 0..p {
         for j in i..p {
             let mut sum = 0.0;
-            for k in 0..n {
-                sum += a[k][i] * a[k][j];
+            for row in a.iter().take(n) {
+                sum += row[i] * row[j];
             }
             result[i][j] = sum;
             result[j][i] = sum;
@@ -350,7 +363,7 @@ fn normal_quantile(p: f64) -> f64 {
         -3.969683028665376e+01,
         2.209460984245205e+02,
         -2.759285104469687e+02,
-        1.383577518672690e+02,
+        1.383_577_518_672_69e2,
         -3.066479806614716e+01,
         2.506628277459239e+00,
     ];
@@ -411,18 +424,21 @@ mod tests {
     #[test]
     fn diagnostics_returns_durbin_watson() {
         let df = test_df();
-        let result = compute_regression_diagnostics(&df, "y", &["x1".into(), "x2".into()])
-            .unwrap();
+        let result = compute_regression_diagnostics(&df, "y", &["x1".into(), "x2".into()]).unwrap();
 
-        let dw = result.values.get("durbin_watson").unwrap().as_f64().unwrap();
+        let dw = result
+            .values
+            .get("durbin_watson")
+            .unwrap()
+            .as_f64()
+            .unwrap();
         assert!(dw > 0.0 && dw < 4.0, "DW={}", dw);
     }
 
     #[test]
     fn diagnostics_returns_vif_for_each_predictor() {
         let df = test_df();
-        let result = compute_regression_diagnostics(&df, "y", &["x1".into(), "x2".into()])
-            .unwrap();
+        let result = compute_regression_diagnostics(&df, "y", &["x1".into(), "x2".into()]).unwrap();
 
         let vif = result.values.get("vif").unwrap().as_array().unwrap();
         assert_eq!(vif.len(), 2);
@@ -435,8 +451,7 @@ mod tests {
     #[test]
     fn diagnostics_returns_leverage_info() {
         let df = test_df();
-        let result = compute_regression_diagnostics(&df, "y", &["x1".into(), "x2".into()])
-            .unwrap();
+        let result = compute_regression_diagnostics(&df, "y", &["x1".into(), "x2".into()]).unwrap();
 
         let lev = result.values.get("leverage").unwrap();
         assert!(lev.get("mean").is_some());
@@ -448,8 +463,7 @@ mod tests {
     #[test]
     fn diagnostics_returns_cooks_distance() {
         let df = test_df();
-        let result = compute_regression_diagnostics(&df, "y", &["x1".into(), "x2".into()])
-            .unwrap();
+        let result = compute_regression_diagnostics(&df, "y", &["x1".into(), "x2".into()]).unwrap();
 
         let cooks = result.values.get("cooks_distance").unwrap();
         assert!(cooks.get("max").is_some());
@@ -460,8 +474,7 @@ mod tests {
     #[test]
     fn diagnostics_returns_residual_stats() {
         let df = test_df();
-        let result = compute_regression_diagnostics(&df, "y", &["x1".into(), "x2".into()])
-            .unwrap();
+        let result = compute_regression_diagnostics(&df, "y", &["x1".into(), "x2".into()]).unwrap();
 
         let stats = result.values.get("residual_stats").unwrap();
         assert!(stats.get("mean").is_some());
@@ -475,8 +488,7 @@ mod tests {
     #[test]
     fn diagnostics_returns_qq_data() {
         let df = test_df();
-        let result = compute_regression_diagnostics(&df, "y", &["x1".into(), "x2".into()])
-            .unwrap();
+        let result = compute_regression_diagnostics(&df, "y", &["x1".into(), "x2".into()]).unwrap();
 
         let qq = result.values.get("qq_data").unwrap().as_array().unwrap();
         assert_eq!(qq.len(), 10); // same as n

@@ -200,7 +200,8 @@ mod tests {
         let values: Vec<f64> = (0..n)
             .map(|i| {
                 let trend = 10.0 + 0.5 * i as f64;
-                let seasonal = 3.0 * ((2.0 * std::f64::consts::PI * i as f64) / period as f64).sin();
+                let seasonal =
+                    3.0 * ((2.0 * std::f64::consts::PI * i as f64) / period as f64).sin();
                 trend + seasonal
             })
             .collect();

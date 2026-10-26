@@ -8,7 +8,9 @@ fn top_level_help_shows_japanese_menu_descriptions() {
         .arg("--help")
         .assert()
         .success()
-        .stdout(predicate::str::contains("Stats Workbench の分析メニューです"))
+        .stdout(predicate::str::contains(
+            "Stats Workbench の分析メニューです",
+        ))
         .stdout(predicate::str::contains("探索的データ分析メニュー"))
         .stdout(predicate::str::contains("統計処理メニュー"))
         .stdout(predicate::str::contains("レシピ実行メニュー"));

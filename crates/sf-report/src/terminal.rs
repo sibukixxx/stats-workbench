@@ -203,11 +203,7 @@ fn render_regression(stats: &sf_core::StatsArtifact) {
         .get("f_statistic")
         .and_then(|v| v.as_f64())
         .unwrap_or(0.0);
-    let n = stats
-        .values
-        .get("n")
-        .and_then(|v| v.as_u64())
-        .unwrap_or(0);
+    let n = stats.values.get("n").and_then(|v| v.as_u64()).unwrap_or(0);
     let df_model = stats
         .values
         .get("df_model")
@@ -246,19 +242,16 @@ fn render_regression(stats: &sf_core::StatsArtifact) {
         println!("{}", "-".repeat(97));
         for coeff in coefficients {
             let name = coeff.get("name").and_then(|v| v.as_str()).unwrap_or("?");
-            let est = coeff.get("estimate").and_then(|v| v.as_f64()).unwrap_or(0.0);
+            let est = coeff
+                .get("estimate")
+                .and_then(|v| v.as_f64())
+                .unwrap_or(0.0);
             let se = coeff
                 .get("std_error")
                 .and_then(|v| v.as_f64())
                 .unwrap_or(0.0);
-            let t = coeff
-                .get("t_value")
-                .and_then(|v| v.as_f64())
-                .unwrap_or(0.0);
-            let p = coeff
-                .get("p_value")
-                .and_then(|v| v.as_f64())
-                .unwrap_or(0.0);
+            let t = coeff.get("t_value").and_then(|v| v.as_f64()).unwrap_or(0.0);
+            let p = coeff.get("p_value").and_then(|v| v.as_f64()).unwrap_or(0.0);
             let ci_lo = coeff
                 .get("ci_lower")
                 .and_then(|v| v.as_f64())
@@ -312,7 +305,13 @@ fn render_regression_diagnostics(stats: &sf_core::StatsArtifact) {
         for entry in vif_arr {
             let name = entry.get("name").and_then(|v| v.as_str()).unwrap_or("?");
             let vif = entry.get("vif").and_then(|v| v.as_f64()).unwrap_or(0.0);
-            let flag = if vif > 10.0 { " !!!" } else if vif > 5.0 { " !" } else { "" };
+            let flag = if vif > 10.0 {
+                " !!!"
+            } else if vif > 5.0 {
+                " !"
+            } else {
+                ""
+            };
             println!("{:<15} {:>10.4}{}", name, vif, flag);
         }
     }
@@ -511,7 +510,11 @@ fn render_decompose(stats: &sf_core::StatsArtifact) {
 }
 
 fn render_ttest(stats: &sf_core::StatsArtifact) {
-    let test = stats.values.get("test").and_then(|v| v.as_str()).unwrap_or("t_test");
+    let test = stats
+        .values
+        .get("test")
+        .and_then(|v| v.as_str())
+        .unwrap_or("t_test");
     println!("Test: {}", test);
 
     if let Some(col) = stats.values.get("column").and_then(|v| v.as_str()) {
@@ -548,7 +551,11 @@ fn render_ttest(stats: &sf_core::StatsArtifact) {
         }
     }
 
-    if let Some(es_type) = stats.values.get("effect_size_type").and_then(|v| v.as_str()) {
+    if let Some(es_type) = stats
+        .values
+        .get("effect_size_type")
+        .and_then(|v| v.as_str())
+    {
         println!("{:<20} {:>15}", "Effect Size Type", es_type);
     }
     if let Some(alt) = stats.values.get("alternative").and_then(|v| v.as_str()) {
@@ -559,19 +566,21 @@ fn render_ttest(stats: &sf_core::StatsArtifact) {
     if let (Some(ci_lo), Some(ci_hi), Some(conf)) = (
         stats.values.get("ci_lower").and_then(|v| v.as_f64()),
         stats.values.get("ci_upper").and_then(|v| v.as_f64()),
-        stats.values.get("confidence_level").and_then(|v| v.as_f64()),
+        stats
+            .values
+            .get("confidence_level")
+            .and_then(|v| v.as_f64()),
     ) {
-        println!(
-            "{:.0}% CI: [{:.6}, {:.6}]",
-            conf * 100.0,
-            ci_lo,
-            ci_hi
-        );
+        println!("{:.0}% CI: [{:.6}, {:.6}]", conf * 100.0, ci_lo, ci_hi);
     }
 }
 
 fn render_ci(stats: &sf_core::StatsArtifact) {
-    let estimate = stats.values.get("estimate").and_then(|v| v.as_str()).unwrap_or("unknown");
+    let estimate = stats
+        .values
+        .get("estimate")
+        .and_then(|v| v.as_str())
+        .unwrap_or("unknown");
     println!("Confidence Interval for: {}", estimate);
 
     if let Some(col) = stats.values.get("column").and_then(|v| v.as_str()) {
@@ -608,14 +617,12 @@ fn render_ci(stats: &sf_core::StatsArtifact) {
     if let (Some(ci_lo), Some(ci_hi), Some(conf)) = (
         stats.values.get("ci_lower").and_then(|v| v.as_f64()),
         stats.values.get("ci_upper").and_then(|v| v.as_f64()),
-        stats.values.get("confidence_level").and_then(|v| v.as_f64()),
+        stats
+            .values
+            .get("confidence_level")
+            .and_then(|v| v.as_f64()),
     ) {
-        println!(
-            "{:.0}% CI: [{:.6}, {:.6}]",
-            conf * 100.0,
-            ci_lo,
-            ci_hi
-        );
+        println!("{:.0}% CI: [{:.6}, {:.6}]", conf * 100.0, ci_lo, ci_hi);
     }
 }
 
@@ -642,7 +649,11 @@ fn render_proportion_test(stats: &sf_core::StatsArtifact) {
         }
     }
 
-    if let Some(es_type) = stats.values.get("effect_size_type").and_then(|v| v.as_str()) {
+    if let Some(es_type) = stats
+        .values
+        .get("effect_size_type")
+        .and_then(|v| v.as_str())
+    {
         println!("{:<20} {:>15}", "Effect Size Type", es_type);
     }
     if let Some(alt) = stats.values.get("alternative").and_then(|v| v.as_str()) {
@@ -653,19 +664,21 @@ fn render_proportion_test(stats: &sf_core::StatsArtifact) {
     if let (Some(ci_lo), Some(ci_hi), Some(conf)) = (
         stats.values.get("ci_lower").and_then(|v| v.as_f64()),
         stats.values.get("ci_upper").and_then(|v| v.as_f64()),
-        stats.values.get("confidence_level").and_then(|v| v.as_f64()),
+        stats
+            .values
+            .get("confidence_level")
+            .and_then(|v| v.as_f64()),
     ) {
-        println!(
-            "{:.0}% CI: [{:.6}, {:.6}]",
-            conf * 100.0,
-            ci_lo,
-            ci_hi
-        );
+        println!("{:.0}% CI: [{:.6}, {:.6}]", conf * 100.0, ci_lo, ci_hi);
     }
 }
 
 fn render_chi_square(stats: &sf_core::StatsArtifact) {
-    let test = stats.values.get("test").and_then(|v| v.as_str()).unwrap_or("chi_squared");
+    let test = stats
+        .values
+        .get("test")
+        .and_then(|v| v.as_str())
+        .unwrap_or("chi_squared");
     println!("Test: {}", test);
 
     if let Some(col1) = stats.values.get("column1").and_then(|v| v.as_str()) {
@@ -697,12 +710,20 @@ fn render_chi_square(stats: &sf_core::StatsArtifact) {
         }
     }
 
-    if let Some(es_type) = stats.values.get("effect_size_type").and_then(|v| v.as_str()) {
+    if let Some(es_type) = stats
+        .values
+        .get("effect_size_type")
+        .and_then(|v| v.as_str())
+    {
         println!("{:<20} {:>15}", "Effect Size Type", es_type);
     }
 
     // Print contingency table if present
-    if let Some(table) = stats.values.get("contingency_table").and_then(|v| v.as_array()) {
+    if let Some(table) = stats
+        .values
+        .get("contingency_table")
+        .and_then(|v| v.as_array())
+    {
         let col_labels = stats
             .values
             .get("col_labels")
@@ -779,7 +800,10 @@ fn render_variance_test(stats: &sf_core::StatsArtifact) {
     if let (Some(ci_lo), Some(ci_hi), Some(conf)) = (
         stats.values.get("ci_lower").and_then(|v| v.as_f64()),
         stats.values.get("ci_upper").and_then(|v| v.as_f64()),
-        stats.values.get("confidence_level").and_then(|v| v.as_f64()),
+        stats
+            .values
+            .get("confidence_level")
+            .and_then(|v| v.as_f64()),
     ) {
         println!(
             "{:.0}% CI for variance: [{:.6}, {:.6}]",
@@ -789,7 +813,6 @@ fn render_variance_test(stats: &sf_core::StatsArtifact) {
         );
     }
 }
-
 
 fn render_generic(stats: &sf_core::StatsArtifact) {
     for (key, val) in &stats.values {

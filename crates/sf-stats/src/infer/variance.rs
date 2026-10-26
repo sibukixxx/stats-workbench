@@ -106,10 +106,7 @@ mod tests {
         let df = sample_df();
         let result = compute_variance_test(&df, "value", 4.0, 0.95, Alternative::TwoSided).unwrap();
         assert!(matches!(result.kind, StatsKind::VarianceTest));
-        assert_eq!(
-            result.values["test"].as_str(),
-            Some("variance_chi2_test")
-        );
+        assert_eq!(result.values["test"].as_str(), Some("variance_chi2_test"));
         assert!(result.values.contains_key("chi2_statistic"));
         assert!(result.values.contains_key("p_value"));
         assert!(result.values.contains_key("df"));
@@ -121,9 +118,14 @@ mod tests {
     fn variance_test_high_p_when_sigma2_matches() {
         let df = sample_df();
         // Calculate sample variance first: it's about 3.66
-        let result = compute_variance_test(&df, "value", 3.66, 0.95, Alternative::TwoSided).unwrap();
+        let result =
+            compute_variance_test(&df, "value", 3.66, 0.95, Alternative::TwoSided).unwrap();
         let p = result.values["p_value"].as_f64().unwrap();
-        assert!(p > 0.5, "p-value should be high when sigma2_0 is near sample variance, got {}", p);
+        assert!(
+            p > 0.5,
+            "p-value should be high when sigma2_0 is near sample variance, got {}",
+            p
+        );
     }
 
     #[test]

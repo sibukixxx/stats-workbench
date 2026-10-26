@@ -244,12 +244,7 @@ fn infer_var_ci_terminal_output() {
 fn infer_chisq_goodness_terminal_output() {
     Command::cargo_bin("stats-workbench")
         .unwrap()
-        .args([
-            "infer",
-            "chisq-goodness",
-            "--observed",
-            "20,30,50",
-        ])
+        .args(["infer", "chisq-goodness", "--observed", "20,30,50"])
         .assert()
         .success()
         .stdout(predicate::str::contains("chi_squared_goodness_of_fit"))

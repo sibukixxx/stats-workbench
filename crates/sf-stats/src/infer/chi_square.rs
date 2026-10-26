@@ -63,7 +63,10 @@ pub fn compute_chisq_goodness(
     };
 
     let mut values_map = BTreeMap::new();
-    values_map.insert("test".into(), serde_json::json!("chi_squared_goodness_of_fit"));
+    values_map.insert(
+        "test".into(),
+        serde_json::json!("chi_squared_goodness_of_fit"),
+    );
     values_map.insert("k".into(), serde_json::json!(k));
     values_map.insert("observed".into(), serde_json::json!(observed));
     values_map.insert("expected".into(), serde_json::json!(expected_vals));
@@ -103,12 +106,12 @@ pub fn compute_chisq_independence(
     }
 
     // Get unique categories
-    let cats1 = series1
-        .unique()
-        .map_err(|e| SfError::Execution(format!("Failed to get unique values for '{}': {}", col1, e)))?;
-    let cats2 = series2
-        .unique()
-        .map_err(|e| SfError::Execution(format!("Failed to get unique values for '{}': {}", col2, e)))?;
+    let cats1 = series1.unique().map_err(|e| {
+        SfError::Execution(format!("Failed to get unique values for '{}': {}", col1, e))
+    })?;
+    let cats2 = series2.unique().map_err(|e| {
+        SfError::Execution(format!("Failed to get unique values for '{}': {}", col2, e))
+    })?;
 
     let r = cats1.len();
     let c = cats2.len();
@@ -160,7 +163,10 @@ pub fn compute_chisq_independence(
     }
 
     // Compute row/col totals
-    let row_totals: Vec<f64> = table.iter().map(|row| row.iter().sum::<u64>() as f64).collect();
+    let row_totals: Vec<f64> = table
+        .iter()
+        .map(|row| row.iter().sum::<u64>() as f64)
+        .collect();
     let col_totals: Vec<f64> = (0..c)
         .map(|j| table.iter().map(|row| row[j]).sum::<u64>() as f64)
         .collect();
@@ -236,7 +242,11 @@ mod tests {
         let observed = vec![20.0, 20.0, 20.0, 20.0, 20.0];
         let result = compute_chisq_goodness(&observed, None).unwrap();
         let p = result.values["p_value"].as_f64().unwrap();
-        assert!((p - 1.0).abs() < 1e-10, "p should be 1.0 for perfectly uniform, got {}", p);
+        assert!(
+            (p - 1.0).abs() < 1e-10,
+            "p should be 1.0 for perfectly uniform, got {}",
+            p
+        );
     }
 
     #[test]
@@ -312,7 +322,11 @@ mod tests {
         .unwrap();
         let result = compute_chisq_independence(&df, "gender", "choice").unwrap();
         let p = result.values["p_value"].as_f64().unwrap();
-        assert!(p < 0.05, "p should be significant for strong association, got {}", p);
+        assert!(
+            p < 0.05,
+            "p should be significant for strong association, got {}",
+            p
+        );
     }
 
     #[test]
