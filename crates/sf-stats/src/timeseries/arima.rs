@@ -198,7 +198,7 @@ fn fit_ar(y: &[f64], p: usize) -> SfResult<(Vec<f64>, f64, f64)> {
     for i in 0..p {
         r_vec[i] = gamma[i + 1];
         for j in 0..p {
-            let idx = if i >= j { i - j } else { j - i };
+            let idx = i.abs_diff(j);
             r_matrix[i][j] = gamma[idx];
         }
     }

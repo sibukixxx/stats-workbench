@@ -14,7 +14,7 @@ resolver = "2"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
-rust-version = "1.75"
+rust-version = "1.89"
 repository = "https://github.com/sibukixxx/stats-workbench"
 homepage = "https://github.com/sibukixxx/stats-workbench"
 
@@ -28,7 +28,7 @@ toml = "0.8"
 polars = { version = "0.46", features = ["lazy", "parquet", "dtype-struct", "round_series"] }
 
 # Database
-sqlx = { version = "0.8", features = ["runtime-tokio", "tls-rustls", "sqlite", "postgres"] }
+sqlx = { version = "0.8", default-features = false, features = ["runtime-tokio", "tls-rustls", "sqlite", "postgres"] }
 tokio = { version = "1", features = ["full"] }
 
 # CLI

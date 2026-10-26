@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 /// Application-level configuration loaded from config/default.toml.
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Default)]
 pub struct AppConfig {
     #[serde(default)]
     pub defaults: DefaultsConfig,
@@ -45,11 +46,3 @@ fn default_log_level() -> String {
     "info".to_string()
 }
 
-impl Default for AppConfig {
-    fn default() -> Self {
-        Self {
-            defaults: DefaultsConfig::default(),
-            logging: LoggingConfig::default(),
-        }
-    }
-}

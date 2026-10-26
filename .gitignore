@@ -1,6 +1,5 @@
 /target
 /output
-Cargo.lock
 .env
 /apps/web/node_modules
 /apps/web/dist

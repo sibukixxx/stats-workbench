@@ -184,7 +184,7 @@ fn invert_matrix(m: &[Vec<f64>]) -> Option<Vec<Vec<f64>>> {
         .enumerate()
         .map(|(i, row)| {
             let mut r = row.clone();
-            r.extend(std::iter::repeat(0.0).take(n));
+            r.extend(std::iter::repeat_n(0.0, n));
             r[n + i] = 1.0;
             r
         })

@@ -26,7 +26,7 @@ It produces statistical results and analytical artifacts. It does **not** turn t
 
 ### CLI
 
-Requires Rust 1.75+.
+Requires Rust 1.89+.
 
 ```sh
 git clone https://github.com/sibukixxx/stats-workbench.git

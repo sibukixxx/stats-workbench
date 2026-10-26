@@ -38,10 +38,15 @@ pub fn setup_fixture() {
     }
     .unwrap();
 
-    let mut file = std::fs::File::create(&path).unwrap();
+    // Publish only a complete fixture: integration tests run concurrently.
+    let temporary = output_path("fixture", "parquet");
+    std::fs::create_dir_all(temporary.parent().unwrap()).unwrap();
+    let mut file = std::fs::File::create(&temporary).unwrap();
     ParquetWriter::new(&mut file)
         .finish(&mut df.clone())
         .unwrap();
+    drop(file);
+    std::fs::rename(temporary, path).unwrap();
 }
 
 #[allow(dead_code)]
@@ -144,10 +149,15 @@ pub fn setup_regression_fixture() {
     }
     .unwrap();
 
-    let mut file = std::fs::File::create(&path).unwrap();
+    // Publish only a complete fixture: integration tests run concurrently.
+    let temporary = output_path("fixture", "parquet");
+    std::fs::create_dir_all(temporary.parent().unwrap()).unwrap();
+    let mut file = std::fs::File::create(&temporary).unwrap();
     ParquetWriter::new(&mut file)
         .finish(&mut df.clone())
         .unwrap();
+    drop(file);
+    std::fs::rename(temporary, path).unwrap();
 }
 
 #[allow(dead_code)]
