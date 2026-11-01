@@ -47,8 +47,12 @@ export function App() {
     <div className="app-shell text-[var(--color-ink)]">
       <div className="mx-auto flex min-h-screen max-w-[1600px] flex-col gap-4 px-4 py-4 lg:flex-row lg:px-6 lg:py-6">
         <Sidebar activePath={activeScreen.path} />
-        <main className="flex-1">
+        <main className="min-w-0 flex-1">
           <div className="space-y-4">
+            <div role="note" className="panel px-6 py-4 text-sm leading-6">
+              <strong>サンプルデータ専用デモ</strong> — Rust CLI は実行しません。
+              表示結果は模擬データです。顧客情報・秘密情報・実際の接続情報は入力しないでください。
+            </div>
             <PageHero screen={activeScreen} />
             <ScreenContent screen={activeScreen} />
           </div>

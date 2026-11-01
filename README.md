@@ -154,6 +154,8 @@ pnpm build
 ```
 
 Cloudflare deployment notes are in [docs/deploy-cloudflare.md](docs/deploy-cloudflare.md).
+ChatGPT Sites deployment notes are in [docs/deploy-sites.md](docs/deploy-sites.md).
+The web UI uses deterministic sample results only; it does not execute the Rust CLI or connect to databases.
 
 ## Development
 
