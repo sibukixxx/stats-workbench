@@ -93,3 +93,11 @@ No D1/R2, new credentials, database or application authentication resources were
 Concurrent main merges #11 and #14 triggered normal Cloudflare Pages builds during this work. No Cloudflare settings were changed. This follow-up is squash-merged with `[CF-Pages-Skip]` to avoid another Pages deployment. The initial Pages production source was a17b67c; it should not be reported as unchanged after those concurrent merges.
 
 Additional documentation mismatch: deploy-cloudflare.md describes obtaining a workers.dev address, while wrangler.jsonc has workers_dev disabled. The running Pages project and its domains are separate from that alternative Workers configuration.
+
+## Correlation matrix follow-up
+
+The correlation matrix now scrolls horizontally within its card on narrow
+screens instead of clipping the remaining columns. Its controls, result matrix
+and mock execution were verified in a 390px iframe viewport. This extends the
+overview responsive check above; physical-phone and authenticated production
+tests remain unverified. The existing engine and deployment settings are unchanged.
