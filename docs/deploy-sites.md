@@ -101,3 +101,25 @@ screens instead of clipping the remaining columns. Its controls, result matrix
 and mock execution were verified in a 390px iframe viewport. This extends the
 overview responsive check above; physical-phone and authenticated production
 tests remain unverified. The existing engine and deployment settings are unchanged.
+
+## Version 3 release (2026-11-01 10:14 JST)
+
+Saved version 3 without deployment, checked the local preview, then deployed it
+successfully with the owner-private operation.
+
+- GitHub application source: `d5f0e2e5bb8194afb9535bd3b3c14f06dac934ef` (PR #15).
+- Sites source: `60a52d771722138b31ee383e415f5518f1cb1bee`.
+- URL: https://techvit-stats-workbench.steadymyna13.chatgpt.site
+- The Sites repository records GitHub provenance in `.openai/github-source.json`.
+- Final checks passed: frozen install, 9 UI tests, typecheck, Vite build, and
+  Wrangler dry-run (zero bindings).
+- Browser preview passed: overview, all five analysis/recipe executions,
+  navigation, distribution bins changed from 8 to 5, and direct `/run` loading.
+  Narrow-screen correlation controls/matrix and execution were checked in a
+  390px iframe. This does not substitute for physical-smartphone testing.
+- After publication, owner-only access was rechecked: one owner, zero editors,
+  external visitors, or groups. Anonymous production access shows the login gate.
+- Authenticated production UI operation and denial of a different signed-in
+  account remain unverified because this browser has no owner login.
+
+This final documentation update does not change the deployed application source.
