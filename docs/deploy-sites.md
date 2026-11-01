@@ -27,7 +27,7 @@ migration is needed. The existing Cloudflare build remains `pnpm build`.
 
 1. Update `apps/web` on a GitHub branch; keep the existing engine boundary.
 2. In `apps/web`, run `pnpm install --frozen-lockfile`, `pnpm test`,
-   `pnpm typecheck`, and `pnpm build`.
+   `pnpm exec tsc --noEmit`, and `pnpm build`.
 3. Copy the tracked `apps/web` source to the same Sites checkout, excluding
    `.git`, `node_modules`, `dist`, local environment files and runtime state.
    Preserve the project ID; do not create another Site.
@@ -57,23 +57,36 @@ using the owner-private operation. Sites source commit:
 | --- | --- |
 | `pnpm install --frozen-lockfile` | Passed, lockfile unchanged |
 | `pnpm test` | 9 passed; navigation, summary/correlation/distribution/outlier/recipe mock execution, validation and demo notice |
-| `pnpm typecheck` | Passed |
+| `pnpm exec tsc --noEmit` | Passed |
 | `pnpm build` | Passed; existing Vite 6 static build |
 | `pnpm exec wrangler deploy --dry-run` | Passed; no bindings; no Cloudflare deployment performed |
 | Owner-only access policy | Verified: one owner, zero external visitors, zero groups |
 | Anonymous live browser | Login gate shown; application content not exposed |
-| Local browser QA | Overview and summary displayed; summary executed. 390px iframe viewport displayed correlation controls/matrix and mock execution passed. Subsequent navigation blocked when the shared preview daemon stopped. |
-| Authenticated live operations / full desktop and mobile QA | Unverified: cloud browser has no owner login; full six-screen unit coverage passes. |
+| PC preview and interactions | Rechecked successfully after preview became available: all five mock executions, navigation, distribution bin change and `/run` reload |
+| Mobile visual QA and authenticated live operations | Unverified: no mobile viewport control in the available browser API; live cloud browser has no owner login |
 | Different signed-in user's access denial | Not exercised; owner-only policy and private-deploy backend check passed |
 
 No real statistical computation is implemented in the web UI. The existing
 Cloudflare documentation describes Workers while the running deployment uses
 Pages; use the coexistence section above for the observed current settings.
 
+Independent follow-up verification used GitHub main `5532bad5882573c8268e49824433d070d4d44d05`.
+Its `apps/web/src` matches deployed Sites source `97ee1872bafd3d9aca86f39d14319c505f508698`
+byte for byte. Frozen installation, all nine tests, build, explicit TypeScript
+check and Cloudflare dry-run passed again. This documentation-only follow-up
+does not require a new Sites deployment.
+
 Official references consulted:
 - https://help.openai.com/en/articles/20001339-creating-and-using-chatgpt-sites
 - Sites plugin's static-hosting, preview and identity documentation.
 
-The development preview explicitly permits `terminal.local`; Vite 6 is retained.
-Node.js 22+ is declared. Long labels wrap, and the correlation matrix scrolls
-horizontally on narrow screens instead of clipping cells. No dependencies changed.
+## Preview and responsive follow-up
+
+The managed preview host `terminal.local` is explicitly allowed. Node.js 22+
+is declared, with `pnpm typecheck` as the explicit TypeScript check. Long labels
+wrap and the correlation matrix scrolls horizontally on narrow screens.
+The local browser displayed the correlation controls and matrix in a 390px
+iframe viewport and executed the mock successfully. This is responsive-layout
+verification, not a physical-phone or authenticated production test.
+Nine tests, typecheck, build, frozen install and Cloudflare dry-run passed.
+No dependencies, Rust crates, Cloudflare settings, or storage bindings changed.
