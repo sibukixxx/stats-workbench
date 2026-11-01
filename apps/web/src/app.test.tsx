@@ -3,6 +3,27 @@ import { describe, expect, it } from "vitest";
 import { App } from "./app";
 
 describe("Stats Workbench web dashboard", () => {
+  it("discloses the sample-only demo on every screen", () => {
+    render(<App />);
+    expect(screen.getByRole("note")).toHaveTextContent("Rust CLI は実行しません");
+    fireEvent.click(screen.getAllByRole("button", { name: /Summary/i })[0]);
+    expect(screen.getByRole("note")).toHaveTextContent("顧客情報や秘密情報は入力しないでください");
+  });
+
+  it("runs summary, correlation, outlier and recipe sample previews", () => {
+    render(<App />);
+    for (const [menu, action] of [
+      [/Summary/i, "要約統計をモック実行"],
+      [/Correlation/i, "相関分析をモック実行"],
+      [/Outlier/i, "外れ値検出をモック実行"],
+      [/Recipe Run/i, "レシピをモック実行"],
+    ] as const) {
+      fireEvent.click(screen.getAllByRole("button", { name: menu })[0]);
+      fireEvent.click(screen.getByRole("button", { name: action }));
+      expect(screen.getByText(/mock executed at/)).toBeInTheDocument();
+    }
+  });
+
   it("renders the overview screen with Japanese menu descriptions", () => {
     render(<App />);
 

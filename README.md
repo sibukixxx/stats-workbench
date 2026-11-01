@@ -153,7 +153,9 @@ pnpm test
 pnpm build
 ```
 
-Cloudflare deployment notes are in [docs/deploy-cloudflare.md](docs/deploy-cloudflare.md).
+The Web UI is a **sample-data demo**, not a browser interface to the Rust CLI. It does not open the configured files or connect to databases.
+
+Deployment: [ChatGPT Sites (owner only)](docs/deploy-sites.md) · [Cloudflare](docs/deploy-cloudflare.md).
 
 ## Development
 

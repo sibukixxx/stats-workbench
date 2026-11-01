@@ -172,3 +172,7 @@ textarea {
     border-radius: 24px;
   }
 }
+
+/* Keep sample paths and result grids within narrow viewports. */
+main, main .panel, main .grid > * { min-width: 0; }
+main dd, main p, .sidebar-panel { overflow-wrap: anywhere; }
