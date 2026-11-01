@@ -42,7 +42,7 @@ migration is needed. The existing Cloudflare build remains `pnpm build`.
 The existing Pages project `techvit-stats-private` serves `stats.techvit.me`
 and is connected to `sibukixxx/stats-workbench`, branch `main`, root `apps/web`.
 Its build command is `corepack enable && pnpm install --frozen-lockfile && pnpm build`
-and output is `dist`. Main merges trigger its normal automatic build.
+and output is `dist`. Main merges normally trigger its automatic build. For Sites-only changes, prefix the squash merge commit with `[CF-Pages-Skip]` to keep the existing Cloudflare deployment unchanged.
 No Pages settings, Access policies, Secrets, domains or databases are changed.
 The older `deploy-cloudflare.md` describes an alternative Workers deployment;
 it does not describe the currently running Pages project's GitHub integration.
@@ -79,3 +79,17 @@ does not require a new Sites deployment.
 Official references consulted:
 - https://help.openai.com/en/articles/20001339-creating-and-using-chatgpt-sites
 - Sites plugin's static-hosting, preview and identity documentation.
+
+## Final update (2026-11-01)
+
+Saved version 2 before publication, then successfully deployed using the owner-private operation.
+Sites source commit: `dca0a81c18716517235c3e21274922ef687c81f8`.
+The application snapshot is recorded by the responsive/verification follow-up PR. This version retains all existing Preact screens and Vite 6, adds explicit demo disclosure, a Node.js 22+ declaration and typecheck script, allows only terminal.local for managed development preview, and fixes narrow-screen overflow and sidebar scrolling.
+
+Validation: frozen install, TypeScript, production build and Wrangler dry-run passed. Seven UI tests passed before publication; reconciliation preserves the nine tests already on main, all passing again. Desktop preview: all five executions passed. Overview was visually checked in a 390px iframe viewport (375px content area), with no page-level horizontal overflow; physical smartphone and full mobile workflow remain unverified. The anonymous production browser displays the ChatGPT login gate; authenticated production operations and a second signed-in user's rejection remain unverified. Access policy was rechecked: sole owner, no editors/groups/external visitors.
+
+No D1/R2, new credentials, database or application authentication resources were created. Plus/Pro hosting is currently included subject to usage limits; editing/building consumes Codex allowance.
+
+Concurrent main merges #11 and #14 triggered normal Cloudflare Pages builds during this work. No Cloudflare settings were changed. This follow-up is squash-merged with `[CF-Pages-Skip]` to avoid another Pages deployment. The initial Pages production source was a17b67c; it should not be reported as unchanged after those concurrent merges.
+
+Additional documentation mismatch: deploy-cloudflare.md describes obtaining a workers.dev address, while wrangler.jsonc has workers_dev disabled. The running Pages project and its domains are separate from that alternative Workers configuration.

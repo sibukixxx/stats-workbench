@@ -51,7 +51,7 @@ export function App() {
           <div className="space-y-4">
             <div role="note" className="panel px-6 py-4 text-sm leading-6">
               <strong>サンプルデータ専用デモ</strong> — Rust CLI は実行しません。
-              表示結果は模擬データです。顧客情報・秘密情報・実際の接続情報は入力しないでください。
+              ファイル・データベースには接続しません。顧客情報や秘密情報は入力しないでください。
             </div>
             <PageHero screen={activeScreen} />
             <ScreenContent screen={activeScreen} />
@@ -64,7 +64,7 @@ export function App() {
 
 function Sidebar(props: { activePath: string }) {
   return (
-    <aside className="panel sidebar-panel w-full overflow-hidden lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)] lg:w-[320px]">
+    <aside className="panel sidebar-panel w-full overflow-hidden lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)] lg:w-[320px] lg:shrink-0 lg:overflow-y-auto">
       <div className="space-y-6 p-5 lg:p-6">
         <div className="space-y-3">
           <p className="eyebrow text-[var(--color-highlight)]">Stats Workbench Web</p>
