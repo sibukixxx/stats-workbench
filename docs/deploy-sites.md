@@ -144,3 +144,25 @@ started but the browser returned `ERR_CONNECTION_REFUSED`; visual PC/mobile QA
 and authenticated production operations remain unverified for this version.
 Owner-only sharing is preserved. This UI merge uses `[CF-Pages-Skip]` so that the
 existing Pages deployment is not updated by this Sites-specific design change.
+
+
+## Version 4 browser QA completed (2026-11-01)
+
+On resume the managed preview was reachable. Checked the same UI source as
+GitHub main `95700d308df376a4a01a322831c5ad536d47d830` and Sites version 4.
+This supersedes the version 4 preview-connection limitation above.
+
+- Desktop browser: overview and correlation visually inspected; all five mock
+  executions (summary, correlation, distribution, outlier and recipe) succeeded.
+  Page scroll width 1348px at browser width 1363px: no page-level overflow.
+- 390px iframe viewport (375px content width due to its scrollbar): all five
+  screens navigated and executed successfully. Each document scroll width was
+  375px, equal to its viewport. Narrow-screen layout visually inspected.
+- Correlation matrix uses its own horizontal scroll region: 299px visible width,
+  446px content width, computed overflow-x auto. Remaining columns are retained.
+- The temporary iframe harness was removed; no UI or deployment change needed.
+- Physical smartphone, owner-authenticated production interactions and a separate
+  signed-in non-owner denial test remain unverified. This was responsive browser
+  QA of local source, not a claim of those production or device checks.
+- Sites still reports version 4 live, custom sharing with one owner and no
+  external visitors, editors or groups. No public access was enabled.
