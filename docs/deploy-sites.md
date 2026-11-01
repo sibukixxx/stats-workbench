@@ -1,42 +1,95 @@
-# ChatGPT Sites: TechVit Stats Workbench
+# ChatGPT Sites
 
-## Scope and architecture
+## Scope
 
-Owner-only static deployment of `apps/web`. Preact, Vite 6 and the existing design are retained. Node.js 22+ and the pinned pnpm are supported; no Vinext/server migration is needed for static assets. Build command remains `pnpm build` (TypeScript + Vite), output `dist`. The Site checkout uses `.openai/hosting.json` with `static.directory: "dist"`. No D1, R2, new authentication, secrets, connectors, or runtime backend are needed. Sites enforces access outside the application.
+TechVit Stats Workbench uses the existing `apps/web` Preact UI as a static demo.
+The Rust CLI, SDK and statistical algorithms remain unchanged. `src/state.ts`
+calls the sample result builders in `src/data.ts`; no real analysis engine,
+file upload, database connection or persistent user data is implemented.
+Do not enter customer data, passwords or actual connection strings.
 
-All screens use deterministic sample builders in `src/data.ts`, called by `src/state.ts`. Source settings and recipe text are demonstrations; files, database connections and TOML are not executed. Do not enter customer data, credentials, or connection secrets. State is in browser memory and resets on reload. Future real-engine integration belongs behind the execution functions in `state.ts`, using the existing result types; do not duplicate Rust statistical algorithms in the UI.
+## Configuration
 
-## Existing Cloudflare environment (read-only verification, 2026-11-01)
+- Project: `TechVit Stats Workbench`
+- Deployed URL: https://techvit-stats-workbench.steadymyna13.chatgpt.site
+- Audience: owner only, enforced by Sites; no application auth is added.
+- Source manifest: `apps/web/.openai/hosting.json`, static directory `dist`.
+- Node.js 24.22.1 and pnpm 11.25.0 (managed runner); the existing
+  `packageManager: pnpm@10.28.0`, lockfile and Vite 6.4.5 are retained.
+- D1, R2, connectors and runtime secrets: none.
+- Cost: no additional database/file resources; Sites hosting is subject to the
+  account's usage limits and pricing, not a guaranteed unlimited free service.
 
-The active service is Pages `techvit-stats-private`, with `stats.techvit.me` and `techvit-stats-private.pages.dev`. GitHub `sibukixxx/stats-workbench`, production branch `main`, root `apps/web`, command `corepack enable && pnpm install --frozen-lockfile && pnpm build`, output `dist`. Preview deployments are disabled. The current production source is `a17b67c7d7b50f02aa93044d851afb34e46f561c`.
-
-`deploy-cloudflare.md` describes an alternative Workers Static Assets deployment, not this actual Pages project. Its example `workers.dev` URL also requires enabling `workers_dev`, currently false in Wrangler. Neither the Pages settings nor Wrangler is changed for Sites.
-
-To preserve the current Cloudflare deployment, prefix the GitHub squash merge commit with `[CF-Pages-Skip]`. Cloudflare documents this prefix as skipping a Pages build. Do not disable Git integration or change Access/secrets to achieve this.
+Sites accepts prebuilt static assets, so no Vite major upgrade or Vinext
+migration is needed. The existing Cloudflare build remains `pnpm build`.
 
 ## Update procedure
 
-1. Check latest GitHub main, AGENTS.md and the existing Site identity/access. Work on a branch. Use Node.js 22+ and pnpm from `packageManager`.
-2. In `apps/web`: `pnpm install --frozen-lockfile`, `pnpm test`, `pnpm exec tsc --noEmit`, `pnpm build`. Verify the existing Wrangler build with `pnpm exec wrangler deploy --dry-run` only.
-3. Open the existing Site source through the Sites source workflow helper with a fresh write credential. Copy the tracked `apps/web` source and LICENSE; exclude Git metadata, node_modules, dist, runtime state and credentials. Preserve `.openai/hosting.json`.
-4. Build with the Sites build helper, push/package through the Sites source workflow helper, then save a version without deploying. Check desktop/mobile preview and all five analysis screens. Static SPA routes must also work on reload.
-5. Confirm the owner is the sole allowed viewer, no editors/groups/external viewers. Deploy the exact saved version using the private deployment tool; wait for success. Verify the live app and access policy.
-6. Record the URL, GitHub/source commit mapping and verification below. Create/review the GitHub PR and squash-merge with `[CF-Pages-Skip]`; confirm the Pages deployment remains unchanged.
+1. Update `apps/web` on a GitHub branch; keep the existing engine boundary.
+2. In `apps/web`, run `pnpm install --frozen-lockfile`, `pnpm test`,
+   `pnpm exec tsc --noEmit`, and `pnpm build`.
+3. Copy the tracked `apps/web` source to the same Sites checkout, excluding
+   `.git`, `node_modules`, `dist`, local environment files and runtime state.
+   Preserve the project ID; do not create another Site.
+4. Use the Sites source workflow helper to build, push and package that source.
+   Save a version without deployment, inspect the local preview, then deploy
+   that saved version with the owner-private operation.
+5. Check the returned deployment status and access policy; test the live UI.
+6. Record the GitHub source commit, Sites source commit and verification results.
 
-## Verification record
+## Cloudflare coexistence
 
-Site: https://techvit-stats-workbench.steadymyna13.chatgpt.site
+The existing Pages project `techvit-stats-private` serves `stats.techvit.me`
+and is connected to `sibukixxx/stats-workbench`, branch `main`, root `apps/web`.
+Its build command is `corepack enable && pnpm install --frozen-lockfile && pnpm build`
+and output is `dist`. Main merges normally trigger its automatic build. For Sites-only changes, prefix the squash merge commit with `[CF-Pages-Skip]` to keep the existing Cloudflare deployment unchanged.
+No Pages settings, Access policies, Secrets, domains or databases are changed.
+The older `deploy-cloudflare.md` describes an alternative Workers deployment;
+it does not describe the currently running Pages project's GitHub integration.
 
-Project: `appgprj_6ae68f8fd5fc8191be03b23b829e4620`. Owner-only policy: one owner, no additional users, editors, groups or external viewers. Initial saved version 1 was deployed successfully on 2026-11-01. A final update with mobile layout fixes and expanded regression tests is being verified; its exact source SHA is recorded after deployment.
+## Verification
 
-Executed successfully: `pnpm install --frozen-lockfile`, `pnpm test` (7 tests), `pnpm exec tsc --noEmit`, `pnpm build`, and `pnpm exec wrangler deploy --dry-run` (no bindings). Runtime: Node 24.22.1, pnpm 11.25.0 provided by the managed environment; repository pnpm pin 10.28.0 and lockfile are unchanged. No Rust code was changed; Rust workspace tests are not required for this Web-only change.
+2026-11-01: saved version 1 without deployment, then deployed successfully
+using the owner-private operation. Sites source commit:
+`97ee1872bafd3d9aca86f39d14319c505f508698` (the `apps/web` source snapshot).
 
-Known limits: real statistics, Rust execution, file/database access and TOML parsing remain unimplemented. Independent non-owner signed-in account testing and mobile viewport testing are not yet asserted.
+| Check | Result |
+| --- | --- |
+| `pnpm install --frozen-lockfile` | Passed, lockfile unchanged |
+| `pnpm test` | 9 passed; navigation, summary/correlation/distribution/outlier/recipe mock execution, validation and demo notice |
+| `pnpm exec tsc --noEmit` | Passed |
+| `pnpm build` | Passed; existing Vite 6 static build |
+| `pnpm exec wrangler deploy --dry-run` | Passed; no bindings; no Cloudflare deployment performed |
+| Owner-only access policy | Verified: one owner, zero external visitors, zero groups |
+| Anonymous live browser | Login gate shown; application content not exposed |
+| PC preview and interactions | Rechecked successfully after preview became available: all five mock executions, navigation, distribution bin change and `/run` reload |
+| Mobile visual QA and authenticated live operations | Unverified: no mobile viewport control in the available browser API; live cloud browser has no owner login |
+| Different signed-in user's access denial | Not exercised; owner-only policy and private-deploy backend check passed |
 
-## Official references
+No real statistical computation is implemented in the web UI. The existing
+Cloudflare documentation describes Workers while the running deployment uses
+Pages; use the coexistence section above for the observed current settings.
 
+Independent follow-up verification used GitHub main `5532bad5882573c8268e49824433d070d4d44d05`.
+Its `apps/web/src` matches deployed Sites source `97ee1872bafd3d9aca86f39d14319c505f508698`
+byte for byte. Frozen installation, all nine tests, build, explicit TypeScript
+check and Cloudflare dry-run passed again. This documentation-only follow-up
+does not require a new Sites deployment.
+
+Official references consulted:
 - https://help.openai.com/en/articles/20001339-creating-and-using-chatgpt-sites
-- https://learn.chatgpt.com/docs/sites
-- https://developers.cloudflare.com/pages/configuration/git-integration/github-integration/
+- Sites plugin's static-hosting, preview and identity documentation.
 
-Plus/Pro hosting is currently included, subject to shared limits. This app requests no database or file storage; building/editing uses Codex allowance. Recheck current plan terms when updating.
+## Final update (2026-11-01)
+
+Saved version 2 before publication, then successfully deployed using the owner-private operation.
+Sites source commit: `dca0a81c18716517235c3e21274922ef687c81f8`.
+The application snapshot is recorded by the responsive/verification follow-up PR. This version retains all existing Preact screens and Vite 6, adds explicit demo disclosure, a Node.js 22+ declaration and typecheck script, allows only terminal.local for managed development preview, and fixes narrow-screen overflow and sidebar scrolling.
+
+Validation: frozen install, TypeScript, production build and Wrangler dry-run passed. Seven UI tests passed before publication; reconciliation preserves the nine tests already on main, all passing again. Desktop preview: all five executions passed. Overview was visually checked in a 390px iframe viewport (375px content area), with no page-level horizontal overflow; physical smartphone and full mobile workflow remain unverified. The anonymous production browser displays the ChatGPT login gate; authenticated production operations and a second signed-in user's rejection remain unverified. Access policy was rechecked: sole owner, no editors/groups/external visitors.
+
+No D1/R2, new credentials, database or application authentication resources were created. Plus/Pro hosting is currently included subject to usage limits; editing/building consumes Codex allowance.
+
+Concurrent main merges #11 and #14 triggered normal Cloudflare Pages builds during this work. No Cloudflare settings were changed. This follow-up is squash-merged with `[CF-Pages-Skip]` to avoid another Pages deployment. The initial Pages production source was a17b67c; it should not be reported as unchanged after those concurrent merges.
+
+Additional documentation mismatch: deploy-cloudflare.md describes obtaining a workers.dev address, while wrangler.jsonc has workers_dev disabled. The running Pages project and its domains are separate from that alternative Workers configuration.
