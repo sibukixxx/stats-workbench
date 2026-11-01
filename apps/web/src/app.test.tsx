@@ -6,6 +6,8 @@ describe("Stats Workbench web dashboard", () => {
   it("renders the overview screen with Japanese menu descriptions", () => {
     render(<App />);
 
+    expect(screen.getByRole("note")).toHaveTextContent("サンプルデータ専用デモ");
+    expect(screen.getByRole("note")).toHaveTextContent("Rust CLI は実行しません");
     expect(screen.getByText("分析メニュー全体を俯瞰するダッシュボード")).toBeInTheDocument();
     expect(screen.getByText("要約統計画面")).toBeInTheDocument();
     expect(screen.getByText("外れ値検出画面")).toBeInTheDocument();
@@ -56,5 +58,18 @@ describe("Stats Workbench web dashboard", () => {
     expect(screen.getByText("Recipe Execution Preview")).toBeInTheDocument();
     expect(screen.getByText("summary")).toBeInTheDocument();
     expect(screen.getByText("outliers")).toBeInTheDocument();
+  });
+
+  it.each([
+    ["Summary", "要約統計をモック実行", "summary mock executed at"],
+    ["Correlation", "相関分析をモック実行", "correlation mock executed at"],
+    ["Outlier", "外れ値検出をモック実行", "outlier mock executed at"],
+    ["Recipe Run", "レシピをモック実行", "recipe mock executed at"],
+  ])("executes the %s demo and preserves the demo notice", (menu, action, result) => {
+    render(<App />);
+    fireEvent.click(screen.getAllByRole("button", { name: new RegExp(menu, "i") })[0]);
+    fireEvent.click(screen.getByRole("button", { name: action }));
+    expect(screen.getByText(new RegExp(result))).toBeInTheDocument();
+    expect(screen.getByRole("note")).toHaveTextContent("サンプルデータ専用デモ");
   });
 });

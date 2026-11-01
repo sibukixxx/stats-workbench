@@ -144,7 +144,9 @@ External sources and recipes should be treated as untrusted input. Paths and dat
 
 ## Web UI
 
-An optional Preact + Vite UI is available in `apps/web`.
+An optional Preact + Vite UI is available in `apps/web`. It displays synthetic demo results only; it does not execute the Rust CLI or connect to databases.
+
+Owner-private ChatGPT Sites deployment: [docs/deploy-sites.md](docs/deploy-sites.md).
 
 ```sh
 cd apps/web
