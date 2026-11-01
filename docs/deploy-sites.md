@@ -62,12 +62,19 @@ using the owner-private operation. Sites source commit:
 | `pnpm exec wrangler deploy --dry-run` | Passed; no bindings; no Cloudflare deployment performed |
 | Owner-only access policy | Verified: one owner, zero external visitors, zero groups |
 | Anonymous live browser | Login gate shown; application content not exposed |
-| PC/mobile visual QA and authenticated live operations | Unverified: managed preview connection refused; live cloud browser has no owner login |
+| PC preview and interactions | Rechecked successfully after preview became available: all five mock executions, navigation, distribution bin change and `/run` reload |
+| Mobile visual QA and authenticated live operations | Unverified: no mobile viewport control in the available browser API; live cloud browser has no owner login |
 | Different signed-in user's access denial | Not exercised; owner-only policy and private-deploy backend check passed |
 
 No real statistical computation is implemented in the web UI. The existing
 Cloudflare documentation describes Workers while the running deployment uses
 Pages; use the coexistence section above for the observed current settings.
+
+Independent follow-up verification used GitHub main `5532bad5882573c8268e49824433d070d4d44d05`.
+Its `apps/web/src` matches deployed Sites source `97ee1872bafd3d9aca86f39d14319c505f508698`
+byte for byte. Frozen installation, all nine tests, build, explicit TypeScript
+check and Cloudflare dry-run passed again. This documentation-only follow-up
+does not require a new Sites deployment.
 
 Official references consulted:
 - https://help.openai.com/en/articles/20001339-creating-and-using-chatgpt-sites
