@@ -10,7 +10,8 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "deploy:cf": "pnpm build && wrangler deploy"
+    "deploy:cf": "pnpm build && wrangler deploy",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@preact/signals": "^2.11.3",
@@ -28,5 +29,8 @@
     "vite": "^6.4.5",
     "vitest": "^4.1.12",
     "wrangler": "^4.152.0"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

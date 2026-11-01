@@ -670,7 +670,7 @@ function CorrelationResultPanel(props: { result: CorrelationResult }) {
         title="Correlation Matrix"
         detail={`${props.result.method} / ${props.result.columns.length} columns`}
       />
-      <div className="mt-5 overflow-hidden rounded-[24px] border border-[var(--color-border)] bg-white/72 p-3">
+      <div className="mt-5 overflow-x-auto rounded-[24px] border border-[var(--color-border)] bg-white/72 p-3">
         <div className="grid gap-2" style={{ gridTemplateColumns: `140px repeat(${props.result.columns.length}, minmax(90px, 1fr))` }}>
           <div />
           {props.result.columns.map((column) => (

@@ -172,3 +172,7 @@ textarea {
     border-radius: 24px;
   }
 }
+
+/* Keep long demo source/recipe labels inside narrow cards. */
+main, .panel, .input-base { min-width: 0; }
+.panel { overflow-wrap: anywhere; }

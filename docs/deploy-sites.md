@@ -27,7 +27,7 @@ migration is needed. The existing Cloudflare build remains `pnpm build`.
 
 1. Update `apps/web` on a GitHub branch; keep the existing engine boundary.
 2. In `apps/web`, run `pnpm install --frozen-lockfile`, `pnpm test`,
-   `pnpm exec tsc --noEmit`, and `pnpm build`.
+   `pnpm typecheck`, and `pnpm build`.
 3. Copy the tracked `apps/web` source to the same Sites checkout, excluding
    `.git`, `node_modules`, `dist`, local environment files and runtime state.
    Preserve the project ID; do not create another Site.
@@ -57,12 +57,13 @@ using the owner-private operation. Sites source commit:
 | --- | --- |
 | `pnpm install --frozen-lockfile` | Passed, lockfile unchanged |
 | `pnpm test` | 9 passed; navigation, summary/correlation/distribution/outlier/recipe mock execution, validation and demo notice |
-| `pnpm exec tsc --noEmit` | Passed |
+| `pnpm typecheck` | Passed |
 | `pnpm build` | Passed; existing Vite 6 static build |
 | `pnpm exec wrangler deploy --dry-run` | Passed; no bindings; no Cloudflare deployment performed |
 | Owner-only access policy | Verified: one owner, zero external visitors, zero groups |
 | Anonymous live browser | Login gate shown; application content not exposed |
-| PC/mobile visual QA and authenticated live operations | Unverified: managed preview connection refused; live cloud browser has no owner login |
+| Local browser QA | Overview and summary displayed; summary executed. 390px iframe viewport displayed correlation controls/matrix and mock execution passed. Subsequent navigation blocked when the shared preview daemon stopped. |
+| Authenticated live operations / full desktop and mobile QA | Unverified: cloud browser has no owner login; full six-screen unit coverage passes. |
 | Different signed-in user's access denial | Not exercised; owner-only policy and private-deploy backend check passed |
 
 No real statistical computation is implemented in the web UI. The existing
@@ -72,3 +73,7 @@ Pages; use the coexistence section above for the observed current settings.
 Official references consulted:
 - https://help.openai.com/en/articles/20001339-creating-and-using-chatgpt-sites
 - Sites plugin's static-hosting, preview and identity documentation.
+
+The development preview explicitly permits `terminal.local`; Vite 6 is retained.
+Node.js 22+ is declared. Long labels wrap, and the correlation matrix scrolls
+horizontally on narrow screens instead of clipping cells. No dependencies changed.
