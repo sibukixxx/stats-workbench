@@ -123,3 +123,24 @@ successfully with the owner-private operation.
   account remain unverified because this browser has no owner login.
 
 This final documentation update does not change the deployed application source.
+
+## UI direction: analytical workbench
+
+The unslop pass keeps the Preact screens, demo fixtures and execution boundary.
+Use neutral white/graphite surfaces, a restrained teal accent, compact navigation,
+aligned tabular figures and clearly separated controls/results. Remove glass,
+background gradients, oversized rounded cards and tracked uppercase metadata.
+Charts carry the visual emphasis; no generated imagery or new dependencies.
+
+Design method: unslop by Damir Sokolovsky (@heydamir), CC BY 4.0:
+https://github.com/heydamir/unslop . The method is adapted for this product;
+no skill code or reference imagery is bundled in the application.
+
+UI pass published as saved version 4 on 2026-11-01. Sites source commit:
+`680a8aac652de7797f567ebb2fd0640026bef420`. Publication returned `succeeded`.
+Nine existing UI tests, standalone TypeScript, production build and Cloudflare
+Wrangler dry-run passed. No dependencies or engine code changed. Managed preview
+started but the browser returned `ERR_CONNECTION_REFUSED`; visual PC/mobile QA
+and authenticated production operations remain unverified for this version.
+Owner-only sharing is preserved. This UI merge uses `[CF-Pages-Skip]` so that the
+existing Pages deployment is not updated by this Sites-specific design change.
